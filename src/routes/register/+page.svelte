@@ -4,7 +4,7 @@
     // Svelte script logic goes here
 </script>
 
-<div class="flex flex-col lg:flex-row h-screen w-screen bg-cover bg-center">
+<div class="flex flex-col lg:flex-row h-screen w-full bg-cover bg-center">
     <div
         class="relative w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-center p-6 lg:p-24 bg-gray-100 dark:bg-black"
     >
@@ -13,11 +13,11 @@
             alt="background"
             class="w-full h-full inset-0 opacity-30 absolute object-cover"
         />
-        <p class="text-gray-800 dark:text-white text-4xl lg:text-7xl font-bold">
+        <p class="text-gray-800 dark:text-white text-4xl lg:text-6xl font-bold">
             Capture every moment,
         </p>
         <p
-            class="text-blue-500 dark:text-sky-300 text-5xl lg:text-8xl font-bold mt-4 lg:ml-36"
+            class="text-blue-500 dark:text-sky-300 text-5xl lg:text-7xl font-bold mt-4 lg:ml-36"
         >
             In Pixels!
         </p>
@@ -75,7 +75,7 @@
         </div>
 
         <div
-            class="w-full flex flex-col lg:flex-row items-center justify-between mb-6 lg:mb-10"
+            class="w-full flex flex-col 2xl:flex-row items-center justify-between mb-6 lg:mb-10"
         >
             <div class="flex flex-row">
                 <label
