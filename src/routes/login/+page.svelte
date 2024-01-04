@@ -1,4 +1,6 @@
 <script>
+  import { fly } from "svelte/transition";
+
   // Svelte script logic goes here
 </script>
 
@@ -12,12 +14,13 @@
 
     <div class="w-full mb-4">
       <label
-        for="username"
+        for="email"
         class="block text-sm font-bold text-gray-700 dark:text-gray-300"
-        >Username</label
+        >Email</label
       >
       <input
-        id="username"
+        id="Email"
+        placeholder="john@doe.com"
         type="text"
         class="mt-1 block w-full px-3 py-2 dark:bg-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 dark:focus:ring-blue-500 focus:border-indigo-500 dark:focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-600"
       />
@@ -31,6 +34,7 @@
       >
       <input
         id="password"
+        placeholder="••••••••"
         type="password"
         class="mt-1 block w-full px-3 py-2 dark:bg-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 dark:focus:ring-blue-500 focus:border-indigo-500 dark:focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-600"
       />
@@ -42,7 +46,7 @@
       <div class="text-sm text-neutral-950 dark:text-neutral-50 mb-4 lg:mb-0">
         Not a user yet?
         <a
-          href="#register"
+          href="/register"
           class="font-bold text-sky-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400"
           >Sign up</a
         >
@@ -58,15 +62,19 @@
     </div>
 
     <button
-      class="w-fit inline-flex justify-center rounded-md shadow-sm px-24 py-3 bg-indigo-600 dark:bg-sky-700 text-base font-bold text-white hover:bg-indigo-700 dark:hover:bg-sky-800 focus:outline-none text-sm"
+      class="w-fit inline-flex justify-center rounded-md border dark:border-sky-500 shadow-sm px-24 py-3 bg-indigo-600 dark:bg-sky-700 text-base font-bold text-white hover:bg-indigo-700 dark:hover:bg-sky-800 focus:outline-none text-sm"
       >Login</button
     >
   </div>
 
   <div
-    class="w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-center lg:text-left p-6 lg:p-24 bg-center bg-cover bg-gray-100 dark:bg-black"
-    style="background-image: url('demo-login-bg.png');"
+    class="relative w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-center p-6 lg:p-24 bg-gray-100 dark:bg-black"
   >
+    <img
+      src="demo-login-bg.png"
+      alt="background"
+      class="w-full h-full inset-0 opacity-30 absolute object-cover"
+    />
     <p class="text-gray-800 dark:text-white text-4xl lg:text-7xl font-bold">
       Don't be scared,
     </p>
