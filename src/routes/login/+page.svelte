@@ -54,7 +54,7 @@
       <div class="text-sm text-neutral-950 dark:text-neutral-50">
         Dementia?
         <a
-          href="#recover"
+          href="/recover"
           class="font-bold text-sky-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400"
           >Recover Password</a
         >
@@ -68,10 +68,10 @@
   </div>
 
   <div
-    class="relative w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-center p-6 lg:p-24 bg-gray-100 dark:bg-black"
+    class="relative w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-left p-6 lg:p-24 bg-gray-100 dark:bg-black"
   >
     <img
-      src="demo-login-bg.png"
+      src="demo-login-bg.jpg"
       alt="background"
       class="w-full h-full inset-0 opacity-30 absolute object-cover"
     />
