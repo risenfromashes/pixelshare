@@ -9,7 +9,7 @@
         class="relative w-full h-64 lg:h-auto lg:min-w-fit lg:w-full flex flex-col justify-center text-center p-6 lg:p-24 bg-gray-100 dark:bg-black"
     >
         <img
-            src="demo-register-bg.png"
+            src="demo-register-bg.jpg"
             alt="background"
             class="w-full h-full inset-0 opacity-30 absolute object-cover"
         />
@@ -78,19 +78,19 @@
             class="w-full flex flex-col lg:flex-row items-center justify-between mb-6 lg:mb-10"
         >
             <div class="flex flex-row">
-                <input id="showpass" type="checkbox" />
                 <label
                     for="showpass"
-                    class="text-sm px-2 text-neutral-950 dark:text-neutral-50"
+                    class="text-sm pr-2 text-neutral-950 dark:text-neutral-50"
                 >
                     Show Passwords
                 </label>
+                <input id="showpass" type="checkbox" />
             </div>
 
             <div class="text-sm text-neutral-950 dark:text-neutral-50">
                 Already a user?
                 <a
-                    href="#recover"
+                    href="/login"
                     class="font-bold text-sky-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400"
                     >Login</a
                 >
