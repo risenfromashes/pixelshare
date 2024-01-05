@@ -9,12 +9,28 @@
 
     const mainContentItems = [
         {
-            title: "Today's Spotlight",
-            images: ["spotlight-1.jpg", "spotlight-2.jpg", "spotlight-3.jpg"],
+            title: "Today's Highlights",
+            images: [
+                "spotlight-1.jpg",
+                "spotlight-2.jpg",
+                "spotlight-3.jpg",
+                "spotlight-3.jpg",
+            ],
         },
         {
-            title: "Top likes last week",
+            title: "Yesterday",
             images: ["top-likes-1.jpg", "top-likes-2.jpg", "top-likes-3.jpg"],
+        },
+        {
+            title: "Last Week",
+            images: [
+                "top-likes-1.jpg",
+                "top-likes-2.jpg",
+                "top-likes-3.jpg",
+                "top-likes-1.jpg",
+                "top-likes-2.jpg",
+                "top-likes-3.jpg",
+            ],
         },
     ];
 
@@ -24,17 +40,17 @@
     };
 </script>
 
-<div class="flex h-screen bg-zinc-950 text-white">
+<div class="flex relative h-screen bg-zinc-950 text-white">
     <!-- Left Sidebar -->
     <div
-        class="flex flex-col justify-start items-start w-64 p-4 space-y-6 bg-zinc-900 pt-16"
+        class="absolute inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start w-64 p-4 space-y-6 bg-zinc-900 pt-16"
     >
         <div class="flex flex-row justify-center items-center">
             <img src="demo-logo.png" alt="Pixel Share" class="h-16 w-16" />
             <p class="ml-4 font-semibold text-2xl text-sky-300">PixelShare</p>
         </div>
         <hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-zinc-700" />
-        <nav class="flex flex-col h-full justify-center">
+        <nav class="grow flex flex-col justify-center">
             {#each sidebarItems as item}
                 <button
                     class="flex items-center px-4 py-2 hover:bg-gray-700 rounded"
@@ -73,17 +89,19 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 p-4 overflow-y-auto">
+    <div class="flex-1 xl:px-64 p-4 overflow-y-auto">
         {#each mainContentItems as section}
-            <div class="p-10">
+            <div class="p-4 xl:p-10">
                 <h2 class="text-xl font-bold mb-3">{section.title}</h2>
-                <div class="grid grid-cols-4 gap-3">
+                <div
+                    class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-2 gap-y-4"
+                >
                     {#each section.images as image}
                         <div class="">
                             <img
                                 src="sample/sample.jpg"
                                 alt="Random"
-                                class="object-cover w-fit rounded rounded-2xl h-48 border border-1 border-zinc-400"
+                                class="object-cover w-fit rounded rounded-lg border border-2 border-zinc-500"
                             />
                         </div>
                     {/each}
@@ -93,7 +111,9 @@
     </div>
 
     <!-- Right Sidebar -->
-    <div class="w-64 p-4 space-y-6 bg-zinc-900">
+    <div
+        class="absolute inset-y-0 right-0 hidden xl:block h-full w-64 p-4 space-y-6 bg-zinc-900"
+    >
         <div class="space-y-4">
             <div>
                 <h3 class="text-lg font-bold">Your Groups</h3>
