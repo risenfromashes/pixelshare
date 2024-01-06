@@ -1,11 +1,20 @@
 <script>
+    import { Icon } from "$lib";
+    import FaIcon from "$lib/components/FaIcon.svelte";
+
     // Placeholder data for sidebar and main content items
     const sidebarItems = [
-        { name: "Home", icon: "icons/home.png" },
-        { name: "Search", icon: "icons/search.png" },
-        { name: "Notifications", icon: "icons/notification.png" },
-        { name: "Settings", icon: "icons/settings.png" },
+        { name: "Home", icon: Icon.HOUSE },
+        { name: "Search", icon: Icon.MAGNIFYING_GLASS },
+        { name: "Notifications", icon: Icon.BELL },
+        { name: "Settings", icon: Icon.GEAR },
     ];
+
+    const userDetails = {
+        name: "Ashrafur Rahman Khan",
+        username: "risenfromashes",
+        avatarUrl: "/risenfromashes.png",
+    };
 
     const mainContentItems = [
         {
@@ -49,45 +58,54 @@
 <div class="flex relative h-screen bg-zinc-950 text-white">
     <!-- Left Sidebar -->
     <div
-        class="absolute inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start w-fit p-6 space-y-6 bg-zinc-900"
+        class="absolute inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start w-fit p-6 space-y-6 bg-neutral-900"
     >
         <div class="flex flex-row justify-center items-center mt-8 xl:mt-6">
             <img src="demo-logo.png" alt="Pixel Share" class="h-12 w-12" />
             <p class="ml-4 font-semibold text-2xl text-sky-300">PixelShare</p>
         </div>
-        <hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-zinc-700" />
+        <hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-neutral-700" />
         <nav class="w-full grow flex flex-col justify-center">
             {#each sidebarItems as item}
                 <button
-                    class="w-full flex items-center px-4 py-2 hover:bg-gray-700 rounded"
+                    class="w-full flex items-center p-4 hover:bg-neutral-800 rounded"
                 >
-                    <img
+                    <!-- <img
                         class="object-cover w-8 h-8"
                         alt="icon"
                         src={item.icon}
-                    />
+                    /> -->
+                    <FaIcon icon={item.icon} className="object-cover w-6 h-6" />
+
                     <span class="ml-3">{item.name}</span>
                 </button>
             {/each}
         </nav>
         <div class="w-full flex flex-col">
             <button
-                class="w-full flex items-center px-4 py-2 hover:bg-gray-700 rounded mb-2"
+                class="w-full flex items-center p-4 hover:bg-neutral-800 rounded"
             >
-                <img
+                <!-- <img
                     class="object-cover w-8 h-8 rounded-full border border-teal-500"
                     alt="icon"
                     src="icons/profile.png"
+                /> -->
+                <FaIcon
+                    icon={Icon.CIRCLE_USER}
+                    className="object-cover w-6 h-6 rounded-full border border-teal-500"
                 />
                 <span class="ml-3">Profile</span>
             </button>
-            <button
-                class="flex items-center px-4 py-2 hover:bg-gray-700 rounded mb-4"
-            >
-                <img
+            <button class="flex items-center p-4 hover:bg-neutral-800 rounded">
+                <!-- <img
                     class="object-cover w-8 h-8"
                     alt="icon"
                     src="icons/logout.png"
+                /> -->
+                <FaIcon
+                    icon={Icon.ARROW_RIGHT_FROM_BRACKET}
+                    className="object-cover w-6 h-6"
+                    fill="#ef4444"
                 />
                 <span class="ml-3 font-medium text-red-500">Log out</span>
             </button>
@@ -105,7 +123,7 @@
                             <img
                                 src={image.link}
                                 alt="Random"
-                                class="object-contain w-full h-full rounded rounded-lg border border-zinc-500"
+                                class="object-contain w-full h-full rounded-lg border border-zinc-500"
                             />
                         </div>
                     {/each}
@@ -116,8 +134,12 @@
 
     <!-- Right Sidebar -->
     <div
-        class="absolute inset-y-0 right-0 hidden xl:block h-full w-64 p-4 space-y-6 bg-zinc-900"
+        class="absolute inset-y-0 right-0 hidden xl:block h-full w-64 p-4 space-y-6 bg-neutral-900"
     >
+        <div class="">
+            <img src={userDetails.avatarUrl} alt="risenfromashes" />
+        </div>
+
         <div class="space-y-4">
             <div>
                 <h3 class="text-lg font-bold">Your Groups</h3>
