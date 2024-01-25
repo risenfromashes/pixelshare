@@ -24,6 +24,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@getbrevo/brevo": "^2.0.0-beta.4"
+		"@getbrevo/brevo": "^1.0.1"
 	}
 }
