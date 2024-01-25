@@ -1,10 +1,10 @@
 <script>
     // Placeholder data for sidebar and main content items
     const sidebarItems = [
-        { name: "Home", icon: "icons/home.png" },
-        { name: "Search", icon: "icons/search.png" },
-        { name: "Notifications", icon: "icons/notification.png" },
-        { name: "Settings", icon: "icons/settings.png" },
+        { name: "Home", icon: "icons/home.png" ,link: "/group"},
+        { name: "Search", icon: "icons/search.png",link:"/group" },
+        { name: "Notifications", icon: "icons/notification.png",link:"/group" },
+        { name: "Settings", icon: "icons/settings.png",link: "/group" },
     ];
 
     const mainContentItems = [
@@ -52,16 +52,21 @@
         <hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-zinc-700" />
         <nav class="grow flex flex-col justify-center">
             {#each sidebarItems as item}
+            <a href={item.link}>
                 <button
                     class="flex items-center px-4 py-2 hover:bg-gray-700 rounded"
                 >
+                   
                     <img
                         class="object-cover w-8 h-8"
                         alt="icon"
                         src={item.icon}
+                        
                     />
+                
                     <span class="ml-3">{item.name}</span>
                 </button>
+            </a>
             {/each}
         </nav>
         <div class="flex flex-col">
