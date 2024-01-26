@@ -1,6 +1,6 @@
 <script>
     // Placeholder data for sidebar and main content items
-    import Comment from "./Comment.svelte";
+    import Comment from "../../../lib/components/Comment.svelte";
     const sidebarItems = [
         { name: "DashBoard", icon: "icons/home.png" },
         { name: "Gallery", icon: "icons/search.png" },
@@ -34,8 +34,8 @@
     },
     // Add more posts as needed
 ];
-    import  CoverPart from "./coverPhoto.svelte";
-    import Post from "./Post.svelte";
+    import  CoverPart from "../../../lib/components/CoverPhoto.svelte";
+    import Post from "../../../lib/components/Post.svelte";
     // import Comment from "./Comment.svelte";
 
 </script>
