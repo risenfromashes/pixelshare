@@ -91,19 +91,23 @@
                 />
                 <span class="ml-3">Profile</span>
             </button>
-            <button class="flex items-center p-4 hover:bg-neutral-800 rounded">
-                <!-- <img
+            <form method="POST" action="?/logout">
+                <button
+                    class="flex items-center p-4 hover:bg-neutral-800 rounded"
+                >
+                    <!-- <img
                     class="object-cover w-8 h-8"
                     alt="icon"
                     src="icons/logout.png"
                 /> -->
-                <FaIcon
-                    icon={Icon.ARROW_RIGHT_FROM_BRACKET}
-                    className="object-cover w-6 h-6"
-                    fill="#ef4444"
-                />
-                <span class="ml-3 font-medium text-red-500">Log out</span>
-            </button>
+                    <FaIcon
+                        icon={Icon.ARROW_RIGHT_FROM_BRACKET}
+                        className="object-cover w-6 h-6"
+                        fill="#ef4444"
+                    />
+                    <span class="ml-3 font-medium text-red-500">Log out</span>
+                </button>
+            </form>
         </div>
     </div>
 

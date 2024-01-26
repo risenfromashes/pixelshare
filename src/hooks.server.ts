@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
+import { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } from '$env/static/private'
 import { createServerClient } from '@supabase/ssr'
 import type { Handle } from '@sveltejs/kit'
 
