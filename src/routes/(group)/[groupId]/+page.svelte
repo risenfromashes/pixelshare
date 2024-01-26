@@ -1,6 +1,8 @@
 <script>
     // Placeholder data for sidebar and main content items
     import Comment from "../../../lib/components/Comment.svelte";
+
+
     const sidebarItems = [
         { name: "DashBoard", icon: "icons/home.png" },
         { name: "Gallery", icon: "icons/search.png" },
@@ -37,6 +39,13 @@
     import  CoverPart from "../../../lib/components/CoverPhoto.svelte";
     import Post from "../../../lib/components/Post.svelte";
     // import Comment from "./Comment.svelte";
+
+
+    
+    const rightSidebarItems = {
+        groups: ["BUET", "CSE '19", "PixelShare Devs"],
+        friends: ["Faria Binte Awal", "Some Random Guy", "Md. Riyasat Hossain"],
+    };
 
 </script>
 
@@ -104,7 +113,7 @@
 </div>
 
     <!-- Right Sidebar -->
-    <!-- <div
+    <div
         class="absolute inset-y-0 right-0 hidden xl:block h-full w-64 p-4 space-y-6 bg-zinc-900"
     >
         <div class="space-y-4">
@@ -125,6 +134,6 @@
                 </ul>
             </div>
         </div>
-    </div> -->
+    </div>
 </div>
 <slot />

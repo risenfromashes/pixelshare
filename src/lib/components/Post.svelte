@@ -3,6 +3,7 @@
 <script>
     import Comment from "./Comment.svelte";
     export let post;
+    
 </script>
 
 <div class="post">
@@ -18,8 +19,14 @@
     {/if}
     <div class="post-info">
         <div class="like-info">
-            <span>like: {post.likeCount}</span>
-            <span>comment: {post.commentCount}</span>
+            <span class="post-container">
+                <img class="icon-image" src="icons/love1.png" alt="Like Icon" />
+                {post.likeCount}
+              </span>
+              <span class="post-container">
+                <img class="icon-image" src="icons/comment.png" alt="comment Icon" />
+                {post.commentCount}
+              </span>
         </div>
         <div class="tags">
             {#each post.tags as tag (tag.id)}
@@ -93,6 +100,12 @@
     .like-info {
         display: flex;
     }
+    .post-container {
+    display: flex;
+    align-items: center;
+  }
+
+
 
     .tags {
         display: flex;
@@ -108,4 +121,10 @@
     .comments {
         margin-top: 10px;
     }
+
+    .icon-image {
+    width: 24px; /* Adjust the width as needed */
+    height: 24px; /* Adjust the height as needed */
+    margin-right: 8px; /* Adjust the margin between image and like count */
+  }
 </style>
