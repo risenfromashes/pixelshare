@@ -8,7 +8,6 @@ export const actions = {
         if (!email || !email.match(/[^@]+@[^.]+\..+/)) {
             return fail(400, { email, emailInvalid: true });
         }
-        console.log(url.pathname);
         // Add your logic for sending password reset email
         // For example, using Supabase:
         let { error } = await supabase.auth.resetPasswordForEmail(email, {

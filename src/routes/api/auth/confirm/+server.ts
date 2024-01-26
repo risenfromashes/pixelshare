@@ -10,15 +10,28 @@ export const GET = async (event) => {
     const next = url.searchParams.get('next') ?? '/';
     let query = new URLSearchParams();
 
-    console.log("token_hash: ", token_hash, "type: ", type, "next: ", next);
 
     if (type && token_hash) {
-        const { error } = await supabase.auth.verifyOtp({ token_hash, type });
-        if (!error) {
+        const { data: { user }, error } = await supabase.auth.verifyOtp({ token_hash, type });
+
+        if (!error && user) {
+            // insert user into database
+            if (type == 'email') {
+                const { error } = await supabase
+                    .from('User')
+                    .insert({ id: user.id, email: user.email, userName: user.email?.split('@')[0], joiningDate: new Date() });
+
+                if (error) {
+                    query.set('error', error.message);
+                    throw redirect(303, `/auth/error?${query.toString()}`);
+                }
+            }
+
             throw redirect(303, `/${next.slice(1)}`);
         }
 
-        query.set('error', error.message);
+        query.set('error', error?.message ?? 'Unknown error.');
+
     } else {
         query.set('error', 'Invalid token or token expired.');
     }

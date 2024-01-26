@@ -1,9 +1,8 @@
 <!-- Post.svelte -->
 
-<script>
+<script lang="ts">
     import Comment from "./Comment.svelte";
-    export let post;
-    
+    export let post: Post;
 </script>
 
 <div class="post">
@@ -15,116 +14,34 @@
         </div>
     </div>
     {#if post.imageUrl}
-        <img class="post-image" src={post.imageUrl} alt="Post Image" />
+        <img class="post-image" src={post.imageUrl} alt="something" />
     {/if}
     <div class="post-info">
         <div class="like-info">
             <span class="post-container">
                 <img class="icon-image" src="icons/love1.png" alt="Like Icon" />
                 {post.likeCount}
-              </span>
-              <span class="post-container">
-                <img class="icon-image" src="icons/comment.png" alt="comment Icon" />
+            </span>
+            <span class="post-container">
+                <img
+                    class="icon-image"
+                    src="icons/comment.png"
+                    alt="comment Icon"
+                />
                 {post.commentCount}
-              </span>
+            </span>
         </div>
         <div class="tags">
-            {#each post.tags as tag (tag.id)}
+            {#each post.tags as tag}
                 <span class="tag">#{tag}</span>
             {/each}
         </div>
     </div>
     <div class="comments">
         <ul>
-            {#each post.comments as comment (comment.id)}
+            {#each post.comments as comment}
                 <Comment {comment} />
             {/each}
         </ul>
     </div>
 </div>
-
-<style>
-    .post {
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #bbb;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        color: #000;
-    }
-
-    .header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .user-info {
-        flex-grow: 1;
-    }
-
-    h2 {
-        margin: 0;
-        font-size: 1.2rem;
-        text-color: #000;
-    }
-
-    p {
-        margin: 0;
-        color: #555;
-    }
-
-    .post-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-top: 10px;
-    }
-
-    .post-info {
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .like-info {
-        display: flex;
-    }
-    .post-container {
-    display: flex;
-    align-items: center;
-  }
-
-
-
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tag {
-        margin-right: 5px;
-        color: #3498db;
-        cursor: pointer;
-    }
-
-    .comments {
-        margin-top: 10px;
-    }
-
-    .icon-image {
-    width: 24px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
-    margin-right: 8px; /* Adjust the margin between image and like count */
-  }
-</style>
