@@ -1,18 +1,6 @@
 <script>
     // Placeholder data for sidebar and main content items
-    import Comment from "../../../lib/components/Comment.svelte";
-    const sidebarItems = [
-        { name: "DashBoard", icon: "icons/home.png" },
-        { name: "Gallery", icon: "icons/search.png" },
-        { name: "Search", icon: "icons/search.png" },
-        { name: "Notifications", icon: "icons/notification.png" },
-        { name: "Members", icon: "icons/settings.png" },
-        // { name: "Profile", icon: "icons/profile.png" },
-        { name: "Settings", icon: "icons/settings.png" },
-    ];
-    const groupPhoto = "sample/sample.jpg";
-    const groupName = "BUET CSE-19";
-    const groupCover = "sample/sample.jpg";
+
     const posts = [
         {
             id: "1",
@@ -34,6 +22,7 @@
             comments: ["Comment X", "Comment Y"],
             tags: ["Tag 3", "Tag 4"],
         },
+        // Add more posts as needed
     ];
     import CoverPart from "../../../lib/components/CoverPhoto.svelte";
     import Post from "../../../lib/components/Post.svelte";
@@ -42,8 +31,12 @@
 
 <div>
     <CoverPart></CoverPart>
+</div>
+<div class="flex-1 xl:px-65 p-4 overflow-y-auto">
     {#each posts as post}
-        <Post {post}></Post>
+        <Post {post} />
+        <!-- {#each {post.comments} as comment (comment.id)}
+                <Comment {comment} />
+            {/each} -->
     {/each}
 </div>
-<div class="flex-1 xl:px-65 p-4 overflow-y-auto"></div>
