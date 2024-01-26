@@ -24,6 +24,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@getbrevo/brevo": "^1.0.1"
+		"@getbrevo/brevo": "^1.0.1",
+		"@supabase/ssr": "^0.0.10",
+		"@supabase/supabase-js": "^2.39.3",
+		"dotenv": "^16.4.1"
 	}
 }
