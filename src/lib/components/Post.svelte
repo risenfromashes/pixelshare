@@ -18,8 +18,18 @@
     {/if}
     <div class="post-info">
         <div class="like-info">
-            <span>like: {post.likeCount}</span>
-            <span>comment: {post.commentCount}</span>
+            <span class="post-container">
+                <img class="icon-image" src="icons/love1.png" alt="Like Icon" />
+                {post.likeCount}
+            </span>
+            <span class="post-container">
+                <img
+                    class="icon-image"
+                    src="icons/comment.png"
+                    alt="comment Icon"
+                />
+                {post.commentCount}
+            </span>
         </div>
         <div class="tags">
             {#each post.tags as tag}
