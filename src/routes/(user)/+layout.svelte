@@ -67,18 +67,18 @@
         <hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-neutral-700" />
         <nav class="w-full grow flex flex-col justify-center">
             {#each sidebarItems as item}
+            <a href={item.link}>
                 <button
                     class="w-full flex items-center p-4 hover:bg-neutral-800 rounded"
                 >
-                    <!-- <img
+                    <img
                         class="object-cover w-8 h-8"
                         alt="icon"
                         src={item.icon}
-                    /> -->
-                    <FaIcon icon={item.icon} className="object-cover w-6 h-6" />
-
+                    />
                     <span class="ml-3">{item.name}</span>
                 </button>
+            </a>
             {/each}
         </nav>
         <div class="w-full flex flex-col">
