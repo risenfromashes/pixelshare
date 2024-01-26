@@ -6,7 +6,7 @@
 
     export let icon: Icon;
     export let className: string;
-    export let fill: string = "#ffffff";
+    export let fill: string;
 
     let iconDiv: Element;
 
