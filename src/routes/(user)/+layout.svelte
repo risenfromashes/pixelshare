@@ -70,11 +70,6 @@
                 <button
                     class="w-full flex items-center p-4 hover:bg-neutral-800 rounded"
                 >
-                    <!-- <img
-                        class="object-cover w-8 h-8"
-                        alt="icon"
-                        src={item.icon}
-                    /> -->
                     <FaIcon icon={item.icon} className="object-cover w-6 h-6" />
 
                     <span class="ml-3">{item.name}</span>
