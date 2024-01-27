@@ -23,14 +23,16 @@
 		{
 			id: 2,
 			title: "Photo tag",
-			message: "Jane Smith has uploaded a photo in Central_BUET under the tags - #ECE_catto, #fav_mav_catto",
+			message:
+				"Jane Smith has uploaded a photo in Central_BUET under the tags - #ECE_catto, #fav_mav_catto",
 			timestamp: new Date("2024-01-24T12:17:00"),
 			seen: true,
 		},
 		{
 			id: 3,
 			title: "Member Request Approval",
-			message: "faria_mou has approved your member request for joining the group Central_BUET",
+			message:
+				"faria_mou has approved your member request for joining the group Central_BUET",
 			timestamp: new Date("2024-01-24T12:17:00"),
 			seen: true,
 		},
@@ -110,19 +112,34 @@
 
 	<!-- Main Content -->
 	<div class="flex-1 xl:px-64 p-4 overflow-y-auto">
-	<div class="notifications-panel bg-zinc-800 p-4 rounded-lg shadow-lg text-white">
-    <h2 class="text-xl font-bold mb-4">Notifications</h2>
-    <div class="flex flex-col space-y-4">
-        {#each notifications as notification (notification.id)}
-            <div class="notification-item p-4 rounded-lg" class:bg-gray-700={notification.seen} class:bg-gray-600={!notification.seen} on:click={() => markAsSeen(notification.id)}>
-                <h3 class="text-lg font-semibold">{notification.title}</h3>
-                <p>{notification.message}</p>
-                <time class="text-sm text-gray-400">{new Date(notification.timestamp).toLocaleString()}</time>
-            </div>
-        {/each}
-    </div>
-</div>
-</div>
+		<div
+			class="notifications-panel bg-zinc-800 p-4 rounded-lg shadow-lg text-white"
+		>
+			<h2 class="text-xl font-bold mb-4">Notifications</h2>
+			<div class="flex flex-col space-y-4">
+				{#each notifications as notification (notification.id)}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<div
+						class="notification-item p-4 rounded-lg"
+						class:bg-gray-700={notification.seen}
+						class:bg-gray-600={!notification.seen}
+						on:click={() => markAsSeen(notification.id)}
+					>
+						<h3 class="text-lg font-semibold">
+							{notification.title}
+						</h3>
+						<p>{notification.message}</p>
+						<time class="text-sm text-gray-400"
+							>{new Date(
+								notification.timestamp,
+							).toLocaleString()}</time
+						>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Right Sidebar -->
@@ -152,10 +169,10 @@
 
 <style>
 	.notification-item:not(.bg-gray-600):hover {
-        background-color: #4b5563; /* Hover effect for seen notifications */
-    }
+		background-color: #4b5563; /* Hover effect for seen notifications */
+	}
 
-    .notification-item.bg-gray-600:hover {
-        background-color: #4b5563; /* Hover effect for unseen notifications */
-    }
+	.notification-item.bg-gray-600:hover {
+		background-color: #4b5563; /* Hover effect for unseen notifications */
+	}
 </style>

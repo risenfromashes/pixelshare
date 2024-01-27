@@ -38,12 +38,14 @@
 						class="p-4 border-2 border-dashed border-gray-600 rounded-lg"
 					>
 						{#if $coverImg}
+							<!-- svelte-ignore a11y-img-redundant-alt -->
 							<img
 								src={$coverImg}
 								alt="Cover Image"
 								class="rounded-lg mx-auto"
 							/>
 						{:else}
+							<!-- svelte-ignore a11y-missing-attribute -->
 							<img
 								src="icons/add-image.png"
 								class="mx-auto mb-2"
