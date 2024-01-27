@@ -10,6 +10,7 @@
 		groups: ["BUET", "CSE '19", "PixelShare Devs"],
 		friends: ["Faria Binte Awal", "Some Random Guy", "Md. Riyasat Hossain"],
 	};
+	let ami = "";
 
 	let notifications = [
 		// Mock notifications data, which you would typically fetch from an API
