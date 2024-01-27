@@ -1,29 +1,15 @@
-<!-- Comment.svelte -->
+<script lang="ts">
+  export let comment: CommentData;
+</script>
 
-<script>
-    export let comment;
-  </script>
-  
-  <span class="post-container">
-    <img class="icon-image" src="icons/profile.png" alt="User Avatar" />
-    {comment}
-  </span>
-  <style>
-
-    .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    .post-container {
-    display: flex;
-    align-items: center;
-  }
-
-    .icon-image {
-    width: 24px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
-    margin-right: 8px; /* Adjust the margin between image and like count */
-  }
-</style>
+<div class="flex items-start">
+  <img
+    class="h-8 w-8 rounded-full mr-3"
+    src="sample/comment-avatar.jpg"
+    alt="Comment User Avatar"
+  />
+  <div class="bg-gray-100 rounded-lg p-3">
+    <p class="font-semibold text-sm">{comment.username}</p>
+    <p class="text-sm text-gray-600">{comment.content}</p>
+  </div>
+</div>

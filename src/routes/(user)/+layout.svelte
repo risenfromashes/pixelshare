@@ -1,121 +1,117 @@
-<script>
-    import { Icon } from "$lib";
-    import FaIcon from "$lib/components/FaIcon.svelte";
+<script lang="ts">
+  import { Icon } from "$lib";
+  import FaIcon from "$lib/components/FaIcon.svelte";
 
-    export let data;
+  export let data;
 
-    // Placeholder data for sidebar and main content items
-    const sidebarItems = [
-        { name: "Home", icon: Icon.HOUSE },
-        { name: "Search", icon: Icon.MAGNIFYING_GLASS },
-        { name: "Notifications", icon: Icon.BELL },
-        { name: "Settings", icon: Icon.GEAR },
-    ];
+  // Placeholder data for sidebar and main content items
+  const sidebarItems = [
+    { name: "Home", icon: Icon.HOUSE },
+    { name: "Upload", icon: Icon.UPLOAD },
+    { name: "Search", icon: Icon.MAGNIFYING_GLASS },
+    { name: "Notifications", icon: Icon.BELL },
+    { name: "Settings", icon: Icon.GEAR },
+  ];
 
-    const userDetails = {
-        name: "Ashrafur Rahman Khan",
-        username: "risenfromashes",
-        avatarUrl: "/risenfromashes.png",
-    };
+  const userDetails = {
+    name: "Ashrafur Rahman Khan",
+    username: "risenfromashes",
+    avatarUrl: "/risenfromashes.png",
+  };
 </script>
 
 <div class="flex relative h-screen bg-gray-100 text-gray-900">
-    <!-- Left Sidebar -->
-    <!-- Adjust for light theme -->
-    <div
-        class="absolute inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start w-fit p-6 space-y-6 bg-orange-100 border border-orange-200 shadow-lg"
-    >
-        <div class="flex flex-row justify-center items-center mt-8 xl:mt-10">
-            <img src="demo-logo.png" alt="Pixel Share" class="h-12 w-12" />
-            <p class="ml-4 font-extrabold text-3xl text-sky-500">PixelShare</p>
-        </div>
-        <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
-        <nav class="w-full grow flex flex-col justify-center">
-            {#each sidebarItems as item}
-                <button
-                    class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
-                >
-                    <FaIcon
-                        icon={item.icon}
-                        className="object-cover w-6 h-6"
-                        fill="#000000"
-                    />
+  <!-- Left Sidebar -->
+  <!-- Adjust for light theme -->
+  <div
+    class="absolute z-10 w-full xl:max-w-64 inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start p-6 space-y-6 bg-orange-100 border-2 border-orange-200 shadow-lg"
+  >
+    <div class="flex flex-row w-full justify-center items-center mt-8 xl:mt-10">
+      <img src="/demo-logo.png" alt="Pixel Share" class="h-24 w-24" />
+    </div>
+    <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
+    <nav class="w-full grow flex flex-col justify-center">
+      {#each sidebarItems as item}
+        <button class="w-full flex items-center p-4 hover:bg-gray-300 rounded">
+          <FaIcon
+            icon={item.icon}
+            className="object-cover w-6 h-6"
+            fill="#000000"
+          />
 
-                    <span class="ml-3 font-medium">{item.name}</span>
-                </button>
-            {/each}
-        </nav>
-        <div class="w-full flex flex-col">
-            <button
-                class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
-            >
-                <FaIcon
-                    icon={Icon.CIRCLE_USER}
-                    className="object-cover w-6 h-6 rounded-full border border-teal-500"
-                    fill="#000000"
-                />
-                <span class="ml-3">Profile</span>
-            </button>
-            <form method="POST" action="/logout">
-                <button
-                    class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
-                >
-                    <FaIcon
-                        icon={Icon.ARROW_RIGHT_FROM_BRACKET}
-                        className="object-cover w-6 h-6"
-                        fill="#ff0000"
-                    />
-                    <span class="ml-3 font-medium text-red-500">Log out</span>
-                </button>
-            </form>
-        </div>
-        <!-- ... existing left sidebar content ... -->
+          <span class="ml-3 font-medium">{item.name}</span>
+        </button>
+      {/each}
+    </nav>
+    <div class="w-full flex flex-col">
+      <button class="w-full flex items-center p-4 hover:bg-gray-300 rounded">
+        <FaIcon
+          icon={Icon.CIRCLE_USER}
+          className="object-cover w-6 h-6 rounded-full border border-teal-500"
+          fill="#000000"
+        />
+        <span class="ml-3">Profile</span>
+      </button>
+      <form method="POST" action="/logout">
+        <button class="w-full flex items-center p-4 hover:bg-gray-300 rounded">
+          <FaIcon
+            icon={Icon.ARROW_RIGHT_FROM_BRACKET}
+            className="object-cover w-6 h-6"
+            fill="#ff0000"
+          />
+          <span class="ml-3 font-medium text-red-500">Log out</span>
+        </button>
+      </form>
+    </div>
+    <!-- ... existing left sidebar content ... -->
+  </div>
+
+  <!-- Main Content -->
+  <!-- Adjust for light theme -->
+  <div class="flex-1 pl-64 pr-60 px-4 overflow-y-auto bg-orange-50">
+    <!-- ... existing main content ... -->
+    <div class="w-full">
+      <slot />
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <!-- Improved style for light theme -->
+  <div
+    class="absolute inset-y-0 right-0 hidden xl:block h-screen w-full xl:max-w-64 p-4 space-y-6 bg-orange-100 border-2 border-orange-200 shadow-lg"
+  >
+    <div class="text-center mt-12">
+      <img
+        src={userDetails.avatarUrl}
+        alt={userDetails.username}
+        class="mx-auto h-16 w-16 rounded-full border border-gray-300"
+      />
+      <h2 class="mt-4 font-semibold text-lg">{userDetails.name}</h2>
+      <p class="text-sm text-gray-600">@{userDetails.username}</p>
     </div>
 
-    <!-- Main Content -->
-    <!-- Adjust for light theme -->
-    <div class="flex-1 xl:px-64 px-4 py-8 overflow-y-auto bg-orange-50">
-        <!-- ... existing main content ... -->
-        <slot />
-    </div>
+    <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
 
-    <!-- Right Sidebar -->
-    <!-- Improved style for light theme -->
-    <div
-        class="absolute inset-y-0 right-0 hidden xl:block h-screen w-64 p-4 space-y-6 bg-orange-100 border border-orange-200 shadow-lg"
-    >
-        <div class="text-center mt-12">
+    {#if data.groups}
+      <div class="space-y-">
+        <h3 class="text-md font-bold text-gray-700">Groups</h3>
+
+        {#each data.groups as group}
+          <a
+            class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
+            href={`/groups/${group.groupId}`}
+          >
             <img
-                src={userDetails.avatarUrl}
-                alt={userDetails.username}
-                class="mx-auto h-16 w-16 rounded-full border border-gray-300"
+              src={group.groupImg}
+              alt={group.groupName}
+              class="h-8 w-8 rounded-full object-cover mr-2"
             />
-            <h2 class="mt-4 font-semibold text-lg">{userDetails.name}</h2>
-            <p class="text-sm text-gray-600">@{userDetails.username}</p>
-        </div>
-
-        <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
-
-        {#if data.groups}
-            <div class="space-y-">
-                <h3 class="text-md font-bold text-gray-700">Groups</h3>
-
-                {#each data.groups as group}
-                    <a
-                        class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
-                        href={`/${group.groupId}`}
-                    >
-                        <img
-                            src={group.groupImg}
-                            alt={group.groupName}
-                            class="h-8 w-8 rounded-full object-cover mr-2"
-                        />
-                        <span class="text-sm font-medium text-gray-800"
-                            >{group.groupName}</span
-                        >
-                    </a>
-                {/each}
-            </div>
-        {/if}
-    </div>
+            <span class="text-sm font-medium text-gray-800"
+              >{group.groupName}</span
+            >
+          </a>
+        {/each}
+      </div>
+    {/if}
+  </div>
 </div>
