@@ -82,9 +82,11 @@
 		alert("Review your post!"); // This would trigger a review modal or similar feature
 	}
 
-	function post() {
+	async function post() {
 		// Post the images, tags, and caption to the server
 		// This is where you would integrate your API call
+		// Gather data to be sent to the server
+	
 		alert("Post submitted!"); // Placeholder for actual post submission
 	}
 </script>
