@@ -2,6 +2,8 @@ import { fail, redirect } from "@sveltejs/kit";
 
 interface NotificationData {
   id: string;
+  username: string;
+  profileImg: string;
   title: string;
   content: string;
   createdAt: Date;
@@ -17,12 +19,9 @@ export const load = async ({
     return redirect(302, "/login");
   }
 
-  const { data, error } = await supabase
-    .from("Notification")
-    .select("id, title, content, createdAt")
-    .eq("seen", false)
-    .eq("userId", session.user.id)
-    .order("createdAt", { ascending: false });
+  const { data, error } = await supabase.rpc("get_notifications", {
+    user_id: session.user.id,
+  });
 
   if (error) {
     return { error: error.message };
