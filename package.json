@@ -13,6 +13,7 @@
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@types/uuid": "^9.0.8",
 		"autoprefixer": "^10.4.16",
 		"postcss": "^8.4.32",
 		"svelte": "^4.2.7",
@@ -27,6 +28,7 @@
 		"@getbrevo/brevo": "^1.0.1",
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.3",
-		"dotenv": "^16.4.1"
+		"dotenv": "^16.4.1",
+		"uuid": "^9.0.1"
 	}
 }
