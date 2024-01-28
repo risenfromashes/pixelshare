@@ -83,18 +83,18 @@
 		</div>
 	</div>
 
-    <div class="flex-1 xl:px-64 px-4 py-8 overflow-y-auto bg-orange-50 scroll-hidden">
+    <div class="flex-1 xl:px-62 px-4 py-8 overflow-y-auto bg-orange-50 scroll-hidden">
         <div >
             <!-- Content Area with image grid -->
             <div class="flex-grow p-4 overflow-auto">
-              <h1 class="text-2xl mb-4 text-black">Images by Date</h1>
+              <h1 class="text-2xl mb-4 text-black font-bold ">Images by Date</h1>
               <div class="grid grid-cols-4 gap-4">
                 {#each images as image}
-                  <div class="relative">
-                    <img src={image.url} alt={`Image taken on ${image.date}`} class="w-full h-full object-cover" />
-                    <div class="absolute bottom-0 left-0 right-0 bg-gray-700 bg-opacity-50 text-white text-sm p-2">
-                      {image.date}
-                    </div>
+                <div class="relative group">
+                  <img src={image.url} alt={`Image taken on ${image.date}`} class="w-full h-full object-cover transition-transform transform hover:scale-105" />
+                  <div class="absolute bottom-0 left-0 right-0 bg-gray-700 bg-opacity-50 text-white text-sm p-2">
+                    {image.date}
+                  </div>                
                   </div>
                 {/each}
               </div>
@@ -105,76 +105,73 @@
     <!-- Right Sidebar for Filters and Sorting -->
    <!-- Right Sidebar for Filters and Sorting -->
 <div class="absolute z-10 inset-y-0 right-0 hidden xl:block h-screen w-64 p-4 space-y-6 bg-orange-100 border border-orange-200 shadow-lg scroll-hidden">
-    <!-- Filters Section -->
-    <div>
-      <h2 class="text-lg mb-2  bg-orange-300 text-black">Filters</h2>
-      <div class="space-y-4 text-lg mb-2 bg-orange-200 text-black"> 
-        <h3 class="text-lg mb-2 bg-orange-200 text-black">By Date</h3>
+  <!-- Filters Section -->
+  <div class="p-4">
+    <h2 class="text-lg mb-4 bg-orange-300 text-black shadow-md font-bold text-center">Filters</h2>
+    <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
+      <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">By Date</h3>
 
-        <div class="flex items-left flex-col">
-            <label class="mb-2 text-medium ">Start Date:</label>
-            <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 rounded">
-          </div>
-          
-          <div class="flex items-left flex-col">
-            <label class="mb-2 text-medium ">End Date:</label>
-            <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 rounded">
-          </div>
-        
-      </div>
-    </div>
-
-    <div class="text-lg mb-2 bg-orange-200 text-black">
-        <h3 class="text-lg mb-2 bg-orange-200 text-black">By Tags</h3>
-        <label class="block mb-2">
-          <input type="checkbox" class="form-checkbox text-blue-500">
-          <span class="ml-2">All</span>
-        </label>
-        {#each tagNames as tag}
-          <label class="block">
-            <input type="checkbox" class="form-checkbox text-blue-500">
-            <span class="ml-2">{tag.tagName}</span>
-          </label>
-        {/each}
+      <div class="flex items-left">
+        <label class="mr-2 mb-2 text-medium font-semibold">Start Date:</label>
+        <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 shadow-md hover:bg-orange-500 rounded">
       </div>
       
-  
-    <!-- Sorting Section -->
-    <div  class="text-lg mb-2 bg-orange-200 text-black">
-        <h3 class="text-lg mb-2 bg-orange-200 text-black">Sort</h3>
-
-      <div class="space-y-4">
-        <div>
-          <!-- Radio buttons for sorting -->
-          <label class="flex items-center">
-            <input type="radio" name="order" class="form-radio text-blue-500">
-            <span class="ml-2 text-black">Ascending</span>
-          </label>
-          <label class="flex items-center">
-            <input type="radio" name="order" class="form-radio text-blue-500">
-            <span class="ml-2 text-black">Descending</span>
-          </label>
-        </div>
+      <div class="flex items-left">
+        <label class="mr-2 mb-2 text-medium font-semibold">End Date:</label>
+        <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 shadow-md hover:bg-orange-500 rounded">
       </div>
     </div>
-<!-- </div> -->
+  </div>
 
-<div class="text-lg mb-2 bg-orange-200 text-black">
-    <h3 class="text-lg mb-2 bg-orange-200 text-black">Sort By</h3>
+  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
+    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">By Tags</h3>
+      <label class="block mb-2">
+        <input type="checkbox" class="form-checkbox text-blue-500">
+        <span class="ml-2 text-medium font-semibold">All</span>
+      </label>
+      {#each tagNames as tag}
+        <label class="block">
+          <input type="checkbox" class="form-checkbox text-blue-500">
+          <span class="ml-2 text-medium font-semibold">{tag.tagName}</span>
+        </label>
+      {/each}
+  </div>
+    
+  <!-- Sorting Section -->
+  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
+    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">Sort</h3>
+
+    <div class="space-y-4">
+      <div>
+        <!-- Radio buttons for sorting -->
+        <label class="flex items-center">
+          <input type="radio" name="order" class="form-radio text-blue-500">
+          <span class="ml-2 text-medium font-semibold">Ascending</span>
+        </label>
+        <label class="flex items-center">
+          <input type="radio" name="order" class="form-radio text-blue-500">
+          <span class="ml-2 text-medium font-semibold">Descending</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
+    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">Sort By</h3>
     <label class="flex items-center">
         <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-black">Date</span>
+        <span class="ml-2 text-medium font-semibold">Date</span>
       </label>
       <label class="flex items-center">
         <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-black">Caption</span>
+        <span class="ml-2 text-medium font-semibold">Caption</span>
       </label>
       <label class="flex items-center">
         <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-black">Tag</span>
+        <span class="ml-2 text-medium font-semibold">Tag</span>
       </label>
   </div>
-  </div>
-  
+</div>
+
 </div>
   
