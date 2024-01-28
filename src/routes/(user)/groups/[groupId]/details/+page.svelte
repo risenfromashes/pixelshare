@@ -5,6 +5,7 @@
   import { writable } from "svelte/store";
 
   // Sample user profile data
+  export let data;
 
   let isLike = false;
   let showComment = false;
@@ -84,92 +85,94 @@
   </div>
   <!-- Posts -->
   <div class="posts-panel mt-4">
-    {#each $posts as post (post.id)}
-      <div class="post-item bg-orange-100 p-4 rounded-lg shadow-lg mb-4">
-        <div class="post-header flex items-center">
-          <img
-            src={userProfile.profileImage}
-            alt="User Profile Image"
-            class="w-8 h-8 rounded-full mr-2"
-          />
-          <span class="font-semibold">{post.username}</span>
-        </div>
-        <img
-          src={post.image}
-          alt="Post Image"
-          class="w-1/3 h-1/3 rounded-lg mt-2"
-        />
-        <div class="post-actions mt-2">
-          <div class="flex items-center">
-            <!-- Replace the SVG button with an image -->
-            {#if !isLike}
-              <button class="btn-icon mr-2" on:click={() => likePost(post)}>
-                <img src="../../icons/love1.png" alt="Like" class="w-6 h-6" />
-              </button>
-            {:else}
-              <button class="btn-icon mr-2" on:click={() => dislikePost(post)}>
-                <img src="../../icons/love2.png" alt="Like" class="w-6 h-6" />
-              </button>
-            {/if}
+    {#if data.posts}
+      {#each data.posts as post (post.postId)}
+        <div class="post-item bg-orange-100 p-4 rounded-lg shadow-lg mb-4">
+          <div class="post-header flex items-center">
+            <img
+              src={post.profileImg}
+              alt="User"
+              class="w-8 h-8 rounded-full mr-2"
+            />
+            <span class="font-semibold">{post.username}</span>
+          </div>
+          <img src={post.url} alt="Post" class="w-1/3 h-1/3 rounded-lg mt-2" />
+          <div class="post-actions mt-2">
+            <div class="flex items-center">
+              <!-- Replace the SVG button with an image -->
+              {#if !isLike}
+                <button class="btn-icon mr-2" on:click={() => likePost(post)}>
+                  <img src="../../icons/love1.png" alt="Like" class="w-6 h-6" />
+                </button>
+              {:else}
+                <button
+                  class="btn-icon mr-2"
+                  on:click={() => dislikePost(post)}
+                >
+                  <img src="../../icons/love2.png" alt="Like" class="w-6 h-6" />
+                </button>
+              {/if}
 
-            <span class="font-semibold">{post.likeCount}</span>
-            <span>
-              <button
-                class="btn-icon mr-1 ml-4"
-                on:click={() => commentPost(post)}
+              <span class="font-semibold">{post.likeCount}</span>
+              <span>
+                <button
+                  class="btn-icon mr-1 ml-4"
+                  on:click={() => commentPost(post)}
+                >
+                  <img
+                    src="../../icons/comment.png"
+                    alt="comment"
+                    class="w-6 h-6"
+                  />
+                </button>
+              </span>
+
+              <span class="font-semibold">{post.commentCount}</span>
+            </div>
+          </div>
+          <div class="post-caption mt-2">
+            <span class="font-semibold">{post.username}</span>
+            <span>{post.caption}</span>
+          </div>
+          <div class="post-tags mt-2 flex justify-end">
+            <!-- {#each post.tags as tag (tag)}
+              <span
+                class="tag bg-orange-300 rounded-full px-2 py-1 text-sm mr-2"
+                >{tag}</span
               >
-                <img
-                  src="../../icons/comment.png"
-                  alt="comment"
-                  class="w-6 h-6"
-                />
-              </button>
-            </span>
+            {/each} -->
+          </div>
 
-            <span class="font-semibold">{post.commentCount}</span>
+          <div class="bg-orange-200 w-full h-px mx-3 mt-4"></div>
+          <div class="post-comments mt-2">
+            {#if showComment}
+              {#each post.comments as comment}
+                <div class="flex items-center mt-1">
+                  <span class="font-semibold mr-2">{comment.username}</span>
+                  <span>{comment.text}</span>
+                </div>
+              {/each}
+              <!-- Add comment form -->
+              <form
+                class="mt-2"
+                on:submit={(e) =>
+                  addComment(post, {
+                    username: userProfile.username,
+                    text: e.target.comment.value,
+                  })}
+              >
+                <input
+                  type="text"
+                  name="comment"
+                  placeholder="Add a comment..."
+                  class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none"
+                />
+              </form>
+            {/if}
           </div>
         </div>
-        <div class="post-caption mt-2">
-          <span class="font-semibold">{post.username}</span>
-          <span>{post.caption}</span>
-        </div>
-        <div class="post-tags mt-2 flex justify-end">
-          {#each post.tags as tag (tag)}
-            <span class="tag bg-orange-300 rounded-full px-2 py-1 text-sm mr-2"
-              >{tag}</span
-            >
-          {/each}
-        </div>
-
-        <div class="bg-orange-200 w-full h-px mx-3 mt-4"></div>
-        <div class="post-comments mt-2">
-          {#if showComment}
-            {#each post.comments as comment}
-              <div class="flex items-center mt-1">
-                <span class="font-semibold mr-2">{comment.username}</span>
-                <span>{comment.text}</span>
-              </div>
-            {/each}
-            <!-- Add comment form -->
-            <form
-              class="mt-2"
-              on:submit={(e) =>
-                addComment(post, {
-                  username: userProfile.username,
-                  text: e.target.comment.value,
-                })}
-            >
-              <input
-                type="text"
-                name="comment"
-                placeholder="Add a comment..."
-                class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none"
-              />
-            </form>
-          {/if}
-        </div>
-      </div>
-    {/each}
+      {/each}
+    {/if}
   </div>
 </div>
 
