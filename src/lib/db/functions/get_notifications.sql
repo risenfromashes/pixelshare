@@ -1,10 +1,10 @@
 -- Supabase AI is experimental and may produce incorrect answers
 -- Always verify the output before executing
 
--- drop function if exists get_user_notifications (text);
+-- drop function if exists get_notifications (text);
 
 create
-or replace function get_user_notifications (user_id text) returns table (
+or replace function get_notifications (user_id text) returns table (
   id bigint,
   "userId" text,
   username text,
@@ -23,4 +23,4 @@ BEGIN
 END;
 $$ language plpgsql;
 
--- select * from get_user_notifications('0aacc737-0c42-48cd-a069-a8e151cfeb7e');
+-- select * from get_notifications('0aacc737-0c42-48cd-a069-a8e151cfeb7e');
