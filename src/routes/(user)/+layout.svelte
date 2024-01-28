@@ -1,21 +1,28 @@
 <script lang="ts">
+  import { invalidateAll } from "$app/navigation";
+  import { page } from "$app/stores";
   import { Icon } from "$lib";
   import FaIcon from "$lib/components/FaIcon.svelte";
+  import PostUpload from "$lib/components/PostUpload.svelte";
+  import { onMount, setContext } from "svelte";
+  import { writable } from "svelte/store";
 
   export let data;
+  const groupId = writable<number>();
+  setContext("groupId", groupId);
 
   // Placeholder data for sidebar and main content items
   const sidebarItems = [
     { name: "Home", icon: Icon.HOUSE, link: "/" },
-    { name: "Upload", icon: Icon.UPLOAD, link: "/upload" },
-    { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
+    { name: "Upload", icon: Icon.UPLOAD, link: "?upload" },
+    // { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
     { name: "Notifications", icon: Icon.BELL, link: "/notifications" },
-    { name: "Settings", icon: Icon.GEAR, link: "/settings" },
+    // { name: "Settings", icon: Icon.GEAR, link: "/settings" },
   ];
 
   const userDetails = {
     name: "Ashrafur Rahman Khan",
-    username: "risenfromashes",
+    username: data.username,
     avatarUrl: "/risenfromashes.png",
   };
 </script>
@@ -32,18 +39,20 @@
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
     <nav class="w-full grow flex flex-col justify-center">
       {#each sidebarItems as item}
-        <a
-          class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
-          href={item.link}
-        >
-          <FaIcon
-            icon={item.icon}
-            className="object-cover w-6 h-6"
-            fill="#000000"
-          />
+        {#if item.name != "Upload" || $page.params.groupId}
+          <a
+            class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
+            href={item.link}
+          >
+            <FaIcon
+              icon={item.icon}
+              className="object-cover w-6 h-6"
+              fill="#000000"
+            />
 
-          <span class="ml-3 font-medium">{item.name}</span>
-        </a>
+            <span class="ml-3 font-medium">{item.name}</span>
+          </a>
+        {/if}
       {/each}
     </nav>
     <div class="w-full flex flex-col">
@@ -130,3 +139,5 @@
     {/if}
   </div>
 </div>
+
+<PostUpload></PostUpload>
