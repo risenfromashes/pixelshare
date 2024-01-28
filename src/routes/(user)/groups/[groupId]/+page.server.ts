@@ -1,7 +1,7 @@
-import { getGroupname, getUsername } from "$lib/db/functions/helpers.js";
 import { fail, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 import { v4 } from "uuid";
+import { getUsername, getGroupname } from "$lib/db/functions/helpers";
 
 export const actions = {
   upload: async ({ request, params, locals: { supabase } }) => {

@@ -180,7 +180,11 @@
               <div class="flex gap-2 mt-2">
                 {#each recommendedTags as tag}
                   <button
-                    on:click={() => addTag(tag)}
+                    on:click={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      addTag(tag);
+                    }}
                     class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
                     >{tag}</button
                   >
@@ -226,6 +230,7 @@
           <!-- Post button -->
           <div class="w-full flex flex-row justify-center">
             <button
+              type="submit"
               class="px-24 py-3 bg-orange-200 border-2 border-orange-300 hover:bg-orange-300 disabled:border-orange-200 disabled:text-gray-500 disabled:bg-orange-100 rounded-md"
               disabled={images.length === 0}>Post</button
             >
