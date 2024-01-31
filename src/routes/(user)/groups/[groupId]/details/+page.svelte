@@ -3,6 +3,7 @@
 
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+  import { page } from "$app/stores";
 
   // Sample user profile data
   export let data;
@@ -84,6 +85,7 @@
     <p class="mb-4">{groupInfo.bio}</p>
   </div>
   <!-- Posts -->
+
   <div class="posts-panel mt-4">
     {#if data.posts}
       {#each data.posts as post (post.postId)}
