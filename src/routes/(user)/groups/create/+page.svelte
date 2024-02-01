@@ -1,14 +1,9 @@
 <script lang="ts">
-  // @ts-nocheck
   import { Icon } from "$lib";
   import FaIcon from "$lib/components/FaIcon.svelte";
-  import Modal from "$lib/components/Modal.svelte";
-  import { page } from "$app/stores";
   import { enhance } from "$app/forms";
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
 
-  let profileImg: File;
-  let coverImg: File;
   let description: String = "";
   let name: String = "";
   let success = false;
@@ -38,15 +33,6 @@
     }
   };
 
-  // const handleFileChange = () => {
-  //   const element = document.querySelector<HTMLInputElement>("#file-input");
-  //   if (element) {
-  //     const files = Array.from(element.files ?? []);
-  //     imageFiles = [...imageFiles, ...files];
-  //     images = [...images, ...files.map((file) => URL.createObjectURL(file))];
-  //     updateDomFileList();
-  //   }
-  // };
   const handleFileChangeCover = () => {
     const element =
       document.querySelector<HTMLInputElement>("#cover-file-input");
@@ -78,10 +64,6 @@
   onNavigate(() => {
     success = false;
   });
-
-  async function post() {
-    alert("Group information submitted!"); // Placeholder for actual post submission
-  }
 </script>
 
 <div
@@ -92,13 +74,12 @@
       <div
         class="block w-full font-bold px-4 py-3 bg-green-100 rounded text-left text-xs text-green-500 mb-4"
       >
-        <p>Congratulations. Your new group {name} added successfully!</p>
+        <p>Congratulations. Your new group {name} created successfully!</p>
       </div>
     {/if}
     <form
       method="POST"
       on:submit|preventDefault
-      action={`/groups/${$page.params.groupId}?/addgroup`}
       enctype="multipart/form-data"
       use:enhance={({ formElement, cancel }) => {
         if (imageFilesCover.length === 0 || imageFilesProfile.length === 0) {
