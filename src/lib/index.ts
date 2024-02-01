@@ -8,4 +8,5 @@ export enum Icon {
   MAGNIFYING_GLASS = "magnifying-glass",
   GEAR = "gear",
   UPLOAD = "plus-solid",
+  IMAGE = "image-regular",
 }

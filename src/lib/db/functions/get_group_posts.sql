@@ -8,7 +8,7 @@ or replace function get_group_posts (gid int8) returns table (
   "postId" int8,
   "imageId" int8,
   "caption" text,
-  "createdAt" date,
+  "createdAt" timestamptz,
   "createdBy" text,
   "url" text,
   "userId" text,
@@ -25,5 +25,6 @@ or replace function get_group_posts (gid int8) returns table (
   on pi."imageId" = i.id
   join
     "User" u
-  on p."createdBy" = u.id;
+  on p."createdBy" = u.id
+  where p."groupId" = gid;
 $$;

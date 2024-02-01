@@ -1,10 +1,10 @@
 -- Supabase AI is experimental and may produce incorrect answers
 -- Always verify the output before executing
 
--- drop function if exists get_user_notifications (text);
+-- drop function if exists get_notifications (text);
 
 create
-or replace function get_user_notifications (user_id text) returns table (
+or replace function get_notifications (user_id text) returns table (
   id bigint,
   "userId" text,
   username text,
@@ -12,7 +12,7 @@ or replace function get_user_notifications (user_id text) returns table (
   title text,
   content text,
   seen boolean,
-  "createdAt" date
+  "createdAt" timestamptz
 ) as $$
 BEGIN
     RETURN QUERY

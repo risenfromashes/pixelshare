@@ -4,25 +4,27 @@ import { v4 } from "uuid";
 import { getUsername, getGroupname } from "$lib/db/functions/helpers";
 
 export const load = async ({ request, params, locals: { supabase } }) => {
-  const { data: user, error: err1 } = await supabase.auth.getUser();
 
-  if (err1 || !user) {
-    return redirect(302, "/login");
-  }
+    const { data: user, error: err1 } = await supabase.auth.getUser();
 
-  if (!params.groupId) {
-    return fail(400, { invalid: true });
-  }
+    if (err1 || !user) {
+        return redirect(302, "/login");
+    }
 
-  const { data, error: err2 } = await supabase.rpc("get_group_posts", {
-    gid: Number.parseInt(params.groupId),
-  });
+    if (!params.groupId) {
+        return fail(400, { invalid: true });
+    }
 
-  if (err2) {
-    return fail(400, { error: err2.message });
-  }
+    const { data, error: err2 } = await supabase.rpc("get_group_posts", {
+        gid: Number.parseInt(params.groupId),
+    });
 
-  return {
-    posts: data,
-  };
+    if (err2) {
+        return fail(400, { error: err2.message });
+    }
+
+
+    return {
+        posts: data,
+    };
 };

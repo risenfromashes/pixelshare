@@ -1,10 +1,10 @@
--- drop function add_post(text, text, text, integer, date, text[]);
+-- drop function add_post(text, text, text, integer, timestamptz, text[]);
 create or replace function add_post(
     "caption" text,
     "location" text,
     "createdBy" text,
     "groupId" integer,
-    "createdAt" date,
+    "createdAt" timestamptz,
     "pictureUrls" text[]
 )
 returns void as $$
