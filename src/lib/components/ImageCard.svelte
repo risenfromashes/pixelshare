@@ -1,21 +1,22 @@
 <script lang="ts">
+    import { onNavigate } from "$app/navigation";
     import { Icon } from "$lib";
+    import { onMount } from "svelte";
     import FaIcon from "./FaIcon.svelte";
 
-    // import Spinner from "./Spinner.svelte"; // or import Skeleton from './Skeleton.svelte';
     export let src: string;
     let loaded = false;
+    let imgElement: HTMLImageElement;
 
-    const onload = (e: any) => {
-        console.log("loaded");
-        loaded = true;
-    };
+    onMount(() => {
+        loaded = imgElement.complete;
+    });
 </script>
 
 <div class="relative w-full h-full">
     <div
         class="flex flex-col justify-center items-center
-             bg-orange-200 w-auto h-full animate-pulse
+             bg-orange-200 min-w-24 xl:min-w-48 w-auto h-full animate-pulse
              rounded-lg border-2 border-orange-200 shadow-lg {loaded
             ? 'hidden'
             : 'block'}"
@@ -34,6 +35,7 @@
         class="w-auto h-full transition-opacity duration-500 ease-in-out object-contain rounded-lg border-2 border-orange-200 shadow-lg {loaded
             ? 'opacity-100'
             : 'opacity-0'}"
-        use:onload
+        on:load={() => (loaded = true)}
+        bind:this={imgElement}
     />
 </div>

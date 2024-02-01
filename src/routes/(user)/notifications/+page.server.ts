@@ -32,7 +32,7 @@ export const load = async ({
     };
   }
 
-  console.log(data);
+  // console.log(data);
 
   return {
     notifications: data as NotificationData[],
