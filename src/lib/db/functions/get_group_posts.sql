@@ -8,7 +8,7 @@ or replace function get_group_posts (gid int8) returns table (
   "postId" int8,
   "imageId" int8,
   "caption" text,
-  "createdAt" date,
+  "createdAt" timestamptz,
   "createdBy" text,
   "url" text,
   "userId" text,

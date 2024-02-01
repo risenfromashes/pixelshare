@@ -12,7 +12,7 @@ or replace function get_notifications (user_id text) returns table (
   title text,
   content text,
   seen boolean,
-  "createdAt" date
+  "createdAt" timestamptz
 ) as $$
 BEGIN
     RETURN QUERY
@@ -23,4 +23,4 @@ BEGIN
 END;
 $$ language plpgsql;
 
--- select * from get_notifications('0aacc737-0c42-48cd-a069-a8e151cfeb7e');
+-- select * from get_user_notifications('0aacc737-0c42-48cd-a069-a8e151cfeb7e');

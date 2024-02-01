@@ -1,14 +1,14 @@
 -- Supabase AI is experimental and may produce incorrect answers
 -- Always verify the output before executing
 
--- DROP FUNCTION add_group(text,text,text,date,text,text);
+-- DROP FUNCTION add_group(text,text,text,timestamptz,text,text);
 
 create
 or replace function add_group (
   "name" text,
   "createdBy" text,
   "description" text,
-  "createdAt" date,
+  "createdAt" timestamptz,
   "coverImg" text,
   "profileImg" text
 ) returns VOID as $$
