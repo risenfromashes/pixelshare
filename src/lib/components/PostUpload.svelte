@@ -5,6 +5,7 @@
   import { page } from "$app/stores";
   import { enhance } from "$app/forms";
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
+  import Button from "./Button.svelte";
 
   let imageFiles: File[] = [];
   let images: string[] = [];
@@ -13,7 +14,7 @@
   let joinedTags: String = "";
   let caption: String;
   let location: String;
-  let success = false;
+  let loading = false;
 
   const recommendedTags = ["ECE Catto", "Central Catto"]; // Example recommended tags
 
@@ -41,7 +42,7 @@
   const removeSelectedImage = (imageId: string) => {
     images = images.filter((image) => image !== imageId);
     imageFiles = imageFiles.filter(
-      (file) => URL.createObjectURL(file) !== imageId
+      (file) => URL.createObjectURL(file) !== imageId,
     );
     updateDomFileList();
     URL.revokeObjectURL(imageId); // Free up memory by revoking object URL
@@ -60,7 +61,7 @@
   };
 
   onNavigate(() => {
-    success = false;
+    loading = false;
   });
 
   let showModal = false;
@@ -73,9 +74,9 @@
 
 <Modal {showModal} className="rounded-md bg-orange-50 no-scrollbar">
   <div
-    class="flex flex-col h-full justify-center items-center w-full my-10 xl:px-24 p-4 overflow-y-auto"
+    class="flex flex-col h-full justify-center items-center w-full my-10 xl:px-8 p-4 overflow-y-auto"
   >
-    {#if success}
+    {#if $page.form?.success}
       <div
         class="block w-full font-bold px-4 py-3 bg-green-100 rounded text-left text-xs text-green-500 mb-4"
       >
@@ -103,10 +104,10 @@
           cancel();
           return;
         }
-        success = false;
+        loading = true;
         return async ({ result }) => {
           if (result.type === "success") {
-            success = true;
+            loading = false;
             formElement.reset();
             images = [];
             imageFiles = [];
@@ -228,12 +229,13 @@
           </div>
 
           <!-- Post button -->
-          <div class="w-full flex flex-row justify-center">
-            <button
-              type="submit"
-              class="px-24 py-3 bg-orange-200 border-2 border-orange-300 hover:bg-orange-300 disabled:border-orange-200 disabled:text-gray-500 disabled:bg-orange-100 rounded-md"
-              disabled={images.length === 0}>Post</button
-            >
+          <div class="w-full flex flex-row justify-end">
+            <Button
+              colour="orange"
+              text="Submit"
+              disabled={imageFiles.length === 0}
+              {loading}
+            />
           </div>
         </div>
       </div>
