@@ -52,7 +52,7 @@ export const actions = {
 
 		const { data, error } = await supabase.rpc("add_tag", {
 			tagName: tagName,
-			createdBy: user.id,
+			createdBy: username,
 			description: description,
 			createdAt: date,
 			tagImage: urls[0],
