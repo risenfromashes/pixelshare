@@ -49,7 +49,7 @@
       <a
         href={`/groups/${$page.params.groupId}/post-requests`}
         class="text-2xl font-bold hover:text-orange-500"
-        aria-label="View Tags">View Member Requests</a
+        aria-label="View Tags">View Post Requests</a
       >
     </span>
   </div>

@@ -19,14 +19,14 @@ export const load = async ({ request, params, locals: { supabase } }) => {
 	const { data: groupInfo, error: err2 } = await supabase.rpc("get_group", {
 		group_id: Number.parseInt(params.groupId),
 	});
-	console.log("In Load method of Post Requests");
-	console.log(groupInfo);
+	//console.log("In Load method of Post Requests");
+	//console.log(groupInfo);
 
 	const { data: postRequests, error: err3 } = await supabase.rpc("get_requested_posts", {
 		group_id: Number.parseInt(params.groupId),
 	});
-	console.log("In Load method of Post Requests");
-	console.log(postRequests);
+	//console.log("In Load method of Post Requests");
+	//console.log(postRequests);
 
 	if (err2) {
 		return fail(400, { error: err2.message });
