@@ -43,6 +43,17 @@
     </span>
   </div>
 
+  <!-- View Post Requets section -->
+  <div class="flex items-center bg-orange-200 text-black p-3 rounded-lg">
+    <span class="text-xl font-bold ml-2">
+      <a
+        href={`/groups/${$page.params.groupId}/post-requests`}
+        class="text-2xl font-bold hover:text-orange-500"
+        aria-label="View Tags">View Member Requests</a
+      >
+    </span>
+  </div>
+
   <h2 class="text-xl font-bold mb-3">Today's Highlights</h2>
   <div class="flex flex-row flex-wrap gap-x-2 gap-y-4">
     {#if data}
