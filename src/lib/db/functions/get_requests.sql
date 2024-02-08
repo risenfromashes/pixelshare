@@ -12,5 +12,6 @@ or replace function get_requests (gid int8) returns table (
   JOIN 
     "GroupMembers" gm
   ON u."id" = gm."memberId"
-  WHERE gm."groupId" = gid;
+  WHERE gm."groupId" = gid
+  AND gm."status"="requested";
 $$;
