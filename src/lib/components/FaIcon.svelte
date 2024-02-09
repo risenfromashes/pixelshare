@@ -5,8 +5,8 @@
     const srcPath = "/icons/fa-svg/";
 
     export let icon: Icon;
-    export let className: string;
-    export let fill: string;
+    export let className: string = "";
+    export let fill: string = "#000000";
     export let initClass = "opacity-100";
 
     let iconDiv: Element;

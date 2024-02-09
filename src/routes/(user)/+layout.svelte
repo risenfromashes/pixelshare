@@ -15,7 +15,7 @@
   const sidebarItems = [
     { name: "Home", icon: Icon.HOUSE, link: "/" },
     { name: "Upload", icon: Icon.UPLOAD, link: "?upload" },
-    // { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
+    { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
     { name: "Notifications", icon: Icon.BELL, link: "/notifications" },
     // { name: "Settings", icon: Icon.GEAR, link: "/settings" },
   ];

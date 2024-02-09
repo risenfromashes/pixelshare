@@ -1,11 +1,11 @@
-<script lang="ts">
+<script>
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
-  export let showModal: boolean; // boolean
+  export let showModal; // boolean
   export let className = "";
 
-  let dialog: HTMLDialogElement; // HTMLDialogElement
+  let dialog; // HTMLDialogElement
   const handleClose = () => {
     // don't let the modal to be closed by other events
     if ($page.url.searchParams.get("upload") != null) {

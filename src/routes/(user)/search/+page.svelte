@@ -1,177 +1,57 @@
 <script>
-    // Include any required JavaScript logic here
-    let results = 20; // This could be dynamically set based on search results
+  import { Icon } from "$lib";
+  import FaIcon from "$lib/components/FaIcon.svelte";
+  import { onMount } from "svelte";
 
-
-    import { onMount } from "svelte";
-	const sidebarItems = [
-		{ name: "Home", icon: "icons/home.png" },
-		{ name: "Search", icon: "icons/search.png" },
-		{ name: "Notifications", icon: "icons/notification.png" },
-		{ name: "Settings", icon: "icons/settings.png" },
-	];
-	const rightSidebarItems = {
-		groups: ["BUET", "CSE '19", "PixelShare Devs"],
-		friends: ["Faria Binte Awal", "Some Random Guy", "Md. Riyasat Hossain"],
-	};
-
-    let images = [
-    { id: 1, url: 'sample/sample.jpg', date: '2024-01-20' },
-    { id: 2, url: 'sample/sample.jpg', date: '2024-01-18' },
-    // More image objects...
+  const sidebarItems = [
+    { name: "Home", icon: "icons/fa-svg/bars.svg" },
+    { name: "Search", icon: "icons/fa-svg/bars.svg" },
+    { name: "Notifications", icon: "icons/fa-svg/bars.svg" },
+    { name: "Settings", icon: "icons/fa-svg/bars.svg" },
   ];
 
-  const tagNames=[
-    {tagId: 1, tagName:'ECE'},
-    {tagId: 2, tagName:'OAB'},
-  ]
+  let images = [
+    { id: 1, url: "sample/sample.jpg", date: "2024-01-20" },
+    { id: 2, url: "sample/sample.jpg", date: "2024-01-18" },
+    // Add more images as needed
+  ];
 
-  // Function to sort images by date
-  const sortImagesByDate = () => {
-    images.sort((a, b) => new Date(b.date) - new Date(a.date));
-  };
+  let searchTerm = "";
+</script>
 
-  // Sort images on initial load
-  sortImagesByDate();
-  </script>
-  
-  <div class="flex h-screen bg-gray-900 text-white">
-    <!-- Sidebar -->
-    <div
-        class="absolute inset-y-0 left-0 hidden xl:flex flex-col justify-start items-start w-fit p-6 space-y-6 bg-orange-100 border border-orange-200 shadow-lg scroll-hidden"
-    >
-		<div class="flex flex-row justify-center items-center">
-			<img src="demo-logo.png" alt="Pixel Share" class="h-16 w-16" />
-			<p class="ml-4 font-semibold text-2xl text-sky-300">PixelShare</p>
-		</div>
-		<hr class="h-px w-full my-8 bg-zinc-800 border-0 dark:bg-zinc-700" />
-		<nav class="grow flex flex-col justify-center">
-			{#each sidebarItems as item}
-				<button
-					class="flex items-center px-4 py-2 hover:bg-gray-700 rounded"
-				>
-					<img
-						class="object-cover w-8 h-8"
-						alt="icon"
-						src={item.icon}
-					/>
-					<span class="ml-3 text-black">{item.name}</span>
-				</button>
-			{/each}
-		</nav>
-		<div class="flex flex-col">
-			<button
-				class="flex items-center px-4 py-2 hover:bg-gray-700 rounded mb-2"
-			>
-				<img
-					class="object-cover w-8 h-8"
-					alt="icon"
-					src="icons/profile.png"
-				/>
-				<span class="ml-3 text-black">Profile</span>
-			</button>
-			<button
-				class="flex items-center px-4 py-2 hover:bg-gray-700 rounded mb-4"
-			>
-				<img
-					class="object-cover w-8 h-8"
-					alt="icon"
-					src="icons/logout.png"
-				/>
-				<span class="ml-3 font-medium text-red-500">Log out</span>
-			</button>
-		</div>
-	</div>
-
-    <div class="flex-1 xl:px-62 px-4 py-8 overflow-y-auto bg-orange-50 scroll-hidden">
-        <div >
-            <!-- Content Area with image grid -->
-            <div class="flex-grow p-4 overflow-auto">
-              <h1 class="text-2xl mb-4 text-black font-bold ">Images by Date</h1>
-              <div class="grid grid-cols-4 gap-4">
-                {#each images as image}
-                <div class="relative group">
-                  <img src={image.url} alt={`Image taken on ${image.date}`} class="w-full h-full object-cover transition-transform transform hover:scale-105" />
-                  <div class="absolute bottom-0 left-0 right-0 bg-gray-700 bg-opacity-50 text-white text-sm p-2">
-                    {image.date}
-                  </div>                
-                  </div>
-                {/each}
-              </div>
+<div class="flex min-h-screen bg-orange-50">
+  <!-- Main content area -->
+  <div class="flex-1 overflow-y-auto">
+    <div class="w-full p-8">
+      <div class="flex justify-center mb-8">
+        <div class="relative w-full max-w-xl">
+          <input
+            type="text"
+            class="w-full pl-10 pr-4 py-2 rounded-full text-gray-700 placeholder-gray-500 border border-gray-200"
+            placeholder="Search..."
+            bind:value={searchTerm}
+          />
+          <div class="absolute left-0 top-0 mt-3 ml-3">
+            <FaIcon icon={Icon.MAGNIFYING_GLASS} className="w-full h-full" />
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+      >
+        {#each images as image}
+          <div class="bg-white rounded-lg overflow-hidden shadow">
+            <img
+              src={image.url}
+              alt={`Image taken on ${image.date}`}
+              class="w-full h-auto"
+            />
+            <div class="p-4">
+              <p class="text-sm text-gray-600">{image.date}</p>
             </div>
           </div>
-    </div>
-  
-    <!-- Right Sidebar for Filters and Sorting -->
-   <!-- Right Sidebar for Filters and Sorting -->
-<div class="absolute z-10 inset-y-0 right-0 hidden xl:block h-screen w-64 p-4 space-y-6 bg-orange-100 border border-orange-200 shadow-lg scroll-hidden">
-  <!-- Filters Section -->
-  <div class="p-4">
-    <h2 class="text-lg mb-4 bg-orange-300 text-black shadow-md font-bold text-center">Filters</h2>
-    <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
-      <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">By Date</h3>
-
-      <div class="flex items-left">
-        <label class="mr-2 mb-2 text-medium font-semibold">Start Date:</label>
-        <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 shadow-md hover:bg-orange-500 rounded">
-      </div>
-      
-      <div class="flex items-left">
-        <label class="mr-2 mb-2 text-medium font-semibold">End Date:</label>
-        <input type="date" class="p-2 bg-orange-400 border-2 border-orange-300 shadow-md hover:bg-orange-500 rounded">
+        {/each}
       </div>
     </div>
-  </div>
-
-  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
-    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">By Tags</h3>
-      <label class="block mb-2">
-        <input type="checkbox" class="form-checkbox text-blue-500">
-        <span class="ml-2 text-medium font-semibold">All</span>
-      </label>
-      {#each tagNames as tag}
-        <label class="block">
-          <input type="checkbox" class="form-checkbox text-blue-500">
-          <span class="ml-2 text-medium font-semibold">{tag.tagName}</span>
-        </label>
-      {/each}
-  </div>
-    
-  <!-- Sorting Section -->
-  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
-    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">Sort</h3>
-
-    <div class="space-y-4">
-      <div>
-        <!-- Radio buttons for sorting -->
-        <label class="flex items-center">
-          <input type="radio" name="order" class="form-radio text-blue-500">
-          <span class="ml-2 text-medium font-semibold">Ascending</span>
-        </label>
-        <label class="flex items-center">
-          <input type="radio" name="order" class="form-radio text-blue-500">
-          <span class="ml-2 text-medium font-semibold">Descending</span>
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <div class="space-y-4 text-sm mb-4 bg-orange-200 text-black shadow-md p-4"> 
-    <h3 class="text-lg mb-2 bg-orange-200 text-black font-bold">Sort By</h3>
-    <label class="flex items-center">
-        <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-medium font-semibold">Date</span>
-      </label>
-      <label class="flex items-center">
-        <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-medium font-semibold">Caption</span>
-      </label>
-      <label class="flex items-center">
-        <input type="radio" name="order" class="form-radio text-blue-500">
-        <span class="ml-2 text-medium font-semibold">Tag</span>
-      </label>
   </div>
 </div>
-
-</div>
-  
