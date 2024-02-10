@@ -8,7 +8,7 @@ export const load = async ({ request, parent, locals: { supabase } }) => {
     return redirect(302, "/login");
   }
 
-  const { data, error: err } = await supabase.rpc("get_groups", {
+  const { data: groups, error: err } = await supabase.rpc("get_groups", {
     uid: session.user.id,
   });
 
@@ -18,10 +18,20 @@ export const load = async ({ request, parent, locals: { supabase } }) => {
       error: err.message,
     };
   }
+  const { data: pro_pic_url, error: err2 } = await supabase.rpc("get_profile_pic_url", {
+    user_id: session.user.id,
+  });
+  if (err2) {
+    return {
+      session,
+      error: err.message,
+    };
+  }
 
   return {
     session,
     username: await getUsername(supabase, session.user.id),
-    groups: data,
+    groups: groups,
+    pro_pic_url: pro_pic_url,
   };
 };

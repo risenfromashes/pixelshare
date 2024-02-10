@@ -94,11 +94,11 @@
   >
     <div class="text-center mt-12">
       <img
-        src={userDetails.avatarUrl}
-        alt={userDetails.username}
+        src={data.pro_pic_url}
+        alt={data.username}
         class="mx-auto h-16 w-16 rounded-full border border-gray-300"
       />
-      <h2 class="mt-4 font-semibold text-lg">{userDetails.name}</h2>
+      <h2 class="mt-4 font-semibold text-lg">{data.username}</h2>
       <p class="text-sm text-gray-600">@{userDetails.username}</p>
     </div>
 
@@ -134,6 +134,19 @@
           />
 
           <span class="ml-3 font-medium">Create Group</span>
+        </a>
+
+        <a
+          class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
+          href="/groups/join-group"
+        >
+          <FaIcon
+            icon={Icon.UPLOAD}
+            className="object-cover w-6 h-6"
+            fill="#000000"
+          />
+
+          <span class="ml-3 font-medium">Join Group</span>
         </a>
       </div>
     {/if}
