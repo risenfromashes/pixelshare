@@ -11,11 +11,13 @@
   const groupId = writable<number>();
   setContext("groupId", groupId);
 
+  let base = "/";
+
   // Placeholder data for sidebar and main content items
-  const sidebarItems = [
+  let sidebarItems = [
     { name: "Home", icon: Icon.HOUSE, link: "/" },
     { name: "Upload", icon: Icon.UPLOAD, link: "?upload" },
-    // { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
+    { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
     { name: "Notifications", icon: Icon.BELL, link: "/notifications" },
     // { name: "Settings", icon: Icon.GEAR, link: "/settings" },
   ];
@@ -25,6 +27,13 @@
     username: data.username,
     avatarUrl: "/risenfromashes.png",
   };
+
+  $: {
+    sidebarItems[2].link =
+      ($page.params.groupId ? `/groups/${$page.params.groupId}` : "") +
+      "/search";
+    sidebarItems = sidebarItems;
+  }
 </script>
 
 <div class="flex relative h-screen bg-gray-100 text-gray-900">
@@ -38,7 +47,7 @@
     </div>
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
     <nav class="w-full grow flex flex-col justify-center">
-      {#each sidebarItems as item}
+      {#each sidebarItems as item (item.name)}
         {#if item.name != "Upload" || $page.params.groupId}
           <a
             class="w-full flex items-center p-4 hover:bg-gray-300 rounded"
@@ -94,35 +103,54 @@
   >
     <div class="text-center mt-12">
       <img
-        src={userDetails.avatarUrl}
-        alt={userDetails.username}
+        src={data.pro_pic_url}
+        alt={data.username}
         class="mx-auto h-16 w-16 rounded-full border border-gray-300"
       />
-      <h2 class="mt-4 font-semibold text-lg">{userDetails.name}</h2>
+      <h2 class="mt-4 font-semibold text-lg">{data.username}</h2>
       <p class="text-sm text-gray-600">@{userDetails.username}</p>
     </div>
 
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
 
-    {#if data.groups}
+    {#if data.non_admin_groups}
       <div class="space-y-">
         <h3 class="text-md font-bold text-gray-700 mb-2">Groups</h3>
 
-        {#each data.groups as group}
+        {#each data.non_admin_groups as group}
           <a
             class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-            href={`/groups/${group.groupId}`}
+            href={`/groups/${group.group_id}`}
           >
             <img
-              src={group.groupImg}
-              alt={group.groupName}
+              src={group.profile_image_url}
+              alt={group.group_name}
               class="h-8 w-8 rounded-full object-cover mr-2"
             />
             <span class="text-sm font-medium text-gray-800"
-              >{group.groupName}</span
+              >{group.group_name}</span
             >
           </a>
         {/each}
+
+        {#if data.admin_groups}
+          {#each data.admin_groups as group}
+            <a
+              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+              href={`/groups/${group.group_id}`}
+            >
+              <img
+                src={group.profile_image_url}
+                alt={group.group_name}
+                class="h-8 w-8 rounded-full object-cover mr-2"
+              />
+              <span class="text-sm font-medium text-gray-800"
+                >{group.group_name}-(admin)</span
+              >
+            </a>
+          {/each}
+        {/if}
+
         <a
           class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
           href="/groups/create"
@@ -134,6 +162,19 @@
           />
 
           <span class="ml-3 font-medium">Create Group</span>
+        </a>
+
+        <a
+          class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
+          href="/groups/join-group"
+        >
+          <FaIcon
+            icon={Icon.UPLOAD}
+            className="object-cover w-6 h-6"
+            fill="#000000"
+          />
+
+          <span class="ml-3 font-medium">Join Group</span>
         </a>
       </div>
     {/if}

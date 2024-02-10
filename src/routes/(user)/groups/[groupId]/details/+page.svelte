@@ -88,7 +88,7 @@
 
   <div class="posts-panel mt-4">
     {#if data.posts}
-      {#each data.posts as post (post.postId)}
+      {#each data.posts as post (post.url)}
         <div class="post-item bg-orange-100 p-4 rounded-lg shadow-lg mb-4">
           <div class="post-header flex items-center">
             <img
