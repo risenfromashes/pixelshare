@@ -11,8 +11,10 @@
   const groupId = writable<number>();
   setContext("groupId", groupId);
 
+  let base = "/";
+
   // Placeholder data for sidebar and main content items
-  const sidebarItems = [
+  let sidebarItems = [
     { name: "Home", icon: Icon.HOUSE, link: "/" },
     { name: "Upload", icon: Icon.UPLOAD, link: "?upload" },
     { name: "Search", icon: Icon.MAGNIFYING_GLASS, link: "/search" },
@@ -25,6 +27,13 @@
     username: data.username,
     avatarUrl: "/risenfromashes.png",
   };
+
+  $: {
+    sidebarItems[2].link =
+      ($page.params.groupId ? `/groups/${$page.params.groupId}` : "") +
+      "/search";
+    sidebarItems = sidebarItems;
+  }
 </script>
 
 <div class="flex relative h-screen bg-gray-100 text-gray-900">
@@ -38,7 +47,7 @@
     </div>
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
     <nav class="w-full grow flex flex-col justify-center">
-      {#each sidebarItems as item}
+      {#each sidebarItems as item (item.name)}
         {#if item.name != "Upload" || $page.params.groupId}
           <a
             class="w-full flex items-center p-4 hover:bg-gray-300 rounded"

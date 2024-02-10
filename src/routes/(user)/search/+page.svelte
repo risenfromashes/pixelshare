@@ -1,20 +1,10 @@
-<script>
+<script lang="ts">
   import { Icon } from "$lib";
   import FaIcon from "$lib/components/FaIcon.svelte";
-  import { onMount } from "svelte";
+  import ImageCard from "$lib/components/ImageCard.svelte";
+  import { page } from "$app/stores";
 
-  const sidebarItems = [
-    { name: "Home", icon: "icons/fa-svg/bars.svg" },
-    { name: "Search", icon: "icons/fa-svg/bars.svg" },
-    { name: "Notifications", icon: "icons/fa-svg/bars.svg" },
-    { name: "Settings", icon: "icons/fa-svg/bars.svg" },
-  ];
-
-  let images = [
-    { id: 1, url: "sample/sample.jpg", date: "2024-01-20" },
-    { id: 2, url: "sample/sample.jpg", date: "2024-01-18" },
-    // Add more images as needed
-  ];
+  export let data;
 
   let searchTerm = "";
 </script>
@@ -36,21 +26,17 @@
           </div>
         </div>
       </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-      >
-        {#each images as image}
-          <div class="bg-white rounded-lg overflow-hidden shadow">
-            <img
-              src={image.url}
-              alt={`Image taken on ${image.date}`}
-              class="w-full h-auto"
-            />
-            <div class="p-4">
-              <p class="text-sm text-gray-600">{image.date}</p>
-            </div>
-          </div>
-        {/each}
+      <div class="flex flex-row flex-wrap gap-x-2 gap-y-4">
+        {#if data}
+          {#each data.posts as post (post.imageId)}
+            <a
+              class="relative h-24 xl:h-56"
+              href={`/groups/${$page.params.groupId}/details`}
+            >
+              <ImageCard src={post.url} />
+            </a>
+          {/each}
+        {/if}
       </div>
     </div>
   </div>
