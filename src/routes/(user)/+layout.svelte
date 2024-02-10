@@ -104,25 +104,44 @@
 
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
 
-    {#if data.groups}
+    {#if data.non_admin_groups}
       <div class="space-y-">
         <h3 class="text-md font-bold text-gray-700 mb-2">Groups</h3>
 
-        {#each data.groups as group}
+        {#each data.non_admin_groups as group}
           <a
             class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-            href={`/groups/${group.groupId}`}
+            href={`/groups/${group.group_id}`}
           >
             <img
-              src={group.groupImg}
-              alt={group.groupName}
+              src={group.profile_image_url}
+              alt={group.group_name}
               class="h-8 w-8 rounded-full object-cover mr-2"
             />
             <span class="text-sm font-medium text-gray-800"
-              >{group.groupName}</span
+              >{group.group_name}</span
             >
           </a>
         {/each}
+
+        {#if data.admin_groups}
+          {#each data.admin_groups as group}
+            <a
+              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+              href={`/groups/${group.group_id}`}
+            >
+              <img
+                src={group.profile_image_url}
+                alt={group.group_name}
+                class="h-8 w-8 rounded-full object-cover mr-2"
+              />
+              <span class="text-sm font-medium text-gray-800"
+                >{group.group_name}-(admin)</span
+              >
+            </a>
+          {/each}
+        {/if}
+
         <a
           class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
           href="/groups/create"

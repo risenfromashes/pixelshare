@@ -39,15 +39,16 @@
 >
 	<div class="space-y-4 w-full">
 		<button
-			class="px-4 py-2 bg-blue-500 text-white rounded-md"
-			on:click={() => (showModal = true)}>+ Open Modal</button
+			class="px-4 py-2 bg-orange-300 text-white fond-bold rounded-md"
+			on:click={() => (showModal = true)}
+			>Search Group to Join............</button
 		>
 
 		{#if showModal}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
-				class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+				class="fixed inset-0 bg-orange-200 bg-opacity-50 overflow-y-auto h-full w-full"
 				on:click={onClose}
 			>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -77,7 +78,7 @@
 						<ul class="max-h-60 overflow-auto">
 							{#each filteredGroups as group}
 								<li
-									class="py-2 px-4 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
+									class="py-2 px-4 hover:bg-orange-100 bg-gray-100 cursor-pointer font-bold flex justify-between items-center"
 								>
 									{group.name}
 									<form
