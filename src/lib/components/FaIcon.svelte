@@ -1,35 +1,36 @@
 <script lang="ts">
-    import { Icon } from "$lib";
-    import { onMount } from "svelte";
+  import { Icon } from "$lib";
+  import { onMount } from "svelte";
 
-    const srcPath = "/icons/fa-svg/";
+  const srcPath = "/icons/fa-svg/";
 
-    export let icon: Icon;
-    export let className: string;
-    export let fill: string;
-    export let initClass = "opacity-100";
+  export let icon: Icon;
+  export let className: string = "";
+  export let fill: string = "#000000";
+  export let initClass = "opacity-100";
 
-    let iconDiv: Element;
+  let iconDiv: Element;
 
-    let loaded = false;
+  let loaded = false;
 
-    onMount(() => {
-        const object = document.createElement("object");
-        object.data = srcPath + icon + ".svg";
-        object.type = "image/svg+xml";
-        object.classList.add("w-full", "h-full");
+  onMount(() => {
+    const object = document.createElement("object");
+    object.data = srcPath + icon + ".svg";
+    object.type = "image/svg+xml";
+    object.classList.add("w-full", "h-full");
+    object.classList.add("cursor-pointer");
 
-        object.onload = () => {
-            loaded = true;
-            let doc = object.getSVGDocument();
-            doc?.querySelector("path")?.setAttribute("fill", fill);
-        };
+    object.onload = () => {
+      loaded = true;
+      let doc = object.getSVGDocument();
+      doc?.querySelector("path")?.setAttribute("fill", fill);
+    };
 
-        iconDiv.appendChild(object);
-    });
+    iconDiv.appendChild(object);
+  });
 </script>
 
 <div
-    bind:this={iconDiv}
-    class={`${className} ` + (loaded ? "opacity-100" : initClass)}
+  bind:this={iconDiv}
+  class={`${className} ` + (loaded ? "opacity-100" : initClass)}
 ></div>
