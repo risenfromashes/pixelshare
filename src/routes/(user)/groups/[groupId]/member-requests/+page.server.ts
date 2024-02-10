@@ -27,7 +27,7 @@ export const actions = {
 		}
 		else {
 			console.log("mara khau");
-			const { data, error } = await supabase.rpc("reject_member", {
+			const { data, error } = await supabase.rpc("delete_group_member", {
 				group_id: Number.parseInt(params.groupId),
 				user_name: username,
 			});
