@@ -11,7 +11,8 @@
 
   let images = data.posts;
   let searchBox: HTMLInputElement;
-  let searchTerm = "";
+  let initialSearchTerm = "photo of ";
+  let searchTerm = initialSearchTerm;
   let loading = false;
 </script>
 
@@ -19,7 +20,7 @@
   <!-- Main content area -->
   <div class="flex-1 overflow-y-auto">
     <div class="w-full p-8">
-      <div class="flex justify-center mb-8">
+      <div class="flex justify-center mb-6">
         <div class="relative w-full max-w-xl">
           <form
             method="POST"
@@ -61,8 +62,9 @@
               class="absolute right-0 top-0 px-3 border-0 h-full rounded-r-3xl cursor-pointer text-2xl hover:font-bold"
               on:click={(e) => {
                 e.preventDefault();
-                searchTerm = "";
+                searchTerm = initialSearchTerm;
                 searchBox.focus();
+                images = data.posts;
               }}
             >
               &times;
@@ -71,17 +73,19 @@
         </div>
       </div>
       {#if form?.error}
-        <div class="p-4 bg-red-100 text-red-500">{form.error}</div>
+        <div class="text-center p-4 bg-red-100 text-red-500">{form?.error}</div>
       {/if}
       {#if loading}
-        <div class="text-center">
+        <div
+          class="text-center text-lg flex flex-row justify-center items-center"
+        >
           Loading... <Spinner size={4} className="ml-2" />
         </div>
       {/if}
       {#if images.length === 0 && !loading}
         <div class="text-center">No images found</div>
       {/if}
-      <div class="flex flex-row flex-wrap gap-x-2 gap-y-4">
+      <div class="flex flex-row flex-wrap gap-x-2 gap-y-4 mt-4">
         {#if data}
           {#each images as image (image.url)}
             <a
