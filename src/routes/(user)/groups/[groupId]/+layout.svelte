@@ -12,28 +12,31 @@
     name: string;
     link: string;
   }
-
-  const base = "/groups/" + $page.params.groupId;
-  const tabs: Tabs = {
-    highlights: [{ name: "Highlights", link: base }],
-    tags: [
-      { name: "Add Tag", link: base + "/tags/add" },
-      { name: "View Tags", link: base + "/tags/view" },
-      { name: "Verify Tags", link: base + "/tags/verify" },
-    ],
-    posts: [
-      { name: "View Posts", link: base + "/details" },
-      { name: "Manage Post Requests", link: base + "/posts/requests" },
-    ],
-    members: [
-      { name: "Current Members", link: base + "/members/view" },
-      { name: "Manage Member Requests", link: base + "/members/requests" },
-    ],
-    admins: [
-      { name: "Current Admins", link: base + "/admins/view" },
-      { name: "Send Moderation Request", link: base + "/admins/request" },
-    ],
-  };
+  let base: string;
+  let tabs: Tabs;
+  $: {
+    base = "/groups/" + $page.params.groupId;
+    tabs = {
+      highlights: [{ name: "Highlights", link: base }],
+      tags: [
+        { name: "Add Tag", link: base + "/tags/add" },
+        { name: "View Tags", link: base + "/tags/view" },
+        { name: "Verify Tags", link: base + "/tags/verify" },
+      ],
+      posts: [
+        { name: "View Posts", link: base + "/details" },
+        { name: "Manage Post Requests", link: base + "/posts/requests" },
+      ],
+      members: [
+        { name: "Current Members", link: base + "/members/view" },
+        { name: "Manage Member Requests", link: base + "/members/requests" },
+      ],
+      admins: [
+        { name: "Current Admins", link: base + "/admins/view" },
+        { name: "Send Moderation Request", link: base + "/admins/request" },
+      ],
+    };
+  }
 
   export let data;
 
