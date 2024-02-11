@@ -21,11 +21,6 @@ interface SimilarityResponse {
   similarity: number;
 }
 
-export const load = async ({ parent }) => {
-  const { posts } = await parent();
-  return { posts: posts };
-};
-
 export const actions = {
   default: async ({ request, params, fetch, locals: { supabase } }) => {
     const data = await request.formData();
