@@ -21,12 +21,9 @@
 		"tailwindcss": "^3.4.0",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-<<<<<<< HEAD
-		"vite": "^5.1.1"
-=======
+		"vite": "^5.1.1",
 		"vite": "^5.0.12",
 		"wrangler": "^3.26.0"
->>>>>>> 449a10501ff7db45ce11dc5f1ee2b202875ca9f6
 	},
 	"type": "module",
 	"dependencies": {
