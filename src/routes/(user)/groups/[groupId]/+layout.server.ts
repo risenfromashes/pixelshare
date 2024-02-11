@@ -81,24 +81,12 @@ export const load = async ({ request, params, locals: { supabase } }) => {
   }
 
   // admin info of the group
-  const { data: admin_members, error: err6 } = await supabase.rpc(
-    "get_group_admins_info",
-    {
-      group_id: Number.parseInt(params.groupId),
-    }
-  );
-
-  if (err6) {
-    return { error: err6 };
-  }
 
   return {
     posts: data,
-    tags: tags,
     members: members,
     groupInfo: groupInfo,
     postRequests: postRequests,
     requests: requests,
-    admin_members: admin_members,
   };
 };

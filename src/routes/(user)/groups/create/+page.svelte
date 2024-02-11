@@ -24,7 +24,7 @@
 
   const updateDomFileListProfile = () => {
     const element = document.querySelector<HTMLInputElement>(
-      "#profile-file-input",
+      "#profile-file-input"
     );
     if (element) {
       const list = new DataTransfer();
@@ -48,7 +48,7 @@
   };
   const handleFileChangeProfile = () => {
     const element = document.querySelector<HTMLInputElement>(
-      "#profile-file-input",
+      "#profile-file-input"
     );
     if (element) {
       const files = Array.from(element.files ?? []);
@@ -67,7 +67,7 @@
 </script>
 
 <div
-  class="flex flex-col items-center justify-center min-h-screen bg-orange-50 text-gray-900 px-36"
+  class="flex flex-col items-center justify-center min-h-screen bg-orange-50 text-gray-900 px-48"
 >
   <div class="space-y-4 w-full">
     {#if success}

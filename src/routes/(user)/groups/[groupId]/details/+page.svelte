@@ -73,17 +73,6 @@
 <div
   class="group-info-panel bg-orange-50 p-4 rounded-lg shadow-lg text-black overflow-hidden"
 >
-  <div class="text-center py-4">
-    <h1 class="text-2xl font-bold mb-2">{groupInfo.name}</h1>
-  </div>
-  <img
-    src={groupInfo.coverImage}
-    alt="Group Cover"
-    class="mb-2 rounded-lg w-full h-60 object-cover"
-  />
-  <div class="text-center py-4">
-    <p class="mb-4">{groupInfo.bio}</p>
-  </div>
   <!-- Posts -->
 
   <div class="posts-panel mt-4">
