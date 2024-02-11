@@ -166,7 +166,7 @@
 
         <a
           class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
-          href="/groups/join-group"
+          href="/groups/join"
         >
           <FaIcon
             icon={Icon.UPLOAD}
