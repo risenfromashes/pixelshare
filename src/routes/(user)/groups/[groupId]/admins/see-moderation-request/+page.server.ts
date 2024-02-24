@@ -9,7 +9,6 @@ export const actions = {
     console.log("here is the form data");
     console.log(formData);
     const requestId = Number.parseInt(formData.get("requestId")?.toString() ?? "0");
-    const description = formData.get("description") as String;
     const isApproved = formData.get("action") as String; // 'true' for approval, 'false' for rejection
     const {
       data: { user },
@@ -21,12 +20,13 @@ export const actions = {
     }
 
     const username = await getUsername(supabase, user.id);
+    console.log("check if it reaches here");
 
     console.log(isApproved);
     if (isApproved === "true") {
       console.log("the moderation request should be approved");
       const { data, error } = await supabase.rpc("approve_moderation_request", {
-        request_id: requestId,
+        req_id: requestId,
       });
 
       if (error) {
@@ -37,7 +37,7 @@ export const actions = {
     } else {
       console.log("Rejecting the moderation request");
       const { data, error } = await supabase.rpc("reject_moderation_request", {
-        request_id: requestId,
+        req_id: requestId,
       });
 
       if (error) {

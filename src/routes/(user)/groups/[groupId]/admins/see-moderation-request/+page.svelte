@@ -7,7 +7,6 @@
   
     // export let moderationRequests;
     // Initialize a writable Svelte store for the map to make it reactive
-    let currentImageIndex: BigInt = 0;
     let isApproved: Boolean = false;
   
     function handleAction(event, approvalStatus) {
@@ -18,15 +17,6 @@
     }
  
   
-    function approveRequest(requestId) {
-      console.log("Approve", requestId);
-      // Here you would make an API call to approve the post
-    }
-  
-    function rejectRequest(requestId) {
-      console.log("Reject", requestId);
-      // Here you would make an API call to reject the post
-    }
     //console.log("ekhane print kora jai jantam na");
     //console.log(data.postRequests);
   </script>
@@ -47,13 +37,13 @@
         <div class="text-center">No moderation requests to show.</div>
       {:else}
         <!-- Moderation Requests -->
-        <div class="bg-blue-300 p-4 rounded-lg shadow-lg">
+        <div class="bg-orange-50 p-4  rounded-lg shadow-lg">
           {#each data.moderationRequests as request}
             <div
-              class="p-3 rounded-lg bg-blue-100 flex items-center justify-between mb-2"
+             
             >
               <form
-                class="moderation-item flex items-center bg-black-100 border-2 border-blue-200 p-4 rounded-lg shadow-lg hover:bg-blue-200 transition-colors duration-200 ease-in-out"
+                class="moderation-item flex items-center bg-black-100 border-2 border-orange-200 p-4 mt-6 mb-8 rounded-lg shadow-lg hover:bg-orange-200 transition-colors duration-200 ease-in-out"
                 method="POST"
                 on:submit
                 enctype="multipart/form-data"
@@ -65,17 +55,17 @@
                       name="moderatedBy"
                       bind:value={request.username}
                     />
-                    Admin {request.username} has sent a moderation request with the following details on {request.createdat}.
+                    Admin {request.username} has sent a moderation request 
                     <input type="hidden" name="requestId" bind:value={request.id} />
                   </p>
   
                   <p class="mb-4 text-blue-800 font-bold hover:text-gray-700">
                     <input
                       type="hidden"
-                      name="description"
-                      bind:value={request.description}
+                      name="message"
+                      bind:value={request.message}
                     />
-                    {request.description}
+                    {request.message}
                   </p>
                   <div class="flex items-center mb-4">
                     <!-- Display request details here, apply text and hover classes as needed -->
@@ -86,8 +76,8 @@
                     <button
                       type="submit"
                       on:click={(event) => handleAction(event, true)}
-                      class="px-4 py-2 bg-blue-400 text-white font-bold rounded-lg hover:bg-green-600 hover:text-gray-700"
-                      >Approve</button
+                      class="px-4 py-2 bg-green-400 text-white font-bold rounded-lg hover:bg-green-600 hover:text-gray-700"
+                      >Accept</button
                     >
                     <button
                       type="submit"

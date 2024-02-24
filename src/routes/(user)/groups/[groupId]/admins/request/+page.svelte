@@ -1,28 +1,46 @@
 <script lang="ts">
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
   import { enhance } from "$app/forms";
+    import { text } from "@sveltejs/kit";
   export let data; // Assume this now contains member requests data including pictures, names, and request IDs
   let isApproved: Boolean = false;
   let isModalOpen = false;
   let success = false;
   let isRequestSent = false;
   let message = "";
-  // Function to toggle isApproved and submit the form
-  function openModal(event: Event) {
-    isModalOpen = true;
+  let isResigned = false;
+
+  // Example of setting the requestSent property for each moderator
+// Assume data.requests is already populated with your API call
+    data.requests = data.requests.map(moderator => ({ ...moderator, isRequestSent: false }));
+
+
+
+  // // Function to close the modal
+  function closeModal(moderator) {
+    message = "";
+    moderator.isModalOpen = false;
+  }
+  // Function to toggle modal state for a specific moderator
+  function openModal(moderator) {
+    moderator.isModalOpen = true;
+    isModalOpen = true; // This might still be needed if you're using it to control a global modal state
   }
 
-  // Function to close the modal
-  function closeModal() {
-    isModalOpen = false;
+  // Function to handle sending/canceling requests for a specific moderator
+  function sendMessage(moderator, event, isSent) {
+    // event.preventDefault(); // Prevent form submission
+    moderator.isRequestSent = isSent;
+    closeModal(moderator);
   }
 
-  // Function to send the message and close the modal
-  function sendMessage(event: Event, isSent: boolean) {
-    isRequestSent = isSent;
-    // You can implement the logic to send the message here.
-    // For now, let's assume the message is sent successfully.
-    closeModal();
+  function cancelRequest(moderator, event) {
+    // event.preventDefault(); // Prevent form submission
+    moderator.isRequestSent = false;
+  }
+  function resignFromModeration(event)
+  {
+    isResigned=true;
   }
   onNavigate(() => {
     success = false;
@@ -33,17 +51,6 @@
   <!-- Main Content -->
   <div class="flex-1 xl:px-12 p-4 overflow-y-auto">
     <div class="requests-panel p-4 rounded-lg text-black">
-      <!-- <div class="text-center py-4">
-				<h1 class="text-2xl font-bold mb-2">{groupInfo.name}</h1>
-			</div>
-			<img
-				src={groupInfo.coverImage}
-				alt="Group Cover"
-				class="mb-2 rounded-lg w-full h-60 object-cover"
-			/>
-			<div class="text-center py-4">
-				<p class="mb-4">{groupInfo.bio}</p>
-			</div> -->
 
       <h1 class="text-3xl font-bold text-center mb-8">Add Moderator</h1>
       <div class="flex flex-col space-y-4">
@@ -103,22 +110,30 @@
                   </h3>
                 </div>
                 <div>
-                  <!-- <input
+                  <input
                             type="hidden"
                             name="action"
                             bind:value={isModalOpen}
-                        /> -->
-                  <button
-                    type="submit"
-                    on:click={(event) => openModal(event)}
+                        />
+                  {#if !moderator.isRequestSent}
+                  <button on:click={(event) => { event.preventDefault();openModal(moderator);}}
                     class="px-4 py-2 mr-2 bg-orange-300 text-white rounded-lg hover:bg-orange-500"
                   >
                     sendRequest</button
                   >
+                  {:else}
+                  <button on:click={(event) => {  cancelRequest(moderator, event); }}
+                  class="px-4 py-2 mr-2 bg-orange-500 text-white rounded-lg hover:bg-orange-500"
+                >
+                  Request Sent</button
+                >
+
+                  {/if}
+
                 </div>
               </div>
 
-              {#if isModalOpen}
+              {#if moderator.isModalOpen}
                 <div
                   class="fixed inset-0 flex items-center justify-center z-50"
                 >
@@ -142,18 +157,18 @@
                       <input
                         type="hidden"
                         name="action"
-                        bind:value={isRequestSent}
+                        bind:value={moderator.isRequestSent}
                       />
                       <button
                         type="submit"
-                        on:click={(event) => sendMessage(event, true)}
+                        on:click={(event) => sendMessage(moderator,event, true)}
                         class="px-4 py-2 mr-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
                       >
                         Send</button
                       >
                       <button
                         type="submit"
-                        on:click={(event) => sendMessage(event, false)}
+                        on:click={(event) => sendMessage(moderator,event, false)}
                         class="px-4 py-2 mr-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
                       >
                         Cancel</button
@@ -169,11 +184,16 @@
         <h2 class="text-xl font-bold mb-2">Resign from Moderation</h2>
         <hr class="h-px w-full my-4 bg-zinc-800 border-0 dark:bg-zinc-700" />
         <div class="text-right">
-          <button
-            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Resign from Moderation
-          </button>
+          <form class="flex items-center justify-end">
+            <input type="hidden" name="userId" value={data.userId} />
+            <input type="hidden" name="resign" bind:value={isResigned} />
+            <button on:click={(event) => resignFromModeration(event)}
+                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                Resign from Moderation
+            </button>
+        </form>
+        
+        
         </div>
       </div>
     </div>

@@ -14,19 +14,16 @@ export const load = async ({ request, params, locals: { supabase } }) => {
     return fail(400, { invalid: true });
   }
 
-//   const { data: groupInfo, error: err2 } = await supabase.rpc("get_group", {
-//     group_id: Number.parseInt(params.groupId),
-//   });
-  //console.log("In Load method of Post Requests");
-  //console.log(groupInfo);
   const username = await getUsername(supabase, user.user.id);
+  console.log("username is " + username);
+
   const { data: moderationRequests, error: err3 } = await supabase.rpc(
     "get_moderation_requests",
     {
-        user_name:username,
+      uname: username, // Correct the parameter name to match the stored procedure
     }
   );
-  //console.log("In Load method of Post Requests");
+
   console.log(moderationRequests);
 
   if (err3) {
