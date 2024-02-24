@@ -1,26 +1,8 @@
-<script>
+<script lang="ts">
+  export let data;
   // Example data to mimic the interface
   import { writable } from "svelte/store";
   const profileImage = writable("sample/sample.jpg");
-
-  let user = {
-    username: "faria_2719",
-    name: "Faria Binte Awal",
-    location: "Dhaka, Bangladesh",
-    department: "Dept. of CSE, BUET",
-    joined: "March, 2023",
-    about: "Embracing the beautiful chaos......",
-    mutualGroups: [
-      { name: "BUET", icon: "🏫" },
-      { name: "CSE '19", icon: "👩‍🎓" },
-      { name: "PixelShare Devs", icon: "👨‍💻" },
-    ],
-    badges: [
-      { title: "Top Contribution", icon: "🌟" },
-      { title: "Group Expert", icon: "🏅" },
-      { title: "PixelShare Developer", icon: "🛠️" },
-    ],
-  };
 
   let tempFile = "";
   let tempBio = "";
@@ -36,7 +18,7 @@
     }
   }
   function cancelChange() {
-    user.about = tempBio;
+    // user.about = tempBio;
     // profileImage.set(tempFile);
   }
 
@@ -58,10 +40,11 @@
   function editAbout() {
     // @ts-ignore
     const editedBio = document.querySelector(".modal textarea").value;
-    tempBio = user.about;
-    user.about = editedBio;
+    //tempBio = user.about;
+    //user.about = editedBio;
     closeModal();
   }
+  console.log(data);
 </script>
 
 <div class="flex h-screen bg-gray-900">
@@ -78,8 +61,8 @@
       <div class="flex relative">
         <div class="relative w-24 h-24">
           <img
-            src={$profileImage}
-            alt="Profile Picture"
+            src={data.user[0].profileimg}
+            alt="Profile "
             class="rounded-full w-24 h-24 border-4 border-white"
           />
           <label
@@ -102,7 +85,7 @@
         </div>
 
         <div>
-          <h1 class="text-2xl font-semibold">{user.name}</h1>
+          <h1 class="text-2xl font-semibold">{data.user[0].username}</h1>
         </div>
       </div>
 
@@ -111,42 +94,31 @@
 
       <!-- User Info -->
       <div class="flex-1">
-        <p class="text-sm mb-2">📍 Lives in {user.location}</p>
-        <p class="text-sm mb-2">🎓 Studies at {user.department}</p>
-        <p class="text-sm mb-2">📅 Joined on {user.joined}</p>
+        <p class="text-sm mb-2">From - {data.user[0].location}</p>
+        <p class="text-sm mb-2">Email - {data.user[0].email}</p>
+        <p class="text-sm mb-2">Joined on - {data.user[0].joiningdate}</p>
+        <p class="text-sm mb-2">Contact No - {data.user[0].phonenumber}</p>
       </div>
 
       <!-- Vertical Line -->
       <div class="bg-orange-200 w-px h-40 mx-3"></div>
-
-      <!-- Badges -->
-      <div class="flex-1">
-        <h2 class="text-lg mb-2.5">Badges</h2>
-        <div class="flex flex-col">
-          {#each user.badges as badge}
-            <div class="flex items-center mb-1.5">
-              <span class="text-3xl mr-2.5">{badge.icon}</span>
-              <span>{badge.title}</span>
-            </div>
-          {/each}
-        </div>
-      </div>
     </div>
 
     <!-- About Section -->
     <div class="mb-12 mt-16 relative">
-      <h2 class="text-semibold mb-2.5">About me</h2>
+      <h3 class="font-bold mb-2.5">About me</h3>
       <div class="relative">
         <p
           id="aboutText"
           class="bg-orange-100 p-2.5 rounded-md w-full relative"
         >
-          {user.about}
+          {data.user[0].bio}
           <a
             href="#"
             id="editButton"
             class="absolute bottom-6 right-0 mr-1 mt-2 cursor-pointer"
           >
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <img
               src="./icons/edit.png"
               class="w-5 h-5 border-1 border-white"
@@ -183,30 +155,52 @@
 
     <!-- Mutual Groups -->
     <div class="mb-5">
-      <h2 class="text-lg mb-2.5">Mutual Groups ({user.mutualGroups.length})</h2>
+      <h2 class="text-lg mb-2.5 font-bold">My Groups</h2>
       <div class="bg-orange-300 gap-4 mb-2 w-full h-px mx-3"></div>
-      <div class="flex flex-wrap gap-4 mb-2">
-        {#each user.mutualGroups as group}
-          <div
-            class="bg-orange-100 p-2.5 rounded-lg w-1/5 hover:bg-orange-200 transition duration-300 ease-in-out"
-          >
-            <!-- Content -->
-            {group.icon}
-            {group.name}
-          </div>
-        {/each}
-      </div>
+      {#if data.admin_groups}
+        <div class="space-y-">
+          {#each data.admin_groups as group}
+            <a
+              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+              href={`/groups/${group.group_id}`}
+            >
+              <img
+                src={group.profile_image_url}
+                alt={group.group_name}
+                class="h-8 w-8 rounded-full object-cover mr-2"
+              />
+              <span class="text-sm font-medium text-gray-800"
+                >{group.group_name}</span
+              >
+            </a>
+          {/each}
+        </div>
+      {/if}
     </div>
-    <div style="display: flex; justify-content: flex-end;">
-      <button
-        class="bg-amber-200 hover:bg-amber-300 text-gray-800 px-4 py-2 rounded-md transition-colors mr-2"
-        on:click={() => confirmChange()}>Confirm</button
-      >
 
-      <button
-        class="bg-amber-200 hover:bg-amber-300 text-gray-800 px-4 py-2 rounded-md transition-colors"
-        on:click={() => cancelChange()}>Cancel</button
-      >
+    <!-- Mutual Groups -->
+    <div class="mb-5">
+      <h2 class="text-lg mb-2.5 font-bold">My Other Groups</h2>
+      <div class="bg-orange-300 gap-4 mb-2 w-full h-px mx-3"></div>
+      {#if data.non_admin_groups}
+        <div class="space-y-">
+          {#each data.non_admin_groups as group}
+            <a
+              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+              href={`/groups/${group.group_id}`}
+            >
+              <img
+                src={group.profile_image_url}
+                alt={group.group_name}
+                class="h-8 w-8 rounded-full object-cover mr-2"
+              />
+              <span class="text-sm font-medium text-gray-800"
+                >{group.group_name}</span
+              >
+            </a>
+          {/each}
+        </div>
+      {/if}
     </div>
   </div>
 </div>

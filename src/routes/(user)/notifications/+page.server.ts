@@ -7,6 +7,7 @@ interface NotificationData {
   title: string;
   content: string;
   createdAt: Date;
+  seen: Boolean;
 }
 
 export const load = async ({
@@ -32,7 +33,16 @@ export const load = async ({
     };
   }
 
-  // console.log(data);
+  console.log(data);
+
+  // Assuming you want to mark each notification as seen immediately after fetching
+  for (const notification of data) {
+    if (!notification.seen) { // Check if the notification hasn't been seen yet
+      await supabase.rpc("set_notification_seen", { notification_id: notification.id });
+      // Update the notification as seen in your local data, if necessary
+      //notification.seen = true;
+    }
+  }
 
   return {
     notifications: data as NotificationData[],
