@@ -10,13 +10,13 @@ export const load = async ({
     return redirect(302, "/login");
   }
 
-  //console.log("hereeeeeeeeeeeeeeeeee");
-  //console.log(params.groupId);
 
-  const { data, error } = await supabase.rpc("get_group_members", {
+
+  const { data, error } = await supabase.rpc("get_recommended_moderators", {
     gid: Number.parseInt(params.groupId),
   });
-  //console.log(data);
+  console.log("recommended moderators");
+  console.log(data);
 
   if (error) {
     return { error: error.message };
@@ -28,8 +28,12 @@ export const load = async ({
   }
 
   //console.log(data);
+  const userId= session.user.id;
+
+  console.log("jala:"+userId);
 
   return {
     requests: data,
+    userId: userId,
   };
 };

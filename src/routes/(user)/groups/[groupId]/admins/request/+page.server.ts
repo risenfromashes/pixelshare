@@ -10,14 +10,33 @@ export const actions = {
         const action = formData.get("action") as string; // Assuming 'invite' as action for simplicity
         const msg= formData.get("message") as string;
 
+        //resignation
+        const userId = formData.get("userId") as string;
+        const resign= formData.get("resign") as string;
+       
+
         console.log(action+ "msg:"+ msg);
+        console.log("username:"+ username);
+        console.log("resign ki hoy? "+userId+ " "+resign    );
+        const time= new Date();
         if (action === "true") {
             console.log("Sending admin invitation request");
             const { data, error } = await supabase.rpc("send_admin_invitation", {
-                group_id: Number.parseInt(params.groupId),
+                group_id: params.groupId,
                 message: msg,
                 user_name: username,
+                sent_time: time,
+                status: "pending",
             });
+
+        if (resign === "true") 
+        {
+            console.log("Sending resignation request");
+            const { data, error } = await supabase.rpc("remove_admin", {
+                group_id: params.groupId,
+                user_id: userId,
+            });
+        }
 
             if (error) {
                 console.log(error);

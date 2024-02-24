@@ -34,6 +34,7 @@
       admins: [
         { name: "Current Admins", link: base + "/admins/view" },
         { name: "Send Moderation Request", link: base + "/admins/request" },
+        {name: "See Moderation Request", link: base + "/admins/see-moderation-request" },
       ],
     };
   }
