@@ -99,8 +99,16 @@ function cancelRequest(moderator,event) {
                       <input type="hidden" name="username" bind:value={moderator.username}/>
                       {moderator.username}
                   </h3>
+                  <div class="flex justify-end">
+                    <span class="text-sm font-semibold text-gray-500 mr-2">Joined at:{new Date(moderator.joinedAt).toISOString().split('T')[0]}</span>
+                    </div>
+                    <div>
+                    <span class="text-sm font-semibold text-gray-500 mr-2">Total Post:{moderator.postCount}</span>
+                    </div>
+                  
               </div>
               <div>
+               
                   <input type="hidden" name="isModalOpen" bind:value={isModalOpen}/>
                   {#if !moderator.isReq}
                       <button on:click={openModal} class="px-4 py-2 mr-2 bg-orange-300 text-white rounded-lg hover:bg-orange-500">
