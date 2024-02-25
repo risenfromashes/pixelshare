@@ -10,11 +10,16 @@ export const actions = {
         const isRequestSent = formData.get("isRequestSent") as string;
         const isCancel = formData.get("isCancel") as string;
 
+        //second form data
+        const userId = formData.get("userId") as string;
+        const resign = formData.get("resign") as string;
+
+        
 
         
         // Common formData
         console.log("Action received:", isModalOpen, "Username:", username, "Message:", message, "isRequestSent:", isRequestSent);
-        
+        // console.log(session.user.id);
         // Process based on action
         const date= new Date();
         if (isRequestSent === "true") {
@@ -51,6 +56,23 @@ export const actions = {
             }
 
             return { success: true, message: "Admin invitation cancelled successfully." };
+        }
+
+        if (resign === "true") {
+            console.log("group_id:", Number.parseInt(params.groupId), "user_name:", username);
+            console.log("Resigning as admin:", userId);
+
+            const { data, error } = await supabase.rpc("resign_admin ", {
+                group_id:  Number.parseInt(params.groupId),
+                user_id: userId, 
+            });
+
+            if (error) {
+                console.log("Error resigning as admin:", error);
+                return fail(400, { error: error.message });
+            }
+
+            return { success: true, message: "Resigned as admin successfully." };
         }
     },
 

@@ -15,8 +15,18 @@ export const load = async ({
   const { data, error } = await supabase.rpc("get_recommended_moderators", {
     gid: Number.parseInt(params.groupId),
   });
-  console.log("recommended moderators");
-  console.log(data);
+
+  const { data:data2, error: err2 } = await supabase.rpc("is_admin", {
+    gid: Number.parseInt(params.groupId),
+    userid: session.user.id,
+  });
+  
+  if (err2) {
+    console.error("Error calling is_admin function:", err2);
+  }
+  
+  console.log("recommended moderators, isAdmin:", data2);
+  // console.log(data);
 
   if (error) {
     return { error: error.message };
@@ -26,6 +36,11 @@ export const load = async ({
       requests: [],
     };
   }
+  // if(!isAdmin){
+  //   return {
+  //     isAdmin: false,
+  //   };
+  // }
 
   //console.log(data);
   const userId= session.user.id;
@@ -35,5 +50,6 @@ export const load = async ({
   return {
     requests: data,
     userId: userId,
+    isAdmin: data2,
   };
 };

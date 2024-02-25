@@ -41,7 +41,8 @@ function cancelRequest(moderator,event) {
   isCancel = true;
 }
   // Function to handle resigning from moderation
-  function resignFromModeration() {
+  function resignFromModeration() 
+  {
     isResigned = true;
   }
 
@@ -142,13 +143,28 @@ function cancelRequest(moderator,event) {
         <h2 class="text-xl font-bold mb-2">Resign from Moderation</h2>
         <hr class="h-px w-full my-4 bg-zinc-800 border-0 dark:bg-zinc-700"/>
         <div class="text-right">
-          <!-- <form class="flex items-center justify-end">
+          {#if data.isAdmin}
+          <form class="flex items-center justify-end"
+          method="POST"
+          action="?/sendRequest"
+          on:submit
+          use:enhance={({ formElement, cancel }) => {
+              success = false;
+              return async ({ result }) => {
+                  if (result.type === "success") {
+                      success = true;
+                      formElement.reset();
+                      invalidateAll();
+                  }
+              };
+          }}>
             <input type="hidden" name="userId" value={data.userId}/>
             <input type="hidden" name="resign" bind:value={isResigned}/>
             <button on:click={() => resignFromModeration()} class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
               Resign from Moderation
             </button>
-          </form> -->
+          </form>
+          {/if}
         </div>
       </div>
     </div>
