@@ -58,66 +58,51 @@
 
 <!-- Main Content -->
 <div class="flex-1 xl:px-12 p-4 overflow-y-auto">
-  <div class="p-4 rounded-lg text-black">
+  <div class="p-4 rounded-lg text-black flex justify-center">
     {#if data.posts.length <= 0}
       <div class="text-center">Nothing to show.</div>
     {:else}
       <!--Posts -->
-      <div class="bg-orange-300 p-4 rounded-lg shadow-lg">
+      <div class="p-4 rounded-lg max-w-xl">
         {#each data.posts as post}
           <div
-            class="p-3 rounded-lg bg-orange-100 flex items-center justify-between mb-2"
+            class=" bg-orange-100 justify-between mb-6 request-item flex items-center bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-200 transition-colors duration-200 ease-in-out"
           >
-            <form
-              class="request-item flex items-center bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-200 transition-colors duration-200 ease-in-out"
-              method="POST"
-              on:submit
-              enctype="multipart/form-data"
-            >
-              <div class="mb-8">
-                <p class="mb-4 text-black font-bold hover:text-gray-700">
-                  <input
-                    type="hidden"
-                    name="postedBy"
-                    bind:value={post.createdby}
-                  />
-                  {post.createdby} has added a post with the following tags and images
-                  on dated {post.createdat}.
-                  <input type="hidden" name="postId" bind:value={post.id} />
-                </p>
+            <div class="mb-8">
+              <p class="mb-4 text-black font-bold hover:text-gray-700">
+                {post.createdby} has added a post with the following tags and images
+                on dated {post.createdat}.
+              </p>
 
-                <p class="mb-4 text-purple-800 font-bold hover:text-gray-700">
-                  <input
-                    type="hidden"
-                    name="caption"
-                    bind:value={post.caption}
-                  />
-                  {post.caption}
-                </p>
-                <div class="flex items-center mb-4">
-                  <!-- Image navigation and tags here, apply text and hover classes as needed -->
-                  <div class="flex mb-4 items-center">
-                    {#if post.image_urls.length > 1}
-                      <div class="flex mb-4 items-left">
-                        <button class="btn" on:click={() => previousImage(post)}
-                          >&lt;</button
-                        >
-                      </div>
-                    {/if}
-                    <img
-                      src={post.image_urls[currentImageIndex]}
-                      alt="no pics"
-                      class="w-32 h-32 object-cover rounded-lg"
-                    />
-                    {#if post.imagelen > 1}
-                      <button class="btn" on:click={() => nextImage(post)}
-                        >&gt;</button
+              <p class="mb-4 text-purple-800 font-bold hover:text-gray-700">
+                {post.caption}
+              </p>
+              <div class="flex justify-center items-center mb-4">
+                <!-- Image navigation and tags here, apply text and hover classes as needed -->
+                <div class="flex mb-4 items-center px-8">
+                  {#if post.image_urls.length > 1}
+                    <div class="flex mb-4 items-left">
+                      <button class="btn" on:click={() => previousImage(post)}
+                        >&lt;</button
                       >
-                    {/if}
-                  </div>
+                    </div>
+                  {/if}
+                  <img
+                    src={post.image_urls[currentImageIndex]}
+                    alt="no pics"
+                    class="w-100 object-cover rounded-lg"
+                  />
+                  {#if post.imagelen > 1}
+                    <button class="btn" on:click={() => nextImage(post)}
+                      >&gt;</button
+                    >
+                  {/if}
                 </div>
+              </div>
 
-                <div class="flex justify-center gap-4">
+              <div class="flex justify-center gap-4">
+                <form method="POST" on:submit enctype="multipart/form-data">
+                  <input type="hidden" name="postId" bind:value={post.id} />
                   <input type="hidden" name="action" bind:value={isLiked} />
                   {#if !post.is_liked}
                     <button
@@ -150,9 +135,9 @@
                       />
                     </button>
                   {/if}
-                </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         {/each}
       </div>
