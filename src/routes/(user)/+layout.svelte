@@ -140,7 +140,7 @@
 
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
         {#if data.admin_groups}
-        <div class="space-y-2 overflow-auto h-50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div class="space-y-2 overflow-auto h-40 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
   
             <h3 class="text-md font-bold text-orange-700 mb-2">My Groups</h3>
     

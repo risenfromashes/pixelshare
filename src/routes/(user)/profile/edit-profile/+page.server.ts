@@ -52,6 +52,8 @@ export const actions = {
             return supabase.storage.from("images").getPublicUrl(path).data.publicUrl;
         });
 
+        console.log("Action received:",username, " url:", urls[0]);
+
 
 
         //add face image
@@ -79,7 +81,8 @@ export const actions = {
 
         
         // Common formData
-       console.log("Action received:",username, "urls:", faceurls[0]);
+        // console.log("Action received:",username, " url:", urls[0]);
+       console.log("Action received:",username, "face url:", faceurls[0]);
 
        const { data, error } = await supabase.rpc("edit_profile", {
         user_id:userId,
@@ -99,6 +102,8 @@ export const actions = {
         
             // return redirect(302, "/profile");
             return { success: true };
+            
+
 
         // }
 
