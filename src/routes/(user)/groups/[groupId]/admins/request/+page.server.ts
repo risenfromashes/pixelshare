@@ -2,50 +2,79 @@ import { fail } from "@sveltejs/kit";
 import { v4 } from "uuid";
 
 export const actions = {
-    default: async ({ request, params, locals: { supabase } }) => {
+    sendRequest: async ({ request, params, locals: { supabase } }) => {
         const formData = await request.formData();
-        console.log("Here is the form data:");
-        console.log(formData);
         const username = formData.get("username") as string;
-        const action = formData.get("action") as string; // Assuming 'invite' as action for simplicity
-        const msg= formData.get("message") as string;
+        const isModalOpen = formData.get("isModalOpen") as string;
+        const message = formData.get("message") as string;
+        const isRequestSent = formData.get("isRequestSent") as string;
+        const isCancel = formData.get("isCancel") as string;
 
-        //resignation
+        //second form data
         const userId = formData.get("userId") as string;
-        const resign= formData.get("resign") as string;
-       
+        const resign = formData.get("resign") as string;
 
-        console.log(action+ "msg:"+ msg);
-        console.log("username:"+ username);
-        console.log("resign ki hoy? "+userId+ " "+resign    );
-        const time= new Date();
-        if (action === "true") {
-            console.log("Sending admin invitation request");
-            const { data, error } = await supabase.rpc("send_admin_invitation", {
-                group_id: params.groupId,
-                message: msg,
-                user_name: username,
-                sent_time: time,
-                status: "pending",
-            });
+        
 
-        if (resign === "true") 
-        {
-            console.log("Sending resignation request");
-            const { data, error } = await supabase.rpc("remove_admin", {
-                group_id: params.groupId,
-                user_id: userId,
+        
+        // Common formData
+        console.log("Action received:", isModalOpen, "Username:", username, "Message:", message, "isRequestSent:", isRequestSent);
+        // console.log(session.user.id);
+        // Process based on action
+        const date= new Date();
+        if (isRequestSent === "true") {
+            console.log("group_id:", Number.parseInt(params.groupId), "message:", message, "sent_time:", date, "user_name:", username);
+            console.log("Sending admin invitation request to:", username, "Message:", message);
+
+            const { data, error } = await supabase.rpc("add_admin_moderation", {
+                group_id:  Number.parseInt(params.groupId),
+                message: message,
+                sent_time: date,
+                user_name: username, 
             });
-        }
 
             if (error) {
-                console.log(error);
+                console.log("Error sending admin invitation:", error);
                 return fail(400, { error: error.message });
             }
+
             return { success: true, message: "Admin invitation sent successfully." };
-        } else {
-            console.log("Unsupported action");
-            return fail(400, { error: "Unsupported action" });
+        }
+        
+        if (isCancel === "true") {
+            console.log("group_id:", Number.parseInt(params.groupId), "user_name:", username);
+            console.log("Cancelling admin invitation request to:", username);
+
+            const { data, error } = await supabase.rpc("cancel_admin_moderation", {
+                group_id:  Number.parseInt(params.groupId),
+                user_id: username, 
+            });
+
+            if (error) {
+                console.log("Error cancelling admin invitation:", error);
+                return fail(400, { error: error.message });
+            }
+
+            return { success: true, message: "Admin invitation cancelled successfully." };
+        }
+
+        if (resign === "true") {
+            console.log("group_id:", Number.parseInt(params.groupId), "user_name:", username);
+            console.log("Resigning as admin:", userId);
+
+            const { data, error } = await supabase.rpc("resign_admin ", {
+                group_id:  Number.parseInt(params.groupId),
+                user_id: userId, 
+            });
+
+            if (error) {
+                console.log("Error resigning as admin:", error);
+                return fail(400, { error: error.message });
+            }
+
+            return { success: true, message: "Resigned as admin successfully." };
         }
     },
+
+
 };
