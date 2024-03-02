@@ -41,7 +41,7 @@
   const removeSelectedImage = (imageId: string) => {
     images = images.filter((image) => image !== imageId);
     imageFiles = imageFiles.filter(
-      (file) => URL.createObjectURL(file) !== imageId
+      (file) => URL.createObjectURL(file) !== imageId,
     );
     updateDomFileList();
     URL.revokeObjectURL(imageId); // Free up memory by revoking object URL
@@ -172,60 +172,6 @@
             placeholder="Add Location"
             class="w-full p-2 border bg-orange-100 border-gray-300 rounded my-2"
           />
-
-          <!-- Tag selection, recommended tags and display -->
-          <div>
-            {#if images.length > 0}
-              <p class="text-gray-500 font-bold">Recommended Tags</p>
-              <div class="flex gap-2 mt-2">
-                {#each recommendedTags as tag}
-                  <button
-                    on:click={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      addTag(tag);
-                    }}
-                    class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
-                    >{tag}</button
-                  >
-                {/each}
-              </div>
-            {/if}
-            <input
-              type="text"
-              bind:value={tag}
-              on:keydown={(event) => {
-                if (event.key == "Enter") {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  addTag(tag);
-                }
-              }}
-              placeholder="Add Tag"
-              class="w-full p-2 border bg-orange-100 border-gray-300 rounded my-2"
-            />
-            <div class="flex flex-wrap gap-2 mt-2">
-              {#each tags as tag}
-                <span class="bg-gray-200 rounded px-2 py-1">
-                  {tag}
-                  <button
-                    on:click={() => {
-                      tags = tags.filter((t) => t !== tag);
-                    }}
-                    class="ml-1 text-gray-600 hover:text-black">&times;</button
-                  >
-                </span>
-              {/each}
-            </div>
-            <input
-              type="text"
-              name="tags"
-              value={joinedTags}
-              placeholder="Add Tag"
-              class="w-full p-2 border bg-orange-100 border-gray-300 rounded my-2"
-              hidden
-            />
-          </div>
 
           <!-- Post button -->
           <div class="w-full flex flex-row justify-center">
