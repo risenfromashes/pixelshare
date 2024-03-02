@@ -33,3 +33,23 @@ end;
 $$ language plpgsql;
 
 -- select notify_all('1', 'hellooo', 'Hello Guyzzzzzzz 2', '2024-01-28');
+
+
+
+
+CREATE OR REPLACE FUNCTION notify_all_users (
+  uid text,
+  title text,
+  content text,
+  "createdAt" timestamptz
+) RETURNS void AS $$
+DECLARE
+  user_id text;
+BEGIN 
+  FOR user_id IN (SELECT "id" FROM "User") LOOP
+    IF user_id <> uid THEN
+      PERFORM notify(user_id, title, content, "createdAt");
+    END IF;
+  END LOOP;
+END; 
+$$ LANGUAGE plpgsql;

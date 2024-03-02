@@ -33,7 +33,7 @@ export const load = async ({
     };
   }
 
-  console.log(data);
+  // console.log(data);
 
   // Assuming you want to mark each notification as seen immediately after fetching
   for (const notification of data) {

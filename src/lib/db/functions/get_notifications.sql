@@ -3,8 +3,7 @@
 
 -- drop function if exists get_notifications (text);
 
-create
-or replace function get_notifications (user_id text) returns table (
+CREATE OR REPLACE FUNCTION get_notifications(user_id text) RETURNS TABLE (
   id bigint,
   "userId" text,
   username text,
@@ -13,14 +12,16 @@ or replace function get_notifications (user_id text) returns table (
   content text,
   seen boolean,
   "createdAt" timestamptz
-) as $$
+) AS $$
 BEGIN
     RETURN QUERY
-    SELECT n.id, n."userId", u.username, u."profileImg",  n.title, n.content, n.seen, n."createdAt"
+    SELECT n.id, n."userId", u.username, u."profileImg", n.title, n.content, n.seen, n."createdAt"
     FROM public."Notification" n
     INNER JOIN public."User" u ON n."userId" = u.id
-    WHERE n."userId" = user_id;
+    WHERE n."userId" = user_id
+    ORDER BY n."createdAt" DESC; -- This will sort the notifications by createdAt in descending order
 END;
-$$ language plpgsql;
+$$ LANGUAGE plpgsql;
+
 
 -- select * from get_user_notifications('0aacc737-0c42-48cd-a069-a8e151cfeb7e');

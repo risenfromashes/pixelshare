@@ -24,5 +24,8 @@ BEGIN
     INSERT INTO "GroupTags" ("groupId", "tagId")
     VALUES ("groupId", new_tag_id);
 
+
+    PERFORM notify_all("createdBy", "groupId", 'New Tag', 'A new tag has been added.', "createdAt");
+
 END;
 $$ language plpgsql;
