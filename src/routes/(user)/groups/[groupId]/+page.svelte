@@ -18,7 +18,7 @@
       {#each data.posts as post (post.imageId)}
         <a
           class="relative h-24 xl:h-56"
-          href={`/groups/${$page.params.groupId}/details`}
+          href={`/groups/${$page.params.groupId}/details#image-${post.imageId}`}
         >
           <ImageCard src={post.url} />
         </a>

@@ -44,8 +44,8 @@ export const load = async ({ request, parent, locals: { supabase } }) => {
       error: err3.message,
     };
   }
-  console.log("ami egular admin na");
-  console.log(non_admin_groups);
+  // console.log("ami egular admin na");
+  // console.log(non_admin_groups);
 
   // groups jegular admin +  member
   const { data: admin_groups, error: err4 } = await supabase.rpc(
@@ -61,8 +61,8 @@ export const load = async ({ request, parent, locals: { supabase } }) => {
       error: err4.message,
     };
   }
-  console.log("ami egular admin");
-  console.log(admin_groups);
+  // console.log("ami egular admin");
+  // console.log(admin_groups);
 
   return {
     session,

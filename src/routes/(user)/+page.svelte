@@ -20,7 +20,7 @@
           {#each group.images as post (post.id)}
             <a
               class="relative h-24 xl:h-56"
-              href={`/groups/${$page.params.groupId}/details`}
+              href={`/groups/${$page.params.groupId}/details#image-${post.id}`}
             >
               <ImageCard src={post.url} />
             </a>
