@@ -18,9 +18,9 @@
   let phonenumber = writable(data.user[0].phonenumber);
 
   let imageProfile = data.user[0].profileimg; // Assuming this is a string URL
-  let imageFileProfile; // This will be a File object
+  let imageFileProfile;//=URL.createObjectURL(data.user[0].profileimg); // This will be a File object
 
-  let faceImg: string;
+  let faceImg= data.user[0].faceImg;
   let faceImgFile;
 
   function editAbout()
@@ -170,6 +170,8 @@
         </div>
   
       </div>
+
+      <input type="hidden" name="imageUrl" bind:value={imageProfile} />
   
 <!-- face add -->
           <input
@@ -202,6 +204,8 @@
             </div>
           {/if}
         </div>
+
+        <input type="hidden" name="faceUrl" bind:value={faceImg} />
 
     <div class="m-4">
         <input type="hidden" name="userId" bind:value={data.user_id}/>
