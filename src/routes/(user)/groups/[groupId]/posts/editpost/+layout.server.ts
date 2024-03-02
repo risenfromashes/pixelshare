@@ -25,9 +25,11 @@ export const load = async ({
 	}
 	if (images) {
 		console.log("Here in editPost");
+		console.log(params.groupId);
 		//console.log(images);
 		return {
 			images: images,
+			group_id: params.groupId,
 		};
 	}
 }

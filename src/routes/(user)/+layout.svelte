@@ -43,10 +43,10 @@
   <!-- Adjust for light theme -->
 
   <button
-    class="px-4 py-2 bg-orange-300 text-black rounded hover:bg-orange-200 transition-colors duration-300"
+    class="px-4 py-2 bg-orange-300 text-black font-bold rounded hover:bg-orange-200 transition-colors duration-300"
     on:click={() => (active = !active)}
   >
-    {active ? "Close" : "Open"} Menu
+    {active ? "<<" : ">>"}
   </button>
   <aside
     class="absolute transition-transform duration-500 h-full w-72 p-5 border bg-gray-100 -translate-x-full {active

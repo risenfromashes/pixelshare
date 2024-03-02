@@ -7,7 +7,7 @@ export const actions = {
 	default: async ({ request, params, locals: { supabase, getSession } }) => {
 		const formData = await request.formData();
 		console.log("here is the form data");
-		console.log(formData);
+		//console.log(formData);
 		//const postedBy = formData.get("username") as String;
 		const postId = Number.parseInt(formData.get("postId")?.toString() ?? "0");
 		//const caption = formData.get("caption") as String;

@@ -58,6 +58,16 @@
 										>Delete</button
 									>
 								</div>
+								<div
+									class="flex justify-center font-bold text-orange-500 gap-4"
+								>
+									<!-- svelte-ignore missing-declaration -->
+									<a
+										class="w-full flex items-center py-4 px-4 hover:bg-range-300 rounded"
+										href={`/groups/${data.group_id}/posts/${image.image_id}/edittags`}
+										>Edit Tags</a
+									>
+								</div>
 							</div>
 						</form>
 					</div>

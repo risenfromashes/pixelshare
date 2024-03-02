@@ -40,8 +40,8 @@ export const load = async ({ params, locals: { supabase, getSession } }) => {
 	if (err2) {
 		return fail(400, { error: err2.message });
 	}
-	console.log("ekhaneeeeeeeeeeeeeeeeeee  liked posts");
-	console.log(posts);
+	//console.log("ekhaneeeeeeeeeeeeeeeeeee  liked posts");
+	//console.log(posts);
 
 	return {
 		groupInfo: groupInfo,
