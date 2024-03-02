@@ -5,6 +5,7 @@
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
 
   let description: String = "";
+  let generalName: String = "";
   let tagName: String = "";
   let success = false;
   let imagesTag: string[] = [];
@@ -65,6 +66,7 @@
           imageFilesTag = [];
           tagName = "";
           description = "";
+          generalName="";
           invalidateAll();
         }
       };
@@ -114,6 +116,15 @@
         />
 
         <!-- Group description for the tag input -->
+
+        <textarea
+        name="generalName"
+        bind:value={generalName}
+        placeholder="Write a general Name for the tag"
+        class="w-full p-2 bg-orange-100 border border-white-300 rounded-md text-black"
+      ></textarea>
+
+
         <textarea
           name="description"
           bind:value={description}

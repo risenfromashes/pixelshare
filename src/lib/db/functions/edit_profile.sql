@@ -8,7 +8,8 @@ CREATE OR REPLACE FUNCTION edit_profile(
     bio2 text,
     location2 text,
     phone_number text,
-    img text
+    img text,
+    face text
 ) RETURNS void AS $$
 BEGIN
     -- Perform the update operation on the 'Users' table
@@ -18,7 +19,8 @@ BEGIN
         "bio" = bio2,
         "location" = location2,
         "phoneNumber" = phone_number,
-        "profileImg" =img
+        "profileImg" =img,
+        "faceImg"=face
     WHERE "id" = user_id;
 END;
 $$ LANGUAGE plpgsql;

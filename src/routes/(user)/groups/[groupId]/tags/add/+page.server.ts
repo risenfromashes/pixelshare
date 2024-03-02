@@ -12,6 +12,7 @@ export const actions = {
 		const files = formData.getAll("files") as File[];
 		const tagName = formData.get("name") as string;
 		const description = formData.get("description") as string;
+		const generalName=formData.get("generalName") as string;
 
 		console.log("Action called");
 		console.log(tagName);
@@ -57,6 +58,7 @@ export const actions = {
 			createdAt: date,
 			tagImage: urls[0],
 			groupId: params.groupId,
+			short_desc:generalName,
 		});
 
 		if (error) {

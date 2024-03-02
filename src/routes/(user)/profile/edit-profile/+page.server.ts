@@ -10,6 +10,7 @@ export const actions = {
         const bio= formData.get("bio") as string;
         const phonenumber= formData.get("phonenumber") as string;
         const imgs= formData.getAll("profileImg") as File[];
+        const faceImgs=formData.getAll("faceImg") as File[];
 
 
         
@@ -51,9 +52,34 @@ export const actions = {
             return supabase.storage.from("images").getPublicUrl(path).data.publicUrl;
         });
 
+
+
+        //add face image
+        if (!faceImgs || faceImgs.length === 0) {
+            return fail(400, { invalid: true });
+        }
+
+        let facePaths = [];
+        for (const img of faceImgs) {
+            const { data, error } = await supabase.storage
+                .from("images")
+                .upload(v4() + "." + img.name.split(".").pop(), img);
+
+            if (error) {
+                await supabase.storage.from("images").remove(facePaths);
+                return fail(400, { error: "Storage error: " + error.message });
+            } else {
+                facePaths.push(data.path);
+            }
+        }
+
+        const faceurls = facePaths.map((facePaths) => {
+            return supabase.storage.from("images").getPublicUrl(facePaths).data.publicUrl;
+        });
+
         
         // Common formData
-       console.log("Action received:",username, "urls:", urls[0]);
+       console.log("Action received:",username, "urls:", faceurls[0]);
 
        const { data, error } = await supabase.rpc("edit_profile", {
         user_id:userId,
@@ -62,6 +88,7 @@ export const actions = {
         location2:location,
         phone_number:phonenumber,
         img:urls[0],
+        face:faceurls[0],
     });
 
     if (error) {
