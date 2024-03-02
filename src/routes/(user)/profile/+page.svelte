@@ -1,14 +1,48 @@
 <script lang="ts">
    import { writable } from 'svelte/store';
    import { onMount } from "svelte";
+   import { Icon } from "$lib";
+   import FaIcon from "$lib/components/FaIcon.svelte";
 
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
   import { enhance } from "$app/forms";
+  // import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
   
 
     let success=false;
 
     export let data; // Assuming 'data' is passed as a prop.
+
+
+    let startIndex = 0;
+    let startIndex0 = 0;
+
+// Function to show next four groups
+
+    function showNextAdminGroups() {
+        if (startIndex0 + 3< data.admin_groups.length) {
+            startIndex0 += 3;
+        }
+    }
+
+    // Function to show previous four groups
+    function showPreviousAdminGroups() {
+        if (startIndex0 - 3>= 0) {
+            startIndex0 -= 3;
+        }
+    }
+    function showNext() {
+        if (startIndex + 3< data.non_admin_groups.length) {
+            startIndex += 3;
+        }
+    }
+
+    // Function to show previous four groups
+    function showPrevious() {
+        if (startIndex - 3>= 0) {
+            startIndex -= 3;
+        }
+    }
 
 </script>
 
@@ -60,9 +94,6 @@
       <p id="aboutText" class="bg-orange-100 p-2.5 rounded-md w-full relative">
         {data.user[0].bio}
       </p>
-      <!-- <a href="#" id="editButton" class="absolute bottom-6 right-0 mr-1 mt-2 cursor-pointer" on:click={openModal}>
-        <img src="./icons/edit.png" alt="Edit bio" class="w-5 h-5 border-1 border-white"/>
-      </a> -->
     </div>
   </div>
 
@@ -71,52 +102,67 @@
     <div class="mb-5">
       <h2 class="text-lg mb-2.5 font-bold">My Groups</h2>
       <div class="bg-orange-300 gap-4 mb-2 w-full h-px mx-3"></div>
-      {#if data.admin_groups}
-        <div class="space-y-">
-          {#each data.admin_groups as group}
-            <a
-              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-              href={`/groups/${group.group_id}`}
-            >
-              <img
-                src={group.profile_image_url}
-                alt={group.group_name}
-                class="h-8 w-8 rounded-full object-cover mr-2"
-              />
-              <span class="text-sm font-medium text-gray-800"
-                >{group.group_name}</span
-              >
-            </a>
-          {/each}
-        </div>
-      {/if}
+      {#if data.admin_groups && data.admin_groups.length > 0}
+      <div class="flex justify-between items-center">
+
+        <button on:click={showPreviousAdminGroups} class="bg-transparent border-0 p-0 flex items-center justify-center">
+          <img src="/icons/leftArrow.png" alt="Previous" class="w-4 h-4"> <!-- Keep only the icon visible -->
+          <span class="hidden">Previous</span> <!-- Hide the text -->
+      </button>
+      
+      
+      
+          
+          <div class="flex space-x-4">
+              {#each data.admin_groups.slice(startIndex0, startIndex0 + 3) as group}
+                  <a class="flex items-center py-4 px-4 hover:bg-gray-300 rounded" href={`/groups/${group.group_id}`}>
+                      <img src={group.profile_image_url} alt={group.group_name} class="h-8 w-8 rounded-full object-cover mr-2" />
+                      <span class="text-sm font-medium text-gray-800">{group.group_name}</span>
+                  </a>
+              {/each}
+          </div>
+
+          <button on:click={showNextAdminGroups} class="bg-transparent border-0 p-0 flex items-center justify-center">
+            <img src="/icons/rightArrow.png" alt="Previous" class="w-4 h-4"> <!-- Keep only the icon visible -->
+            <span class="hidden">Next</span> <!-- Hide the text -->
+        </button>
+      </div>
+  {/if}
+     
     </div>
 
     <!-- Mutual Groups -->
     <div class="mb-5">
       <h2 class="text-lg mb-2.5 font-bold">My Other Groups</h2>
       <div class="bg-orange-300 gap-4 mb-2 w-full h-px mx-3"></div>
-      {#if data.non_admin_groups}
-        <div class="space-y-">
-          {#each data.non_admin_groups as group}
-            <a
-              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-              href={`/groups/${group.group_id}`}
-            >
-              <img
-                src={group.profile_image_url}
-                alt={group.group_name}
-                class="h-8 w-8 rounded-full object-cover mr-2"
-              />
-              <span class="text-sm font-medium text-gray-800"
-                >{group.group_name}</span
-              >
-            </a>
-          {/each}
-        </div>
-      {/if}
+      {#if data.non_admin_groups && data.non_admin_groups.length > 0}
+        <div class="flex justify-between items-center">
 
-      <div class="relative w-full h-full"> <!-- Ensure the parent is positioned relatively -->
+          <button on:click={showPrevious} class="bg-transparent border-0 p-0 flex items-center justify-center">
+            <img src="/icons/leftArrow.png" alt="Previous" class="w-4 h-4"> <!-- Keep only the icon visible -->
+            <span class="hidden">Previous</span> <!-- Hide the text -->
+        </button>
+        
+        
+        
+            
+            <div class="flex space-x-4">
+                {#each data.non_admin_groups.slice(startIndex, startIndex + 3) as group}
+                    <a class="flex items-center py-4 px-4 hover:bg-gray-300 rounded" href={`/groups/${group.group_id}`}>
+                        <img src={group.profile_image_url} alt={group.group_name} class="h-8 w-8 rounded-full object-cover mr-2" />
+                        <span class="text-sm font-medium text-gray-800">{group.group_name}</span>
+                    </a>
+                {/each}
+            </div>
+
+            <button on:click={showNext} class="bg-transparent border-0 p-0 flex items-center justify-center">
+              <img src="/icons/rightArrow.png" alt="Previous" class="w-4 h-4"> <!-- Keep only the icon visible -->
+              <span class="hidden">Next</span> <!-- Hide the text -->
+          </button>
+        </div>
+    {/if}
+
+      <div class="relative w-full h-full mt-10"> <!-- Ensure the parent is positioned relatively -->
         <a href={`/profile/edit-profile`} class="absolute bottom-0 right-0"> <!-- Position the link at the bottom right -->
             <button class="px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500" >
                 Edit Profile
