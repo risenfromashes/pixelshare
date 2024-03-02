@@ -26,8 +26,8 @@ export const load = async ({ request, params, locals: { supabase } }) => {
   const { data: tags, error } = await supabase.rpc("get_tags", {
     gid: Number.parseInt(params.groupId),
   });
-  console.log(tags);
-  console.log("tags got from layout");
+  // console.log(tags);
+  // console.log("tags got from layout");
 
   if (error) {
     return { error: error.message };
@@ -41,8 +41,8 @@ export const load = async ({ request, params, locals: { supabase } }) => {
       group_id: Number.parseInt(params.groupId),
     }
   );
-  console.log(members);
-  console.log("members got from layout");
+  // console.log(members);
+  // console.log("members got from layout");
 
   if (err4) {
     return { error: err4.message };

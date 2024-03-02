@@ -1,50 +1,49 @@
 <script lang="ts">
-  export let data;
-  // Example data to mimic the interface
-  import { writable } from "svelte/store";
-  const profileImage = writable("sample/sample.jpg");
+   import { writable } from 'svelte/store';
 
-  let tempFile = "";
-  let tempBio = "";
-  // @ts-ignore
-  function changeProfilePicture(event) {
-    const file = event.target.files[0];
-    // tempFile.set(URL.createObjectURL(profileImage));
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      profileImage.set(imageUrl);
-      // @ts-ignore
-      consol.log("hehe");
-    }
-  }
-  function cancelChange() {
-    // user.about = tempBio;
-    // profileImage.set(tempFile);
-  }
+  import { goto, invalidateAll, onNavigate } from "$app/navigation";
+  import { enhance } from "$app/forms";
+  
 
-  function confirmChange() {
-    //
-  }
-  let isModalOpen = false;
+    let success=false;
 
-  // Function to open the modal
-  function openModal() {
-    isModalOpen = true;
-  }
+export let data; // Assuming 'data' is passed as a prop.
+const profileImage = writable(data.user[0].profileimg); // Use user's current image as default.
+let tempFile = data.user[0].profileimg; // Temporary storage for profile image.
+let tempBio = data.user[0].bio; // Temporary storage for biography.
+let isModalOpen = false;
+let isEdited=false;
+let editedBio = ''; // To be used in the modal for editing bio.
 
-  // Function to close the modal
-  function closeModal() {
-    isModalOpen = false;
+// Function to handle profile picture change.
+function changeProfilePicture(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const imageUrl = URL.createObjectURL(file);
+    profileImage.set(imageUrl); // Update the profile image preview.
+    tempFile = imageUrl; // Update temporary file storage.
   }
+}
 
-  function editAbout() {
-    // @ts-ignore
-    const editedBio = document.querySelector(".modal textarea").value;
-    //tempBio = user.about;
-    //user.about = editedBio;
-    closeModal();
-  }
-  console.log(data);
+// Function to handle opening the bio edit modal.
+function openModal() {
+  isModalOpen = true;
+  // editedBio = tempBio; // Pre-fill the textarea with the current bio.
+}
+
+// Function to handle closing the bio edit modal.
+function closeModal() {
+  isModalOpen = false;
+}
+
+// Function to handle bio changes.
+function editAbout(isEdited,event) 
+{
+  tempBio = editedBio; // Update the temporary bio storage with the new bio.
+  isModalOpen = false; // Close the modal.
+  isEdited=true;
+  data.user[0].bio = editedBio; // Update the actual bio with the new content.
+}
 </script>
 
 <div class="flex h-screen bg-gray-900">
@@ -104,54 +103,52 @@
       <div class="bg-orange-200 w-px h-40 mx-3"></div>
     </div>
 
-    <!-- About Section -->
-    <div class="mb-12 mt-16 relative">
-      <h3 class="font-bold mb-2.5">About me</h3>
-      <div class="relative">
-        <p
-          id="aboutText"
-          class="bg-orange-100 p-2.5 rounded-md w-full relative"
-        >
-          {data.user[0].bio}
-          <a
-            href="#"
-            id="editButton"
-            class="absolute bottom-6 right-0 mr-1 mt-2 cursor-pointer"
-          >
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <img
-              src="./icons/edit.png"
-              class="w-5 h-5 border-1 border-white"
-              on:click={openModal}
-            />
-            <!-- <button class="px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-600" on:click={openModal}>
-              Send Request
-          </button> -->
-          </a>
-        </p>
-      </div>
+   
+  <!-- About Section -->
+  <div class="mb-12 mt-16 relative">
+    <h3 class="font-bold mb-2.5">About me</h3>
+    <div class="relative">
+      <p id="aboutText" class="bg-orange-100 p-2.5 rounded-md w-full relative">
+        {data.user[0].bio}
+      </p>
+      <!-- <a href="#" id="editButton" class="absolute bottom-6 right-0 mr-1 mt-2 cursor-pointer" on:click={openModal}>
+        <img src="./icons/edit.png" alt="Edit bio" class="w-5 h-5 border-1 border-white"/>
+      </a> -->
     </div>
+  </div>
 
-    {#if isModalOpen}
-      <div class="fixed inset-0 flex items-center justify-center z-50">
-        <div class="modal bg-orange-200 rounded-lg p-6">
-          <h2 class="text-xl font-semibold mb-4">Edit Your Bio</h2>
-          <!-- <h3 class="text-lg mb-2">State the Reason why do you prefer him as a Moderator?</h3> -->
-          <hr class="h-px w-full my-2 bg-zinc-800 border-0 dark:bg-zinc-700" />
-          <textarea
-            class="w-full h-32 rounded border p-2 mb-4 bg-orange-100"
-            placeholder="Type your message here"
-          ></textarea>
-          <div class="flex justify-end">
-            <button
-              class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              on:click={editAbout}>Change</button
-            >
-            <!-- <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ml-2" on:click={closeModal}>Cancel</button> -->
-          </div>
+  <!-- Modal for editing bio -->
+  {#if isModalOpen}
+      <form
+      class="request-item flex items-center bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-200 transition-colors duration-200 ease-in-out"
+      method="POST"
+      on:submit
+      enctype="multipart/form-data"
+      use:enhance={({ formElement, cancel }) => {
+          success = false;
+          return async ({ result }) => {
+              if (result.type === "success") {
+                  success = true;
+                  formElement.reset();
+                  invalidateAll();
+              }
+          };
+      }}
+    > 
+    <div class="fixed inset-0 flex items-center justify-center z-50">
+      <div class="modal bg-orange-200 rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Edit Your Bio</h2>
+        <textarea class="w-full h-32 rounded border p-2 mb-4 bg-orange-100" placeholder="Type your Bio here" bind:value={editedBio}></textarea>
+        <div class="flex justify-end">
+          <input type="hidden" name="userId" bind:value={data.user_id}/>
+          <input type="hidden" name="isEdited" bind:value={isEdited}/>
+          <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" on:click={(event) => editAbout(true, event)}>Change</button>
+          <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ml-2" on:click={closeModal}>Cancel</button>
         </div>
       </div>
-    {/if}
+    </div>
+    </form>
+  {/if}
 
     <!-- Mutual Groups -->
     <div class="mb-5">
@@ -201,6 +198,16 @@
           {/each}
         </div>
       {/if}
+
+      <div class="relative w-full h-full"> <!-- Ensure the parent is positioned relatively -->
+        <a href={`/profile/edit-profile`} class="absolute bottom-0 right-0"> <!-- Position the link at the bottom right -->
+            <button class="px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500" >
+                Edit Profile
+            </button>
+        </a>
     </div>
+    </div>
+
+  
   </div>
 </div>

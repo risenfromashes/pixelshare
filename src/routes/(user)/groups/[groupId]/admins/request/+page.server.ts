@@ -1,8 +1,8 @@
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { v4 } from "uuid";
 
 export const actions = {
-    sendRequest: async ({ request, params, locals: { supabase } }) => {
+    default: async ({ request, params, locals: { supabase, getSession } }) => {
         const formData = await request.formData();
         const username = formData.get("username") as string;
         const isModalOpen = formData.get("isModalOpen") as string;
@@ -14,7 +14,19 @@ export const actions = {
         const userId = formData.get("userId") as string;
         const resign = formData.get("resign") as string;
 
-        
+        const {
+			data: { user },
+			error: err1,
+		} = await supabase.auth.getUser();
+
+		if (err1 || !user) {
+			return redirect(302, "/login");
+		}
+
+		const session = await getSession();
+		if (!session) {
+			return redirect(302, "/login");
+		}
 
         
         // Common formData
@@ -41,7 +53,7 @@ export const actions = {
             return { success: true, message: "Admin invitation sent successfully." };
         }
         
-        if (isCancel === "true") {
+        else if (isCancel === "true") {
             console.log("group_id:", Number.parseInt(params.groupId), "user_name:", username);
             console.log("Cancelling admin invitation request to:", username);
 
@@ -58,7 +70,7 @@ export const actions = {
             return { success: true, message: "Admin invitation cancelled successfully." };
         }
 
-        if (resign === "true") {
+        else if (resign === "true") {
             console.log("group_id:", Number.parseInt(params.groupId), "user_name:", username);
             console.log("Resigning as admin:", userId);
 
@@ -72,8 +84,9 @@ export const actions = {
                 return fail(400, { error: error.message });
             }
 
-            return { success: true, message: "Resigned as admin successfully." };
+            return { success: true };
         }
+
     },
 
 
