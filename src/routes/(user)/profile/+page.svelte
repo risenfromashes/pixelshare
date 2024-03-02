@@ -76,10 +76,11 @@
 
       <!-- User Info -->
       <div class="flex-1">
-        <p class="text-sm mb-2">From - {data.user[0].location}</p>
-        <p class="text-sm mb-2">Email - {data.user[0].email}</p>
-        <p class="text-sm mb-2">Joined on - {data.user[0].joiningdate}</p>
-        <p class="text-sm mb-2">Contact No - {data.user[0].phonenumber}</p>
+        <h2 class="text-sm mb-2 font-semibold text-orange-700">From - {data.user[0].location}</h2>
+        <h3 class="text-sm mb-2 font-semibold text-orange-700">Email - {data.user[0].email}</h3>
+        <h3 class="text-sm mb-2 font-semibold text-orange-700">Joined on - {data.user[0].joiningdate}</h3>
+        <h3 class="text-sm mb-2 font-semibold text-orange-700">Contact No - {data.user[0].phonenumber}</h3>
+
       </div>
 
       <!-- Vertical Line -->
@@ -161,10 +162,11 @@
           </button>
         </div>
     {/if}
-
-      <div class="relative w-full h-full mt-10"> <!-- Ensure the parent is positioned relatively -->
+      
+    <div class="bg-orange-300 gap-4 mb-2 w-full h-px mx-3 mt-4 mb-4"></div>
+      <div class="relative w-full h-full mt-20"> <!-- Ensure the parent is positioned relatively -->
         <a href={`/profile/edit-profile`} class="absolute bottom-0 right-0"> <!-- Position the link at the bottom right -->
-            <button class="px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500" >
+            <button class="px-4 py-3 mt-8 bg-red-400 text-white rounded hover:bg-red-500" >
                 Edit Profile
             </button>
         </a>
