@@ -9,9 +9,11 @@ export const actions = {
         const location = formData.get("location") as string;
         const bio= formData.get("bio") as string;
         const phonenumber= formData.get("phonenumber") as string;
+        const imgs= formData.getAll("profileImg") as File[];
+
 
         
-
+        console.log("Action received:",username, "img:", imgs);
         const {
 			data: { user },
 			error: err1,
@@ -26,9 +28,32 @@ export const actions = {
 			return redirect(302, "/login");
 		}
 
+
+        if (!imgs || imgs.length === 0) {
+            return fail(400, { invalid: true });
+        }
+
+        let paths = [];
+        for (const img of imgs) {
+            const { data, error } = await supabase.storage
+                .from("images")
+                .upload(v4() + "." + img.name.split(".").pop(), img);
+
+            if (error) {
+                await supabase.storage.from("images").remove(paths);
+                return fail(400, { error: "Storage error: " + error.message });
+            } else {
+                paths.push(data.path);
+            }
+        }
+
+        const urls = paths.map((path) => {
+            return supabase.storage.from("images").getPublicUrl(path).data.publicUrl;
+        });
+
         
         // Common formData
-       console.log("Action received:",username, "bio:", bio);
+       console.log("Action received:",username, "urls:", urls[0]);
 
        const { data, error } = await supabase.rpc("edit_profile", {
         user_id:userId,
@@ -36,6 +61,7 @@ export const actions = {
         bio2:bio,
         location2:location,
         phone_number:phonenumber,
+        img:urls[0],
     });
 
     if (error) {
@@ -44,7 +70,9 @@ export const actions = {
     }
 
         
+            return redirect(302, "/profile");
             return { success: true };
+
         // }
 
     },
