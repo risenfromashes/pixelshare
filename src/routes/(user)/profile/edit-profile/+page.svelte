@@ -76,13 +76,13 @@
             enctype="multipart/form-data"
             use:enhance={({ formElement, cancel }) => {
                    success = false;
-        return async ({ result }) => {
-          if (result.type === "success") {
-            success = true;
-            formElement.reset();
-            imageProfile = data.user[0].profileimg;
-            imageFileProfile = URL.createObjectURL(data.user[0].profileimg);
-            invalidateAll();
+            return async ({ result }) => {
+              if (result.type === "success") {
+                success = true;
+                formElement.reset();
+                imageProfile = data.user[0].profileimg;
+                imageFileProfile = URL.createObjectURL(data.user[0].profileimg);
+                // invalidateAll();
           }
         };
             }}
@@ -133,24 +133,7 @@
   
       </div>
   
-     
-    <!-- About Section -->
-    <!-- <form
-    class="request-item flex flex-col  bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-150 transition-colors duration-200 ease-in-out"
-    method="POST"
-    on:submit
-    enctype="multipart/form-data"
-    use:enhance={({ formElement, cancel }) => {
-        success = false;
-        return async ({ result }) => {
-            if (result.type === "success") {
-                success = true;
-                formElement.reset();
-                invalidateAll();
-            }
-        };
-    }}
-  >  -->
+
     <div>
         <input type="hidden" name="userId" bind:value={data.user_id}/>
       <h3 class="font-bold mb-2.5">User Name</h3>

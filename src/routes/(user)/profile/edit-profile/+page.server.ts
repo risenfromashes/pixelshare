@@ -70,7 +70,7 @@ export const actions = {
     }
 
         
-            return redirect(302, "/profile");
+            // return redirect(302, "/profile");
             return { success: true };
 
         // }

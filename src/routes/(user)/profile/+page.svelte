@@ -30,23 +30,6 @@
             alt="Profile "
             class="rounded-full w-24 h-24 border-4 border-white"
           />
-          <!-- <label
-            for="profile-image-input"
-            class="cursor-pointer absolute bottom-0 right-0"
-          >
-            <img
-              src="./icons/camera.png"
-              alt="File Picker"
-              class="w-10 h-10 p-2 bg-white-300 rounded-full"
-            />
-          </label>
-          <input
-            type="file"
-            id="profile-image-input"
-            accept="image/*"
-            on:change={() => changeProfilePicture(event)}
-            hidden
-          /> -->
         </div>
 
         <div>
