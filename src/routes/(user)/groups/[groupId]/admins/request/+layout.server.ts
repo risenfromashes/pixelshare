@@ -26,7 +26,7 @@ export const load = async ({
   }
   
   console.log("recommended moderators, isAdmin:", data2);
-  // console.log(data);
+  console.log(data);
 
   if (error) {
     return { error: error.message };

@@ -3,6 +3,7 @@
   import FaIcon from "$lib/components/FaIcon.svelte";
   import { enhance } from "$app/forms";
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
+  import Spinner from "$lib/components/Spinner.svelte";
 
   let description: String = "";
   let name: String = "";
@@ -11,6 +12,8 @@
   let imageFilesCover: File[] = [];
   let imagesProfile: string[] = [];
   let imageFilesProfile: File[] = [];
+
+  let loading = false;
 
   const updateDomFileListCover = () => {
     const element =
@@ -77,6 +80,14 @@
         <p>Congratulations. Your new group {name} created successfully!</p>
       </div>
     {/if}
+
+    {#if loading}
+        <div
+          class="text-center text-lg flex flex-row justify-center items-center"
+        >
+          Loading... <Spinner size={4} className="ml-2" />
+        </div>
+    {/if}
     <form
       method="POST"
       on:submit|preventDefault
@@ -86,6 +97,10 @@
           cancel();
           return;
         }
+        if (loading) {
+                cancel();
+              }
+        loading = true;
         success = false;
         return async ({ result }) => {
           if (result.type === "success") {
@@ -99,6 +114,7 @@
             description = "";
             invalidateAll();
           }
+          loading = false;
         };
       }}
     >

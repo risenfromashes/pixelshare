@@ -3,8 +3,13 @@ import { get } from "svelte/store";
 import { v4 } from "uuid";
 import { getUsername, getGroupname } from "$lib/db/functions/helpers";
 
-export const load = async ({ request, params, locals: { supabase } }) => {
+export const load = async ({ request, params, locals: { supabase ,getSession} }) => {
   const { data: user, error: err1 } = await supabase.auth.getUser();
+
+    const session = await getSession();
+    if (!session) {
+      return redirect(302, "/login");
+    }
 
   if (err1 || !user) {
     return redirect(302, "/login");
@@ -14,20 +19,20 @@ export const load = async ({ request, params, locals: { supabase } }) => {
     return fail(400, { invalid: true });
   }
 
-  const { data, error: err2 } = await supabase.rpc("get_group_posts", {
+  const { data, error: err5 } = await supabase.rpc("get_group_posts", {
     gid: Number.parseInt(params.groupId),
   });
 
-  if (err2) {
-    return fail(400, { error: err2.message });
+  if (err5) {
+    return fail(400, { error: err5.message });
   }
 
   // Fetching Tags
   const { data: tags, error } = await supabase.rpc("get_tags", {
     gid: Number.parseInt(params.groupId),
   });
-  console.log(tags);
-  console.log("tags got from layout");
+  // console.log(tags);
+  // console.log("tags got from layout");
 
   if (error) {
     return { error: error.message };
@@ -41,8 +46,8 @@ export const load = async ({ request, params, locals: { supabase } }) => {
       group_id: Number.parseInt(params.groupId),
     }
   );
-  console.log(members);
-  console.log("members got from layout");
+  // console.log(members);
+  // console.log("members got from layout");
 
   if (err4) {
     return { error: err4.message };
@@ -55,7 +60,7 @@ export const load = async ({ request, params, locals: { supabase } }) => {
   //console.log("In Load method of Post Requests");
   //console.log(groupInfo);
 
-  const { data: postRequests, error: err5 } = await supabase.rpc(
+  const { data: postRequests, error: err6 } = await supabase.rpc(
     "get_requested_posts",
     {
       group_id: Number.parseInt(params.groupId),
@@ -74,6 +79,11 @@ export const load = async ({ request, params, locals: { supabase } }) => {
       gid: Number.parseInt(params.groupId),
     }
   );
+
+  const { data:data2, error: err2 } = await supabase.rpc("is_admin", {
+    gid: Number.parseInt(params.groupId),
+    userid: session.user.id,
+  });
   //console.log(data);
 
   if (error_req) {
@@ -88,5 +98,6 @@ export const load = async ({ request, params, locals: { supabase } }) => {
     groupInfo: groupInfo,
     postRequests: postRequests,
     requests: requests,
+    isAdmin: data2,
   };
 };

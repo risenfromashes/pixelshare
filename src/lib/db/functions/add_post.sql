@@ -1,3 +1,4 @@
+
 --drop function add_post(text, text, text, integer, timestamptz, text[]);
 create or replace function add_post(
    "status" text,
@@ -29,6 +30,8 @@ begin
         insert into "PostImages" ("postId", "imageId")
         values (new_post_id, new_image_id);
     end loop;
+
+
+    PERFORM notify_all("createdBy", "groupId", 'New Post', 'A new post has been approved.', "createdAt");
 end;
 $$ language plpgsql;
-

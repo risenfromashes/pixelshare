@@ -75,8 +75,8 @@ function cancelRequest(moderator,event) {
           <form
           class="request-item flex items-center bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-200 transition-colors duration-200 ease-in-out"
           method="POST"
-          action="?/sendRequest"
           on:submit
+          enctype="multipart/form-data"
           use:enhance={({ formElement, cancel }) => {
               success = false;
               return async ({ result }) => {
@@ -111,12 +111,12 @@ function cancelRequest(moderator,event) {
                
                   <input type="hidden" name="isModalOpen" bind:value={isModalOpen}/>
                   {#if !moderator.isReq}
-                      <button on:click={openModal} class="px-4 py-2 mr-2 bg-orange-300 text-white rounded-lg hover:bg-orange-500">
+                      <button  type="submit" on:click={openModal} class="px-4 py-2 mr-2 bg-orange-300 text-white rounded-lg hover:bg-orange-500">
                           Send Request
                       </button>
                   {:else}
                   <input type="hidden" name="isCancel" bind:value={isCancel}/>
-                      <button on:click={(event) => cancelRequest(moderator, event)} class="px-4 py-2 mr-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                      <button  type="submit" on:click={(event) => cancelRequest(moderator, event)} class="px-4 py-2 mr-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
                           Request Sent
                       </button>
                   {/if}
@@ -154,7 +154,7 @@ function cancelRequest(moderator,event) {
           {#if data.isAdmin}
           <form class="flex items-center justify-end"
           method="POST"
-          action="?/sendRequest"
+          enctype="multipart/form-data"
           on:submit
           use:enhance={({ formElement, cancel }) => {
               success = false;
@@ -168,7 +168,7 @@ function cancelRequest(moderator,event) {
           }}>
             <input type="hidden" name="userId" value={data.userId}/>
             <input type="hidden" name="resign" bind:value={isResigned}/>
-            <button on:click={() => resignFromModeration()} class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+            <button  type="submit" on:click={() => resignFromModeration()} class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
               Resign from Moderation
             </button>
           </form>

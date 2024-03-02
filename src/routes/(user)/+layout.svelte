@@ -139,44 +139,51 @@
     </div>
 
     <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
+        {#if data.admin_groups}
+        <div class="space-y-2 overflow-auto h-50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+  
+            <h3 class="text-md font-bold text-orange-700 mb-2">My Groups</h3>
+    
+            {#each data.admin_groups as group}
+                <a
+                    class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+                    href={`/groups/${group.group_id}`}
+                >
+                    <img
+                        src={group.profile_image_url}
+                        alt={group.group_name}
+                        class="h-8 w-8 rounded-full object-cover mr-2"
+                    />
+                    <span class="text-sm font-medium text-gray-800">{group.group_name}</span>
+                </a>
+            {/each}
+        </div>
+    {/if}
+
+    <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
 
     {#if data.non_admin_groups}
-      <div class="space-y-">
-        <h3 class="text-md font-bold text-gray-700 mb-2">Groups</h3>
+    <div class="space-y-2 overflow-auto h-40 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <!-- Adjust height as needed -->
+            <h3 class="text-md font-bold text-orange-700 mb-2">Other Groups</h3>
+    
+            {#each data.non_admin_groups as group}
+                <a
+                    class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
+                    href={`/groups/${group.group_id}`}
+                >
+                    <img
+                        src={group.profile_image_url}
+                        alt={group.group_name}
+                        class="h-8 w-8 rounded-full object-cover mr-2"
+                    />
+                    <span class="text-sm font-medium text-gray-800">{group.group_name}</span>
+                </a>
+            {/each}
+        </div>
+    {/if}
 
-        {#each data.non_admin_groups as group}
-          <a
-            class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-            href={`/groups/${group.group_id}`}
-          >
-            <img
-              src={group.profile_image_url}
-              alt={group.group_name}
-              class="h-8 w-8 rounded-full object-cover mr-2"
-            />
-            <span class="text-sm font-medium text-gray-800"
-              >{group.group_name}</span
-            >
-          </a>
-        {/each}
-
-        {#if data.admin_groups}
-          {#each data.admin_groups as group}
-            <a
-              class="w-full flex items-center py-4 px-4 hover:bg-gray-300 rounded"
-              href={`/groups/${group.group_id}`}
-            >
-              <img
-                src={group.profile_image_url}
-                alt={group.group_name}
-                class="h-8 w-8 rounded-full object-cover mr-2"
-              />
-              <span class="text-sm font-medium text-gray-800"
-                >{group.group_name}-(admin)</span
-              >
-            </a>
-          {/each}
-        {/if}
+    <hr class="h-px w-full my-8 bg-orange-300 border-0 shadow-md" />
 
         <a
           class="w-full flex items-center py-3 px-4 hover:bg-gray-300 rounded"
@@ -203,8 +210,8 @@
 
           <span class="ml-3 font-medium">Join Group</span>
         </a>
-      </div>
-    {/if}
+      <!-- </div>
+    {/if} -->
   </div>
 </div>
 
