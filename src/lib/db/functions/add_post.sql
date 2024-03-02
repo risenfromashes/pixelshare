@@ -1,6 +1,7 @@
 
-
+--drop function add_post(text, text, text, integer, timestamptz, text[]);
 create or replace function add_post(
+   "status" text,
     "caption" text,
     "location" text,
     "createdBy" text,
@@ -15,8 +16,8 @@ declare
     url text;
 begin
     -- insert into post table
-    insert into "Post" ("caption", "location", "groupId", "createdAt", "createdBy", "approvedBy")
-    values ("caption", "location", "groupId", "createdAt", "createdBy", "createdBy")
+    insert into "Post" ("status", "caption", "location", "groupId", "createdAt", "createdBy", "approvedBy")
+    values ("status", "caption", "location", "groupId", "createdAt", "createdBy", "createdBy")
     returning id into new_post_id;
 
     -- loop through each picture path and insert into image and postimages table

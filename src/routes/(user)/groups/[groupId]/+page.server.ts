@@ -9,10 +9,11 @@ export const actions = {
     const files = formData.getAll("files") as File[];
     const caption = formData.get("caption") as string;
     const location = formData.get("location") as string;
-    const tags = (formData.get("tags") as string).split(",");
+    let status: String = "requested";
+    //const tags = (formData.get("tags") as string).split(",");
 
     console.log("Action called");
-    console.log(tags);
+    //console.log(tags);
 
     const {
       data: { user },
@@ -50,8 +51,36 @@ export const actions = {
     });
 
     const date = new Date();
+    // checking if the user is one of the admins of the group
+
+    const { data: admins } = await supabase.rpc("get_group_admins", {
+      group_id: params.groupId,
+    }
+    );
+
+    console.log("here are the group admins");
+    console.log(admins);
+
+    const user_id = user.id;
+
+    // Check if the user_id is in the admins array
+    let isAdmin: Boolean = false;
+    for (const admin of admins) {
+      if (admin === user_id) {
+        isAdmin = true;
+        break;
+      }
+    }
+
+    if (isAdmin === true) {
+      status = "approved"; // ami nijei admin
+    } else {
+      status = "requested"; // for others
+    }
+
 
     const { error } = await supabase.rpc("add_post", {
+      status: status,
       caption: caption,
       location: location,
       createdBy: user.id,

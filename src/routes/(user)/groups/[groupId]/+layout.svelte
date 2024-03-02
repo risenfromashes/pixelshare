@@ -47,6 +47,7 @@
       posts: [
         { name: "View Posts", link: base + "/details" },
         { name: "Manage Post Requests", link: base + "/posts/requests" },
+        { name: "Edit Post", link: base + "/posts/editpost" },
       ],
       members: [
         { name: "Current Members", link: base + "/members/view" },
