@@ -43,7 +43,7 @@ $$ language plpgsql;
 
 
 
--- drop function if exists get_similar_images_in_group_by_image(bigint, bigint, double precision, integer);
+drop function if exists get_similar_images_in_group_by_image(bigint, bigint, double precision, integer);
 
 create
 or replace function public.get_similar_images_in_group_by_image (
@@ -51,7 +51,7 @@ or replace function public.get_similar_images_in_group_by_image (
   gid bigint,
   threshold double precision,
   n integer
-) returns table (id bigint, url text, similarity double precision) as $$
+) returns table (id bigint, url text, score double precision) as $$
 DECLARE
     model_name text := 'dinov2';
 BEGIN
@@ -71,4 +71,4 @@ BEGIN
 END;
 $$ language plpgsql;
 
--- select * from get_similar_images_in_group_by_image(108, 1, 0.4, 10);
+select * from get_similar_images_in_group_by_image(108, 1, 0.4, 10);

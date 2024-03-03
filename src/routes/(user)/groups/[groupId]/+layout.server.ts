@@ -3,13 +3,17 @@ import { get } from "svelte/store";
 import { v4 } from "uuid";
 import { getUsername, getGroupname } from "$lib/db/functions/helpers";
 
-export const load = async ({ request, params, locals: { supabase ,getSession} }) => {
+export const load = async ({
+  request,
+  params,
+  locals: { supabase, getSession },
+}) => {
   const { data: user, error: err1 } = await supabase.auth.getUser();
 
-    const session = await getSession();
-    if (!session) {
-      return redirect(302, "/login");
-    }
+  const session = await getSession();
+  if (!session) {
+    return redirect(302, "/login");
+  }
 
   if (err1 || !user) {
     return redirect(302, "/login");
@@ -80,7 +84,7 @@ export const load = async ({ request, params, locals: { supabase ,getSession} })
     }
   );
 
-  const { data:data2, error: err2 } = await supabase.rpc("is_admin", {
+  const { data: data2, error: err2 } = await supabase.rpc("is_admin", {
     gid: Number.parseInt(params.groupId),
     userid: session.user.id,
   });
