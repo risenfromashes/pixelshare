@@ -5,10 +5,12 @@
   import { enhance } from "$app/forms";
   import { Icon } from "$lib";
   import FaIcon from "$lib/components/FaIcon.svelte";
+  import Spinner from "$lib/components/Spinner.svelte";
 
   export let data;
 
   let success = false;
+  let loading=false;
 
   let username = writable(data.user[0].username);
   let location = writable(data.user[0].location);
@@ -16,9 +18,9 @@
   let phonenumber = writable(data.user[0].phonenumber);
 
   let imageProfile = data.user[0].profileimg; // Assuming this is a string URL
-  let imageFileProfile; // This will be a File object
+  let imageFileProfile;//=URL.createObjectURL(data.user[0].profileimg); // This will be a File object
 
-  let faceImg;
+  let faceImg= data.user[0].faceImg;
   let faceImgFile;
 
   function editAbout()
@@ -27,23 +29,27 @@
   }
 
   const updateDomFileProfile = () => {
-      const element = document.querySelector<HTMLInputElement>("#profile-file-input");
-      if (element && imageFileProfile) {
-          const list = new DataTransfer();
-          list.items.add(imageFileProfile); // Add the File object
-          element.files = list.files; // Set the FileList on the input element
-      }
+    const element = document.querySelector<HTMLInputElement>("#profile-file-input");
+    if (element) {
+      const list = new DataTransfer();
+      imageFileProfile.forEach((file) => list.items.add(file));
+      element.files = list.files;
+    }
   };
 
   const handleFileChangeProfile = () => {
-      const element = document.querySelector<HTMLInputElement>("#profile-file-input");
-      if (element && element.files && element.files.length > 0) {
-          const file = element.files[0]; // Get only the first file
-          imageFileProfile = file; // Set the single File object
-          imageProfile = URL.createObjectURL(file); // Create and set the single image URL
-          updateDomFileProfile(); // Update the DOM/file input
+    const element = document.querySelector<HTMLInputElement>("#profile-file-input");
+    if (element) {
+      const files = Array.from(element.files ?? []);
+      if (files.length > 0) {
+        const lastFile = files[files.length - 1];
+        imageFileProfile = [lastFile];
+        imageProfile = [URL.createObjectURL(lastFile)];
       }
+      updateDomFileProfile();
+    }
   };
+
 
   const updateFace = () => {
       const element = document.querySelector<HTMLInputElement>("#face-file-input");
@@ -75,7 +81,23 @@
     <div
       class="flex-1 xl:px-32 px-4 py-8 overflow-y-auto bg-orange-50 text-black"
     >
+    {#if success}
+    <div
+      class="block w-full font-bold px-4 py-3 bg-green-100 rounded text-left text-xs text-green-500 mb-4"
+    >
+      <p>
+        Congratulations. Your Profile is Edited successfully!
+      </p>
+    </div>
+  {/if}
 
+  {#if loading}
+  <div
+    class="text-center text-lg flex flex-row justify-center items-center"
+  >
+    Loading... <Spinner size={4} className="ml-2" />
+  </div>
+{/if}
    
   <form
   class="request-item flex flex-col bg-black-100 border-2 border-orange-200 p-4 rounded-lg shadow-lg hover:bg-orange-150 transition-colors duration-200 ease-in-out"
@@ -83,14 +105,21 @@
   on:submit
   enctype="multipart/form-data"
   use:enhance={({ formElement, cancel }) => {
+
+      if (loading) {
+                cancel();
+              }
+        loading = true;
       success = false;
       return async ({ result }) => {
           if (result.type === "success") {
+            
               success = true;
-              formElement.reset();
+              // formElement.reset();
               imageProfile = data.user[0].profileimg;  // Assuming this is for resetting to default image
               // Define your logic here as per requirements
           }
+          loading = false;
       };
   }}
 >
@@ -141,6 +170,8 @@
         </div>
   
       </div>
+
+      <input type="hidden" name="imageUrl" bind:value={imageProfile} />
   
 <!-- face add -->
           <input
@@ -173,6 +204,8 @@
             </div>
           {/if}
         </div>
+
+        <input type="hidden" name="faceUrl" bind:value={faceImg} />
 
     <div class="m-4">
         <input type="hidden" name="userId" bind:value={data.user_id}/>

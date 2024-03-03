@@ -11,6 +11,8 @@ export const actions = {
         const phonenumber= formData.get("phonenumber") as string;
         const imgs= formData.getAll("profileImg") as File[];
         const faceImgs=formData.getAll("faceImg") as File[];
+        const imageUrl=formData.get("imageUrl") as string;
+        const faceUrl=formData.get("faceUrl") as string;
 
 
         
@@ -52,6 +54,8 @@ export const actions = {
             return supabase.storage.from("images").getPublicUrl(path).data.publicUrl;
         });
 
+        console.log("Action received:",username, " url:", urls[0]);
+
 
 
         //add face image
@@ -79,8 +83,17 @@ export const actions = {
 
         
         // Common formData
-       console.log("Action received:",username, "urls:", faceurls[0]);
+        // console.log("Action received:",username, " url:", urls[0]);
+       console.log("Action received:",username, "face url:", faceurls[0]);
 
+       if(!imgs[0].size)
+       {
+            urls[0]=imageUrl;
+       }
+        if(!faceImgs[0].size)
+        {
+            faceurls[0]=faceUrl;
+        }
        const { data, error } = await supabase.rpc("edit_profile", {
         user_id:userId,
         user_name:username,
@@ -99,6 +112,8 @@ export const actions = {
         
             // return redirect(302, "/profile");
             return { success: true };
+            
+
 
         // }
 

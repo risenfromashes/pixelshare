@@ -1,4 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit";
+import { get } from "svelte/store";
+import { v4 } from "uuid";
 
 export const load = async ({
 	request,
