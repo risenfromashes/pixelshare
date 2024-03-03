@@ -23,8 +23,8 @@ export const load = async ({ params, locals: { supabase, getSession } }) => {
 	});
 	//console.log("In Load method of Post Requests");
 	//console.log(groupInfo);
-	console.log(session.user.id);
-	console.log(params.groupId);
+	// console.log(session.user.id);
+	// console.log(params.groupId);
 
 	const { data: posts, error: err3 } = await supabase.rpc(
 		"get_liked_posts",
@@ -34,17 +34,30 @@ export const load = async ({ params, locals: { supabase, getSession } }) => {
 			user_id: session.user.id,
 		}
 	);
-	//console.log("In Load method of Post Requests");
-	//console.log(postRequests);
 
 	if (err2) {
+		console.log("err2");
 		return fail(400, { error: err2.message });
 	}
-	//console.log("ekhaneeeeeeeeeeeeeeeeeee  liked posts");
-	//console.log(posts);
+
+
+	// console.log(posts);
+
+	// const {data: comments , error: err4} = await supabase.rpc("get_comments_by_post", {
+	// 	group_id: Number.parseInt(params.groupId),
+	// });
+
+	// if (err4) {
+	// 	console.log("err4");
+	// 	return fail(400, { error: err4.message });
+	// }
+	// console.log("ekhaneeeeeeeeeeeeeeeeeee  liked posts");
+	// console.log("comments:");
+	// console.log(comments);
 
 	return {
 		groupInfo: groupInfo,
 		posts: posts,
+		
 	};
 };

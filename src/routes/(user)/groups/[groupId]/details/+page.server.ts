@@ -12,6 +12,7 @@ export const actions = {
 		const postId = Number.parseInt(formData.get("postId")?.toString() ?? "0");
 		//const caption = formData.get("caption") as String;
 		const isApproved = formData.get("action") as String;
+		const comment= formData.get("newComment") as String;
 		const {
 			data: { user },
 			error: err1,
@@ -27,8 +28,23 @@ export const actions = {
 			return redirect(302, "/login");
 		}
 
+		console.log("In Load method of Post Requests");
 		console.log(isApproved);
-		if (isApproved === "true") {
+		console.log("comment= ", comment);
+
+		if(comment!==""){
+			const { data, error } = await supabase.rpc("add_comment", {
+				post_id: postId,
+				user_id: session.user.id,
+				comment: comment,
+				comment_time: new Date(),
+			});
+			if (error) {
+				console.log(error);
+				return fail(400, { error: error.message });
+			}
+		}
+		else if (isApproved === "true") {
 			console.log("the post should be liked");
 			const { data, error } = await supabase.rpc("like_post", {
 				post_id: postId,
@@ -40,7 +56,7 @@ export const actions = {
 				return fail(400, { error: error.message });
 			}
 			return { success: true };
-		} else {
+		} else if (isApproved === "false") {
 			console.log("dislike khau tumi post fuuuuuuuuuuuuu");
 			const { data, error } = await supabase.rpc("dislike_post", {
 				post_id: postId,

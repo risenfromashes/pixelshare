@@ -5,6 +5,7 @@
   import { enhance } from "$app/forms";
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
   import { formatDistanceToNow } from "date-fns";
+    // import { handle } from "../../../../../hooks.server.js";
   export let data;
   let isLiked: Boolean = false;
   let newComment = "";
@@ -13,6 +14,7 @@
     const date = new Date(dateString);
     return formatDistanceToNow(date, { addSuffix: true });
   }
+
 </script>
 
 <div class="flex-1 xl:px-12 p-4 overflow-y-auto">
@@ -83,29 +85,53 @@
                     enctype="multipart/form-data"
                     use:enhance
                   >
-                    <input type="hidden" name="postId" bind:value={post.id} />
-                    <input type="hidden" name="action" bind:value={isLiked} />
-                    <button
-                      type="submit"
-                      on:click={(event) => {
-                        event.stopPropagation();
-                        isLiked = !post.is_liked;
-                      }}
-                      class="px-4 py-2 rounded-lg shadow hover:bg-gray-100 flex items-center"
-                    >
-                      <img
-                        src={!post.is_liked
-                          ? "../../icons/love1.png"
-                          : "../../icons/love2.png"}
-                        alt="Like"
-                        class="w-6 h-6 mr-2"
-                      />
-                      <span class="text-sm">{post.num_reacts}</span>
-                    </button>
-                  </form>
+                    <!-- <input type="hidden" name="postId" bind:value={post.id} />
+                    <input type="hidden" name="action" bind:value={isLiked} /> -->
+                   
+                    <div class="flex items-center gap-4"> <!-- Add this line -->
+                      <p> just for checking {post.is_liked}</p>
+
+                      <input type="hidden" name="postId" bind:value={post.id} />
+                      <input type="hidden" name="action" bind:value={isLiked} />
+                      <button
+                          type="submit" 
+                          onclick={(event) => {
+                              event.stopPropagation();
+                              isLiked = !post.is_liked;
+                          }}
+                          class="px-4 py-2 rounded-lg shadow hover:bg-gray-100 flex items-center"
+                      >
+                          <img
+                              src={!post.is_liked ? "../../icons/love1.png" : "../../icons/love2.png"}
+                              alt="Like"
+                              class="w-6 h-6 mr-2"
+                          />
+                          <span class="text-sm">{post.num_reacts}</span>
+                      </button>
+                  
+                      <button
+                          type="submit"
+                          onclick={(event) => {
+                              event.stopPropagation();
+                              newComment = "";
+                          }}
+                          class="px-4 py-2 rounded-lg shadow hover:bg-gray-100 flex items-center"
+                      >
+                          <img
+                              src="../../icons/comment.png"
+                              alt="Comment"
+                              class="w-6 h-6 mr-2"
+                          />
+                          <span class="text-sm">{post.commentcount}</span>
+                      </button>
+                  </div> <!-- Add this line -->
+                  
                   <!-- Improved Comment Box Layout -->
                   <div class="flex items-center flex-grow">
+
+                    <!-- <input type="hidden" name="action" bind:value={isLiked} /> -->
                     <textarea
+                      name="newComment"
                       bind:value={newComment}
                       class="flex-grow p-2 text-gray-700 leading-tight focus:outline-none border rounded-l-md shadow"
                       placeholder="Write a comment..."
@@ -113,12 +139,19 @@
                     ></textarea>
                     <button
                       class="bg-orange-500 text-white rounded-r-md hover:bg-orange-700 focus:outline-none focus:shadow-outline px-4 py-2"
-                      >Post</button
-                    >
+                      type="submit" on:click={(event) => {
+                        event.stopPropagation();
+                        // newComment = "";
+                      }}
+                      >
+                      Post
+                    </button>
+                  </form>
                   </div>
                 </div>
               </div>
-            </div>
+            <!-- </div> -->
+            
           {/if}
         {/each}
       </div>

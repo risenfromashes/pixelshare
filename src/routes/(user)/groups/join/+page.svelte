@@ -23,7 +23,7 @@
   $: filteredGroups =
     searchQuery.trim().length > 0
       ? data.groups.filter((group) =>
-          group.name.toLowerCase().includes(searchQuery.toLowerCase())
+          group.name.toLowerCase().includes(searchQuery.toLowerCase()),
         )
       : [];
 
@@ -36,6 +36,43 @@
   class="flex flex-col items-center justify-center min-h-screen bg-orange-50 text-gray-900 px-36"
 >
   <div class="space-y-4 w-full">
+    <!-- Card-like structure for PixelShare Group with a background image -->
+    <div
+      class="w-full bg-cover bg-center rounded-lg shadow-md"
+      style="background-image: url('/join_group.jpg'); height: 300px;"
+    >
+      <div
+        class="flex items-center justify-center h-full w-full bg-opacity-50 bg-black rounded-lg"
+      >
+        <div class="text-center">
+          <h2 class="text-white text-3xl font-bold">PixelShare Groups</h2>
+          <p class="mt-2 text-white text-lg">
+            Join groups to share and explore pixels together!
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Introductory Summary -->
+    <div class="mt-8 text-center">
+      <h3 class="text-2xl font-semibold">Why Join a Group?</h3>
+      <p class="mt-4 bg-orange-50">
+        Being in groups allows you to connect with others who share your passion
+        for photography and pixel art. It's a space to collaborate, share
+        insights, and grow together. Join a PixelShare group today and start
+        sharing!
+      </p>
+    </div>
+    <div class="mt-8 text-center">
+      <h3 class="text-2xl font-bold">Recommended groups</h3>
+      {#each data.groups as group}
+        <div class="relative rounded-lg overflow-hidden border border-gray-300">
+          <p class="mt-4">
+            {group.name}
+          </p>
+        </div>
+      {/each}
+    </div>
+
     <button
       class="px-4 py-2 bg-orange-300 text-white fond-bold rounded-md"
       on:click={() => (showModal = true)}

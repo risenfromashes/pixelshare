@@ -242,7 +242,7 @@
       <textarea class="w-full h-16 rounded border p-2 mb-4 bg-orange-100 hover:bg-orange-200" placeholder="Type your Phone number here" name="phonenumber" bind:value={$phonenumber}></textarea>
     </div>
     
-    <ButtonComp text="Submit" {loading} onClick={handleClick} />
+    <ButtonComp text="Submit" classes="w-20 h-10 px-4 py-2 m-4 bg-green-500 text-white rounded hover:bg-green-600" {loading} onClick={handleClick} />
 
     <!-- <button class="w-20 h-10 px-4 py-2 m-4 bg-green-500 text-white rounded hover:bg-green-600" on:click={(event) => editAbout( event)}>Save</button> -->
     <!-- </form>     -->
