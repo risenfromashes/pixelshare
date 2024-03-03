@@ -5,9 +5,6 @@
   import ImageCard from "$lib/components/ImageCard.svelte";
 
   export let data;
-
-  const groupId: Writable<number> = getContext("groupId");
-  $: groupId.set(Number.parseInt($page.params.groupId));
 </script>
 
 <!-- {#each mainContentItems as section} -->

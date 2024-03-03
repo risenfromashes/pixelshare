@@ -25,6 +25,9 @@ export const actions = {
   default: async ({ request, params, fetch, locals: { supabase } }) => {
     const data = await request.formData();
     const query = data.get("query");
+    const tagIds = data.get("tagIds")?.toString() ?? "[]";
+
+    const tags = JSON.parse(tagIds);
 
     if (!query) {
       return fail(400, { error: "No query provided" });
@@ -49,30 +52,46 @@ export const actions = {
 
       // console.log("Clip response", res);
       // console.log("Embedding", res.texts[0].embedding);
-
-      const { data, error } = await supabase.rpc(
-        "get_similar_images_in_group",
-        {
-          gid: params.groupId,
-          modelName: "clip",
-          threshold: 0.2,
-          query: Array.from(res.texts[0].embedding),
-          n: 20,
+      let results = [];
+      if (tags.length <= 0) {
+        const { data, error } = await supabase.rpc(
+          "get_similar_images_in_group",
+          {
+            gid: params.groupId,
+            modelName: "clip",
+            threshold: 0.2,
+            query: Array.from(res.texts[0].embedding),
+            n: 20,
+          }
+        );
+        if (error) {
+          return fail(500, { error: error.message });
         }
-      );
+        const result = data as SimilarityResponse[];
 
-      if (error) {
-        return fail(500, { error: error.message });
+        // console.log("Similarity Response: ", result);
+        return {
+          success: true,
+          similarImages: result,
+        };
+      } else {
+        const { data, error } = await supabase.rpc("get_top_images_by_tag", {
+          gid: params.groupId,
+          tid: tags[0],
+          n: 20,
+        });
+        if (error) {
+          return fail(500, { error: error.message });
+        }
+        const result = data as SimilarityResponse[];
+
+        // console.log("Similarity Response: ", result);
+
+        return {
+          success: true,
+          similarImages: result,
+        };
       }
-
-      const result = data as SimilarityResponse[];
-
-      // console.log("Similarity Response: ", result);
-
-      return {
-        success: true,
-        similarImages: result,
-      };
     } catch (e: any) {
       return fail(500, { error: e.message });
     }
