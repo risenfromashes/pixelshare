@@ -43,20 +43,6 @@ BEGIN
     SELECT embedding INTO emb FROM "ImageEmbedding" WHERE "imageId" = 
         CASE WHEN TG_OP = 'DELETE' THEN OLD.image_id ELSE NEW.image_id END AND model = model_; 
 
-    -- Handle DELETE case 
-    IF TG_OP = 'DELETE' THEN
-        score_adjustment := CASE WHEN OLD.value THEN -1 ELSE 1 END; -- Ternary Operator 
-
-        SELECT EXISTS(
-            SELECT * FROM "ImageTagScores" 
-            WHERE "imageId" = OLD.image_id AND "tagId" = OLD.tag_id
-        ) INTO existing;
-
-        IF existing THEN 
-            PERFORM update_image_tag_score(emb, OLD.image_id, OLD.tag_id, score_adjustment, threshold, model_); 
-        END IF;
-    END IF;
-
     -- Handle INSERT/UPDATE Cases
     score_adjustment := CASE WHEN NEW.value THEN 1 ELSE -1 END;
     IF OLD.value IS NOT NULL THEN -- Adjust for pre-existing value
@@ -81,5 +67,5 @@ $$ LANGUAGE plpgsql;
 
 -- Trigger (Unchanged) 
 CREATE OR REPLACE TRIGGER update_image_tag_scores_trigger
-AFTER INSERT OR UPDATE OR DELETE ON "ImageTags" FOR EACH ROW
+AFTER INSERT OR UPDATE ON "ImageTags" FOR EACH ROW
 EXECUTE FUNCTION update_image_tag_scores();
