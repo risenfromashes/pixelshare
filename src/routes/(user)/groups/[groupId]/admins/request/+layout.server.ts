@@ -25,8 +25,8 @@ export const load = async ({
     console.error("Error calling is_admin function:", err2);
   }
   
-  console.log("recommended moderators, isAdmin:", data2);
-  console.log(data);
+  // console.log("recommended moderators, isAdmin:", data2);
+  // console.log(data);
 
   if (error) {
     return { error: error.message };
@@ -45,7 +45,7 @@ export const load = async ({
   //console.log(data);
   const userId= session.user.id;
 
-  console.log("jala:"+userId);
+  // console.log("jala:"+userId);
 
   return {
     requests: data,

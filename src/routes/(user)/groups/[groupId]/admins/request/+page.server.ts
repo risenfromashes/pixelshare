@@ -5,7 +5,7 @@ export const actions = {
     default: async ({ request, params, locals: { supabase, getSession } }) => {
         const formData = await request.formData();
         const username = formData.get("username") as string;
-        const isModalOpen = formData.get("isModalOpen") as string;
+        // const isModalOpen = formData.get("isModalOpen") as string;
         const message = formData.get("message") as string;
         const isRequestSent = formData.get("isRequestSent") as string;
         const isCancel = formData.get("isCancel") as string;
@@ -30,11 +30,12 @@ export const actions = {
 
         
         // Common formData
-        console.log("Action received:", isModalOpen, "Username:", username, "Message:", message, "isRequestSent:", isRequestSent);
+        console.log("Action received:", "Username:", username, "Message:", message, "isRequestSent:", isRequestSent);
         // console.log(session.user.id);
         // Process based on action
         const date= new Date();
         if (isRequestSent === "true") {
+            // isRequestSent=isModalOpen;
             console.log("group_id:", Number.parseInt(params.groupId), "message:", message, "sent_time:", date, "user_name:", username);
             console.log("Sending admin invitation request to:", username, "Message:", message);
 

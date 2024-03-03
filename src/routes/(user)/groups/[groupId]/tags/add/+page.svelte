@@ -3,6 +3,8 @@
   import FaIcon from "$lib/components/FaIcon.svelte";
   import { enhance } from "$app/forms";
   import { goto, invalidateAll, onNavigate } from "$app/navigation";
+  import Button from "$lib/components/Button.svelte";
+
 
   let description: String = "";
   let generalName: String = "";
@@ -10,6 +12,8 @@
   let success = false;
   let imagesTag: string[] = [];
   let imageFilesTag: File[] = [];
+
+  let loading=false;
 
   const updateDomFileListTag = () => {
     const element = document.querySelector<HTMLInputElement>("#tag-file-input");
@@ -36,6 +40,16 @@
   onNavigate(() => {
     success = false;
   });
+
+  async function handleClick() {
+        console.log('Button clicked');
+        // Add your click handling logic here
+
+        loading.set(true);
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate an async operation
+        loading.set(false);
+        message.set("Operation completed."); // 
+    }
 </script>
 
 <div class="space-y-4 w-full max-w-xl mx-auto">
@@ -134,11 +148,13 @@
 
         <!-- Create Group button -->
         <div class="w-full flex flex-row justify-center">
-          <button
+          <Button classes="px-24 py-3 bg-orange-200 border-2 border-orange-300 hover:bg-orange-300 disabled:border-orange-200 disabled:text-gray-500 disabled:bg-orange-100 rounded-md"
+          text="Create Tag" {loading} onClick={handleClick}  />
+          <!-- <button
             type="submit"
             class="px-24 py-3 bg-orange-200 border-2 border-orange-300 hover:bg-orange-300 disabled:border-orange-200 disabled:text-gray-500 disabled:bg-orange-100 rounded-md"
             disabled={imagesTag.length === 0}>Create Tag</button
-          >
+          > -->
         </div>
       </div>
     </div>
