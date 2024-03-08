@@ -32,6 +32,7 @@
     <img
         {src}
         alt="Random"
+        loading="lazy"
         class="w-auto h-full transition-opacity duration-500 ease-in-out object-contain rounded-lg border-2 border-orange-200 shadow-lg {loaded
             ? 'opacity-100'
             : 'opacity-0'}"
